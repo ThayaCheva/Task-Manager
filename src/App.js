@@ -17,8 +17,14 @@ function App() {
       <div className="App">
         <div className="navbar">
           <h1>Menu</h1>
-          <Link to="/">Home</Link>
-          <Link to="/summary">Summary</Link>
+          <Link className="nav-item" to="/">
+            - Home
+          </Link>
+          <Link className="nav-item" to="/summary">
+            - Summary
+          </Link>
+          <h1>Tasks</h1>
+          <p className="nav-item">- Add Tasks</p>
         </div>
 
         <TaskContext.Provider value={[tasks, setTasks]}>

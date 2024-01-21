@@ -171,7 +171,7 @@ function TaskForm(props) {
             <input
               className={`${editMode.state ? "edit-mode" : ""} btn`}
               type="submit"
-              value="Add Task"
+              value="Create New Task"
             />
           )}
           {editMode.state && (
@@ -201,12 +201,11 @@ function TaskForm(props) {
             required
           />
           <input
-            className={`${editMode.state ? "edit-mode" : ""} btn`}
+            className={`${editMode.state ? "edit-mode" : ""} btn subtask-btn`}
             type="submit"
-            value="Add Subtask"
+            value="+ Add Subtask"
           />
 
-          {/* Display Subtask Items */}
           {formData.subTasks &&
             formData.subTasks.map((st, index) => (
               <div className="subtask-item">

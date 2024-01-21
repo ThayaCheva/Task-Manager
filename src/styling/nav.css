@@ -14,7 +14,19 @@
   justify-content: flex-start;
   flex-direction: column;
   background: var(--grey);
-  padding: 1rem;
+  padding: 2rem;
   border-radius: 15px;
   gap: 2rem;
+}
+.App .navbar .nav-item {
+  color: #444;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 5px;
+}
+.App .navbar .nav-item:hover {
+  background: rgba(0, 0, 0, 0.1);
 }/*# sourceMappingURL=nav.css.map */

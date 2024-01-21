@@ -27,24 +27,33 @@ function TaskSummary() {
 
   return (
     <section className="task-summary">
-      <h1>TaskSummary</h1>
+      <h1>Task Summary</h1>
       <div className="task-summary-container">
-        <h2>Number of Tasks: {tasks.length}</h2>
-        <h2>
-          Number of Subtasks:
-          <GetSubtaskAmount />
-        </h2>
-        <h2>Task List: </h2>
-        {newTasks
-          .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
-          .map((t) => (
-            <p
-              onClick={() => handleTaskClick(t.id)}
-              className="summary-task-item"
-            >
-              Title: <span>{t.title}</span> | Due Date: {t.dueDate}
-            </p>
-          ))}
+        <div className="tasks-list">
+          <h2>List of tasks: </h2>
+          {newTasks
+            .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
+            .map((t) => (
+              <p
+                onClick={() => handleTaskClick(t.id)}
+                className="summary-task-item"
+              >
+                Title: <span>{t.title}</span> | Due Date: {t.dueDate}
+              </p>
+            ))}
+        </div>
+        <div className="tasks-stats">
+          <div className="tasks-stats-item">
+            <h1>Number of Tasks:</h1>
+            <h2>{tasks.length}</h2>
+          </div>
+          <div className="tasks-stats-item">
+            <h1>Number of Subtasks:</h1>
+            <h2>
+              <GetSubtaskAmount />
+            </h2>
+          </div>
+        </div>
       </div>
     </section>
   );

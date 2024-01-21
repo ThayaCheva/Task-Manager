@@ -32,18 +32,25 @@ function TaskItem() {
             ref={t.id === selectedTask ? selectedTaskRef : null}
             className="task-item"
           >
-            <h1>{t.title}</h1>
+            <button className="delete-btn" onClick={() => removeTask(t.id)}>
+              X
+            </button>
+            <div className="tasks-item-title">
+              <h1>{t.title}</h1>
+              <p>| 📆 {t.dueDate}</p>
+            </div>
             <p>{t.desc}</p>
-            <p>{t.dueDate}</p>
             <div>
               {t.subTasks &&
                 t.subTasks.map((st) => (
-                  <div className="subtask-item">{st}</div>
+                  <div className="subtask-item">
+                    <input type="checkbox"></input>
+                    <div>{st}</div>
+                  </div>
                 ))}
             </div>
             <div className="task-item-buttons">
               <button onClick={() => editTask(t.id)}>EDIT</button>
-              <button onClick={() => removeTask(t.id)}>DELETE</button>
             </div>
           </div>
         ))}
