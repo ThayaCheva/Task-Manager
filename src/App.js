@@ -8,10 +8,15 @@ export const EditModeContext = React.createContext();
 export const SelectedTaskContext = React.createContext();
 
 function App() {
-  const [tasks, setTasks] = React.useState([]);
+  const [tasks, setTasks] = React.useState(
+    JSON.parse(localStorage.getItem("tasks")) || []
+  );
   const [editMode, setEditMode] = React.useState({ state: false, taskID: "" });
   const [selectedTask, setSelectedTask] = React.useState("");
 
+  React.useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
   return (
     <Router>
       <div className="App">
