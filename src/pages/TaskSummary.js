@@ -1,20 +1,23 @@
 import React from "react";
-import "../styling/tasklist.css";
+import "../styling/tasksummary.css";
 import { useNavigate } from "react-router-dom";
 
-import { TaskContext, SelectedTaskContext } from "../App";
+import { TaskContext } from "../App";
 
 function TaskSummary() {
-  const [tasks, setTasks] = React.useContext(TaskContext);
-  const [selectedTask, setSelectedTask] = React.useContext(SelectedTaskContext);
+  const [tasks, setTasks, selectedTask, setSelectedTask] =
+    React.useContext(TaskContext);
 
   const navigate = useNavigate();
   const newTasks = [...tasks];
   const GetSubtaskAmount = () => {
     var count = 0;
-    for (var i = 0; i < tasks.length; i++) {
-      for (var j = 0; j < tasks[i].subTasks.length; j++) {
-        count++;
+    console.log(tasks);
+    if (tasks) {
+      for (var i = 0; i < tasks.length; i++) {
+        for (var j = 0; j < tasks[i].subTasks.length; j++) {
+          count++;
+        }
       }
     }
     return count;

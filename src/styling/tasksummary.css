@@ -1,0 +1,58 @@
+.task-summary {
+  width: 100%;
+  height: 100%;
+  margin-left: 2rem;
+}
+.task-summary h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+.task-summary .task-summary-container {
+  gap: 1rem;
+  display: flex;
+}
+.task-summary .task-summary-container h2 {
+  font-size: 1.2rem;
+}
+.task-summary .task-summary-container .tasks-list {
+  width: 100%;
+  height: 86vh;
+  border: 1px solid var(--grey-1);
+  border-radius: 15px;
+  padding: 2rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  overflow-y: auto;
+  gap: 1rem;
+}
+.task-summary .task-summary-container .tasks-list h2 {
+  margin-bottom: 1rem;
+}
+.task-summary .task-summary-container .summary-task-item {
+  border: 1px solid var(--grey-1);
+  padding: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.task-summary .task-summary-container .summary-task-item span {
+  font-weight: bold;
+}
+.task-summary .task-summary-container .tasks-stats {
+  display: flex;
+  gap: 2rem;
+  flex-direction: column;
+  width: 30vw;
+}
+.task-summary .task-summary-container .tasks-stats .tasks-stats-item {
+  padding: 2rem;
+  background: var(--grey);
+  border-radius: 15px;
+}
+.task-summary .task-summary-container .tasks-stats .tasks-stats-item h1 {
+  font-size: 1.5rem;
+}
+.task-summary .task-summary-container .tasks-stats .tasks-stats-item h2 {
+  font-size: 2rem;
+}/*# sourceMappingURL=tasksummary.css.map */

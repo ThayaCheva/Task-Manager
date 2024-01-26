@@ -2,10 +2,10 @@ import React from "react";
 import "../styling/tasklist.css";
 import TaskItem from "./TaskItem.js";
 import TaskForm from "./TaskForm.js";
-import { EditModeContext } from "../App";
+import { TaskContext } from "../App";
 
 function TaskList(props) {
-  const [editMode, setEditMode] = React.useContext(EditModeContext);
+  const { editMode, setEditMode } = React.useContext(TaskContext);
   return (
     <section id="tasklist">
       <TaskItem />

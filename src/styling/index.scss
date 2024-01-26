@@ -26,8 +26,16 @@ body {
 
 h1 {
   color: var(--dark);
+  font-size: 24px;
 }
 
+h2 {
+  font-size: 16px;
+}
+
+h3 {
+  font-size: 14px;
+}
 p {
   color: var(--paragraph);
 }

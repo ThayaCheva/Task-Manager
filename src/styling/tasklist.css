@@ -41,7 +41,7 @@
   width: 80%;
 }
 #tasklist .forms input {
-  padding: 1rem;
+  padding: 0.5rem 1rem;
   background: var(--light);
   border: 1px solid var(--grey-1);
   border-radius: 5px;
@@ -53,97 +53,13 @@
 #tasklist .forms .btn {
   background: var(--green);
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.8rem;
   font-weight: bold;
   color: var(--dark);
-  padding: 1rem;
+  padding: 0.5rem;
   border: none;
   border-radius: 5px;
   width: 100%;
-}
-#tasklist .tasks-items {
-  width: 100%;
-  height: 100%;
-}
-#tasklist .tasks-items .header {
-  font-size: 2.5rem;
-}
-#tasklist .tasks-items .tasks-items-container {
-  width: 100%;
-  min-height: 10vw;
-  max-height: 86vh;
-  display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
-  padding: 1rem;
-  border: 1px solid var(--grey-1);
-  border-radius: 15px;
-  flex-wrap: wrap;
-  overflow-y: scroll;
-}
-#tasklist .tasks-items .tasks-items-container .task-item {
-  padding: 1rem;
-  border: 1px solid var(--grey-1);
-  border-radius: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1rem;
-  width: 100%;
-  box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
-  position: relative;
-}
-#tasklist .tasks-items .tasks-items-container .task-item .tasks-item-title {
-  display: flex;
-  gap: 1rem;
-  width: 100%;
-  align-items: flex-end;
-  justify-content: flex-start;
-}
-#tasklist .tasks-items .tasks-items-container .task-item .tasks-item-title h1 {
-  line-height: 25px;
-}
-#tasklist .tasks-items .tasks-items-container .task-item .tasks-item-title p {
-  font-weight: bold;
-  line-height: 25px;
-}
-#tasklist .tasks-items .tasks-items-container .task-item .delete-btn {
-  position: absolute;
-  top: 5%;
-  right: 2%;
-  font-weight: 800;
-  cursor: pointer;
-  color: var(--red);
-  border: none;
-  background: none;
-  font-size: 1.5rem;
-}
-#tasklist .tasks-items .tasks-items-container .task-item .task-item-buttons {
-  display: flex;
-  gap: 1rem;
-}
-#tasklist .tasks-items .tasks-items-container .task-item .task-item-buttons button {
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--blue);
-  background: none;
-  border-radius: 5px;
-  font-weight: bold;
-  cursor: pointer;
-}
-#tasklist .tasks-items .tasks-items-container .task-item .subtask-item {
-  margin-left: 1rem;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 1rem;
-  margin: 0.5rem 0;
-}
-#tasklist .tasks-items .tasks-items-container .task-item .subtask-item input {
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
 }
 #tasklist .sub-task {
   width: 100%;
@@ -184,65 +100,6 @@
   display: flex;
   width: 100%;
   gap: 1rem;
-}
-
-.task-summary {
-  width: 100%;
-  height: 100%;
-  margin-left: 2rem;
-}
-.task-summary h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-}
-.task-summary .task-summary-container {
-  gap: 1rem;
-  display: flex;
-}
-.task-summary .task-summary-container h2 {
-  font-size: 1.2rem;
-}
-.task-summary .task-summary-container .tasks-list {
-  width: 100%;
-  height: 86vh;
-  border: 1px solid var(--grey-1);
-  border-radius: 15px;
-  padding: 2rem;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: column;
-  overflow-y: scroll;
-  gap: 1rem;
-}
-.task-summary .task-summary-container .tasks-list h2 {
-  margin-bottom: 1rem;
-}
-.task-summary .task-summary-container .summary-task-item {
-  border: 1px solid var(--grey-1);
-  padding: 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-}
-.task-summary .task-summary-container .summary-task-item span {
-  font-weight: bold;
-}
-.task-summary .task-summary-container .tasks-stats {
-  display: flex;
-  gap: 2rem;
-  flex-direction: column;
-  width: 30vw;
-}
-.task-summary .task-summary-container .tasks-stats .tasks-stats-item {
-  padding: 2rem;
-  background: var(--grey);
-  border-radius: 15px;
-}
-.task-summary .task-summary-container .tasks-stats .tasks-stats-item h1 {
-  font-size: 1.5rem;
-}
-.task-summary .task-summary-container .tasks-stats .tasks-stats-item h2 {
-  font-size: 2rem;
 }
 
 button,

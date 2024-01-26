@@ -1,12 +1,14 @@
 import React from "react";
 import "../styling/tasklist.css";
-import { TaskContext, EditModeContext, SelectedTaskContext } from "../App";
+import { TaskContext } from "../App";
+import FileUpload from "./FileUpload.js";
 
 function TaskForm(props) {
   const form = React.useRef();
-  const [tasks, setTasks] = React.useContext(TaskContext);
   const [subTask, setSubTask] = React.useState("");
-  const [editMode, setEditMode] = React.useContext(EditModeContext);
+
+  const { tasks, setTasks, editMode, setEditMode, taskImages, setTaskImages } =
+    React.useContext(TaskContext);
 
   const [formData, setFormData] = React.useState({
     id: "",
@@ -14,6 +16,7 @@ function TaskForm(props) {
     desc: "",
     dueDate: "",
     subTasks: [],
+    images: [],
   });
 
   const handleInputChange = (event) => {
@@ -27,15 +30,43 @@ function TaskForm(props) {
 
   const addTask = (event) => {
     event.preventDefault();
-    setTasks([...tasks, { ...formData, id: tasks.length + 1 }]);
+    console.log(taskImages);
+    const updatedFormData = {
+      ...formData,
+      images: Array.isArray(formData.images)
+        ? [...formData.images, ...taskImages]
+        : [...taskImages],
+      id: "test",
+    };
+    setFormData(updatedFormData);
+    console.log(formData);
+
+    setTasks([
+      ...tasks,
+      {
+        ...formData,
+        id: tasks.length + 1,
+        images: Array.isArray(formData.images)
+          ? [...formData.images, ...taskImages]
+          : [...taskImages],
+        id: "test",
+      },
+    ]);
+    console.log(formData);
+
+    console.log(tasks);
     setFormData({
       title: "",
       desc: "",
       dueDate: "",
       subTasks: [],
+      images: [],
     });
-    console.log(tasks);
+    // console.log(tasks);
   };
+
+  // console.log("rerender");
+  // console.log(formData);
 
   const addSubTask = (event) => {
     event.preventDefault();
@@ -223,6 +254,7 @@ function TaskForm(props) {
             ))}
         </form>
       </div>
+      <FileUpload></FileUpload>
     </div>
   );
 }

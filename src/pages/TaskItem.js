@@ -1,11 +1,17 @@
 import React from "react";
-import "../styling/tasklist.css";
-import { TaskContext, EditModeContext, SelectedTaskContext } from "../App";
+import "../styling/taskitem.css";
+import { TaskContext } from "../App";
 function TaskItem() {
-  const [tasks, setTasks] = React.useContext(TaskContext);
-  const [editMode, setEditMode] = React.useContext(EditModeContext);
-  const selectedTaskRef = React.useRef(null);
-  const [selectedTask, setSelectedTask] = React.useContext(SelectedTaskContext);
+  const {
+    tasks,
+    setTasks,
+    editMode,
+    setEditMode,
+    selectedTaskRef,
+    selectedTask,
+    setSelectedTask,
+    taskImages,
+  } = React.useContext(TaskContext);
 
   const removeTask = (id) => {
     setEditMode(false);
@@ -18,7 +24,7 @@ function TaskItem() {
   };
 
   React.useEffect(() => {
-    if (selectedTaskRef.current) {
+    if (selectedTaskRef && selectedTaskRef.current) {
       selectedTaskRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, []);
@@ -48,6 +54,11 @@ function TaskItem() {
                     <div>{st}</div>
                   </div>
                 ))}
+            </div>
+            <div>
+              {t.images.map((i) => (
+                <img src={i}></img>
+              ))}
             </div>
             <div className="task-item-buttons">
               <button onClick={() => editTask(t.id)}>EDIT</button>
