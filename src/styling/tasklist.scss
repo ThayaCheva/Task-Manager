@@ -1,11 +1,9 @@
 #tasklist {
   height: 100vh;
   width: 100%;
-  overflow-x: hidden;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 2rem;
+  align-items: flex-start;
+  justify-content: flex-start;
   gap: 2rem;
   .forms {
     width: 30vw;
@@ -14,10 +12,10 @@
     align-items: flex-start;
     justify-content: flex-start;
     flex-direction: column;
-    background: var(--grey);
+    background: var(--light);
     padding: 2rem;
-    border-radius: 15px;
     gap: 2rem;
+    box-shadow: var(--box-shadow);
     form {
       display: flex;
       align-items: flex-start;

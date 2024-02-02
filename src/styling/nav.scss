@@ -1,31 +1,37 @@
 .App {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 2rem;
-  width: 100%;
-  height: 100vh;
+  padding-left: 17vw;
   .navbar {
-    width: 30vw;
+    position: absolute;
+    top: 0;
+    left: 0;
     height: 100%;
+    width: 15vw;
     display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
     flex-direction: column;
-    background: var(--grey);
+    align-items: flex-start;
+    justify-content: space-between;
+    background: var(--light);
     padding: 2rem;
-    border-radius: 15px;
-    gap: 2rem;
-    .nav-item {
-      color: #444;
-      text-decoration: none;
-      font-weight: bold;
-      cursor: pointer;
+    box-shadow: var(--box-shadow);
+    .navbar-container {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
       width: 100%;
-      padding: 1rem;
+    }
+    h1 {
+      font-size: 1.5rem;
+    }
+    .nav-item {
+      width: 100%;
+      text-decoration: none;
+      padding: 0.5rem;
       border-radius: 5px;
       &:hover {
-        background: rgba(0, 0, 0, 0.1);
+        background: #e6e6e6;
+      }
+      .icon {
+        margin-right: 1rem;
       }
     }
   }

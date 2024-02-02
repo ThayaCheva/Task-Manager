@@ -1,14 +1,12 @@
 import React from "react";
 import "../styling/tasklist.css";
 import { TaskContext } from "../App";
-import FileUpload from "./FileUpload.js";
 
 function TaskForm(props) {
+  const { tasks, setTasks, editMode, setEditMode, taskImages } =
+    React.useContext(TaskContext);
   const form = React.useRef();
   const [subTask, setSubTask] = React.useState("");
-
-  const { tasks, setTasks, editMode, setEditMode, taskImages, setTaskImages } =
-    React.useContext(TaskContext);
 
   const [formData, setFormData] = React.useState({
     id: "",
@@ -30,31 +28,13 @@ function TaskForm(props) {
 
   const addTask = (event) => {
     event.preventDefault();
-    console.log(taskImages);
-    const updatedFormData = {
-      ...formData,
-      images: Array.isArray(formData.images)
-        ? [...formData.images, ...taskImages]
-        : [...taskImages],
-      id: "test",
-    };
-    setFormData(updatedFormData);
-    console.log(formData);
-
     setTasks([
       ...tasks,
       {
         ...formData,
         id: tasks.length + 1,
-        images: Array.isArray(formData.images)
-          ? [...formData.images, ...taskImages]
-          : [...taskImages],
-        id: "test",
       },
     ]);
-    console.log(formData);
-
-    console.log(tasks);
     setFormData({
       title: "",
       desc: "",
@@ -62,11 +42,7 @@ function TaskForm(props) {
       subTasks: [],
       images: [],
     });
-    // console.log(tasks);
   };
-
-  // console.log("rerender");
-  // console.log(formData);
 
   const addSubTask = (event) => {
     event.preventDefault();
@@ -81,9 +57,9 @@ function TaskForm(props) {
     setSubTask("");
   };
 
-  const editTask = (event, id) => {
+  const editTask = (event, taskID) => {
     event.preventDefault();
-    const index = tasks.findIndex((t) => t.id === id);
+    const index = tasks.findIndex((t) => t.id === taskID);
     if (index !== -1) {
       const updatedTask = [...tasks];
       // Subtasks
@@ -98,15 +74,15 @@ function TaskForm(props) {
       const updatedForm = {
         ...formData,
         subTasks: mergedSubTasks,
+        images: updatedTask[index].images,
       };
       console.log(updatedForm);
       setFormData(updatedForm);
-      console.log(formData);
 
       // Update whole task
       updatedTask[index] = {
         ...updatedForm,
-        id,
+        taskID,
       };
 
       setTasks(updatedTask);
@@ -115,31 +91,31 @@ function TaskForm(props) {
         desc: "",
         dueDate: "",
         subTasks: [],
+        images: [],
       });
       setSubTask("");
-      console.log("edit success");
     }
     setEditMode(false);
   };
 
   const removeSubTask = (indexToRemove) => {
-    const updatedSubTasks = tasks[editMode.taskID - 1].subTasks.filter(
-      (_, index) => index !== indexToRemove
-    );
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === editMode.taskID
-          ? { ...task, subTasks: updatedSubTasks }
-          : task
-      )
-    );
-  };
-
-  const removeFormSubTask = (indexToRemove) => {
-    const updatedSubTasks = formData.subTasks.filter(
-      (_, index) => index !== indexToRemove
-    );
-    setFormData((prevForm) => ({ ...prevForm, subTasks: updatedSubTasks }));
+    if (editMode.state) {
+      const updatedSubTasks = tasks[editMode.taskID - 1].subTasks.filter(
+        (_, index) => index !== indexToRemove
+      );
+      setTasks((prevTasks) =>
+        prevTasks.map((task) =>
+          task.id === editMode.taskID
+            ? { ...task, subTasks: updatedSubTasks }
+            : task
+        )
+      );
+    } else {
+      const updatedSubTasks = formData.subTasks.filter(
+        (_, index) => index !== indexToRemove
+      );
+      setFormData((prevForm) => ({ ...prevForm, subTasks: updatedSubTasks }));
+    }
   };
 
   React.useEffect(() => {
@@ -236,25 +212,25 @@ function TaskForm(props) {
             type="submit"
             value="+ Add Subtask"
           />
+          <div className="subtask-item-container">
+            {formData.subTasks &&
+              formData.subTasks.map((st, index) => (
+                <div className="subtask-item" key={index}>
+                  <button onClick={() => removeSubTask(index)}>-</button>
+                  <div>{st}</div>
+                </div>
+              ))}
 
-          {formData.subTasks &&
-            formData.subTasks.map((st, index) => (
-              <div className="subtask-item">
-                <button onClick={() => removeFormSubTask(index)}>-</button>
-                <div>{st}</div>
-              </div>
-            ))}
-
-          {editMode.state &&
-            tasks[editMode.taskID - 1].subTasks.map((st, index) => (
-              <div className="subtask-item">
-                <button onClick={() => removeSubTask(index)}>-</button>
-                <div>{st}</div>
-              </div>
-            ))}
+            {editMode.state &&
+              tasks[editMode.taskID - 1].subTasks.map((st, index) => (
+                <div className="subtask-item">
+                  <button onClick={() => removeSubTask(index)}>-</button>
+                  <div>{st}</div>
+                </div>
+              ))}
+          </div>
         </form>
       </div>
-      <FileUpload></FileUpload>
     </div>
   );
 }

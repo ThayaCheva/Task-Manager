@@ -5,21 +5,22 @@ import { useNavigate } from "react-router-dom";
 import { TaskContext } from "../App";
 
 function TaskSummary() {
-  const [tasks, setTasks, selectedTask, setSelectedTask] =
-    React.useContext(TaskContext);
+  const { tasks, setSelectedTask } = React.useContext(TaskContext);
 
   const navigate = useNavigate();
   const newTasks = [...tasks];
   const GetSubtaskAmount = () => {
     var count = 0;
-    console.log(tasks);
     if (tasks) {
       for (var i = 0; i < tasks.length; i++) {
-        for (var j = 0; j < tasks[i].subTasks.length; j++) {
-          count++;
+        if (tasks[i] && tasks[i].subTasks) {
+          for (var j = 0; j < tasks[i].subTasks.length; j++) {
+            count++;
+          }
         }
       }
     }
+
     return count;
   };
 

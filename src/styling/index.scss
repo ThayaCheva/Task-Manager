@@ -16,17 +16,19 @@
   --red: #f1a1a1;
   --green: #a1eebd;
   --yellow: #f4f67c;
+  --box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
 html,
 body {
-  background: var(--light);
+  background: var(--grey);
   height: 100%;
+  overflow: hidden;
 }
 
 h1 {
   color: var(--dark);
-  font-size: 24px;
+  font-size: 20px;
 }
 
 h2 {
