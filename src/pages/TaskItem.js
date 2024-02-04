@@ -23,6 +23,10 @@ function TaskItem() {
     setTasks(updatedTask);
   };
 
+  const clearAllTasks = () => {
+    setTasks([]);
+  };
+
   const editTask = (id) => {
     setEditMode({ ...editMode, state: true, taskID: id });
   };
@@ -33,7 +37,53 @@ function TaskItem() {
     }
   }, [selectedTaskRef]);
 
-  console.log(tasks);
+  const handleCheckList = (taskID, subTaskID) => {
+    var currSubTask = tasks[taskID - 1].subTasks[subTaskID];
+    if (!currSubTask.checked) {
+      setTasks((prevTasks) =>
+        prevTasks.map((taskItem) =>
+          taskItem.id === taskID
+            ? {
+                ...taskItem,
+                subTasks: taskItem.subTasks.map((subTask, index) =>
+                  index === subTaskID ? { ...subTask, checked: true } : subTask
+                ),
+              }
+            : taskItem
+        )
+      );
+    } else {
+      setTasks((prevTasks) =>
+        prevTasks.map((taskItem) =>
+          taskItem.id === taskID
+            ? {
+                ...taskItem,
+                subTasks: taskItem.subTasks.map((subTask, index) =>
+                  index === subTaskID ? { ...subTask, checked: false } : subTask
+                ),
+              }
+            : taskItem
+        )
+      );
+    }
+  };
+
+  const getTaskPercent = (id) => {
+    var count = 0;
+    if (tasks[id - 1] && tasks[id - 1].subTasks) {
+      for (var i = 0; i < tasks[id - 1].subTasks.length; i++) {
+        if (tasks[id - 1].subTasks[i].checked) {
+          count++;
+        }
+      }
+    }
+    if (tasks[id - 1] && tasks[id - 1].subTasks) {
+      return Math.floor((count / tasks[id - 1].subTasks.length) * 100);
+    } else {
+      return 0;
+    }
+  };
+
   const handleDropdown = (id) => {
     if (!toggleDropdown.state && toggleDropdown.id === null) {
       setToggleDropdown((prevToggle) => ({ state: !prevToggle.state, id: id }));
@@ -49,10 +99,6 @@ function TaskItem() {
     } else {
       setToggleDropdown((prevToggle) => ({ state: !prevToggle.state, id: id }));
     }
-  };
-
-  const clearAllTasks = () => {
-    setTasks([]);
   };
 
   return (
@@ -72,7 +118,9 @@ function TaskItem() {
             >
               <div>
                 <div className="edit-task" onClick={() => handleDropdown(t.id)}>
-                  <FontAwesomeIcon icon={faEllipsisVertical} />
+                  <button>
+                    <FontAwesomeIcon icon={faEllipsisVertical} />
+                  </button>
                 </div>
                 {t.id === toggleDropdown.id && toggleDropdown.state && (
                   <div className="task-item-buttons">
@@ -94,12 +142,29 @@ function TaskItem() {
                   <h1>{t.title}</h1>
                   {t.dueDate && <p className="due-date">Due: {t.dueDate}</p>}
                   <p>{t.desc}</p>
+                  {t.subTasks && t.subTasks.length > 0 && (
+                    <div className="task-progress">
+                      <div className="task-progress-header">
+                        <h3>Task Progress</h3>
+                        <p>{getTaskPercent(t.id)}%</p>
+                      </div>
+                      <div className="task-progress-bar">
+                        <div
+                          style={{ width: `${getTaskPercent(t.id)}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  )}
                   <div>
                     {t.subTasks &&
-                      t.subTasks.map((st) => (
+                      t.subTasks.map((st, index) => (
                         <div className="subtask-item">
-                          <input type="checkbox"></input>
-                          <div>{st}</div>
+                          <input
+                            onChange={() => handleCheckList(t.id, index)}
+                            type="checkbox"
+                            checked={t.subTasks[index].checked}
+                          />
+                          <div>{st.task}</div>
                         </div>
                       ))}
                   </div>

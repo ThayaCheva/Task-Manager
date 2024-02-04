@@ -36,22 +36,26 @@ function TaskForm(props) {
       },
     ]);
     setFormData({
+      id: "",
       title: "",
       desc: "",
       dueDate: "",
       subTasks: [],
       images: [],
     });
+    console.log(tasks);
   };
+  console.log(tasks);
 
   const addSubTask = (event) => {
     event.preventDefault();
     const currentSubTasks = Array.isArray(formData.subTasks)
-      ? formData.subTasks
+      ? formData.subTasks.map((t) => ({ task: t.task, checked: false }))
       : [];
+    const newSubTask = { task: subTask, checked: false };
     const updatedForm = {
       ...formData,
-      subTasks: [...currentSubTasks, subTask],
+      subTasks: [...currentSubTasks, newSubTask],
     };
     setFormData(updatedForm);
     setSubTask("");
@@ -70,7 +74,7 @@ function TaskForm(props) {
       const mergedSubTasks = Array.from(
         new Set([...currentSubTasks, ...updatedTask[index].subTasks])
       );
-
+      console.log(mergedSubTasks);
       const updatedForm = {
         ...formData,
         subTasks: mergedSubTasks,
@@ -82,11 +86,12 @@ function TaskForm(props) {
       // Update whole task
       updatedTask[index] = {
         ...updatedForm,
-        taskID,
+        id: taskID,
       };
 
       setTasks(updatedTask);
       setFormData({
+        id: "",
         title: "",
         desc: "",
         dueDate: "",
@@ -217,7 +222,7 @@ function TaskForm(props) {
               formData.subTasks.map((st, index) => (
                 <div className="subtask-item" key={index}>
                   <button onClick={() => removeSubTask(index)}>-</button>
-                  <div>{st}</div>
+                  <p>{st.task}</p>
                 </div>
               ))}
 
@@ -225,7 +230,7 @@ function TaskForm(props) {
               tasks[editMode.taskID - 1].subTasks.map((st, index) => (
                 <div className="subtask-item">
                   <button onClick={() => removeSubTask(index)}>-</button>
-                  <div>{st}</div>
+                  <p>{st.task}</p>
                 </div>
               ))}
           </div>

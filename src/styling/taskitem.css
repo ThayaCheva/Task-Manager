@@ -1,6 +1,5 @@
 .tasks-items {
   width: 100%;
-  height: 100vh;
   padding: 1rem;
 }
 .tasks-items .search-bar {
@@ -30,6 +29,7 @@
 .tasks-items .tasks-scroll {
   width: 100%;
   height: 100%;
+  min-height: 50vh;
   overflow: auto;
 }
 .tasks-items .tasks-scroll .tasks-items-container {
@@ -61,24 +61,61 @@
   align-items: flex-start;
   justify-content: flex-start;
   gap: 0.5rem;
-  width: 100%;
+  width: 16vw;
 }
 .tasks-items .tasks-scroll .tasks-items-container .task-item .tasks-item-content h1 {
   font-size: 1.2rem;
 }
 .tasks-items .tasks-scroll .tasks-items-container .task-item .tasks-item-content .due-date {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
+}
+.tasks-items .tasks-scroll .tasks-items-container .task-item .tasks-item-content .task-progress {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.tasks-items .tasks-scroll .tasks-items-container .task-item .tasks-item-content .task-progress .task-progress-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.tasks-items .tasks-scroll .tasks-items-container .task-item .tasks-item-content .task-progress .task-progress-bar {
+  width: 100%;
+  background: var(--grey);
+  height: 10px;
+  border-radius: 50px;
+}
+.tasks-items .tasks-scroll .tasks-items-container .task-item .tasks-item-content .task-progress .task-progress-bar div {
+  height: 100%;
+  background: var(--blue);
+  border-radius: 50px;
+}
+.tasks-items .tasks-scroll .tasks-items-container .task-item .tasks-item-content .subtask-item {
+  display: flex;
+  width: 100%;
+  gap: 1rem;
+}
+.tasks-items .tasks-scroll .tasks-items-container .task-item .tasks-item-content .subtask-item div {
+  color: var(--paragraph);
 }
 .tasks-items .tasks-scroll .tasks-items-container .task-item .edit-task {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  cursor: pointer;
   margin-left: 1rem;
-  width: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.tasks-items .tasks-scroll .tasks-items-container .task-item .edit-task button {
+  cursor: pointer;
+  width: 15px;
+  background: none;
+  border: none;
+}
+.tasks-items .tasks-scroll .tasks-items-container .task-item .edit-task button:hover {
+  transform: none;
 }
 .tasks-items .tasks-scroll .tasks-items-container .task-item .task-item-buttons {
   position: absolute;
@@ -126,9 +163,6 @@
 .sub-task .subtask-item {
   margin-left: 1rem;
   transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
   gap: 1rem;
   margin: 0.5rem 0;
 }
