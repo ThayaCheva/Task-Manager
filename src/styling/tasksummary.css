@@ -9,6 +9,7 @@
 }
 .task-summary .task-summary-container {
   gap: 1rem;
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -17,7 +18,7 @@
 }
 .task-summary .task-summary-container .tasks-list {
   width: 100%;
-  height: 78vh;
+  height: 95vh;
   border: 1px solid var(--grey-1);
   background: var(--light);
   border-radius: 15px;
@@ -33,6 +34,31 @@
 .task-summary .task-summary-container .tasks-list h2 {
   margin-bottom: 1rem;
 }
+.task-summary .task-summary-container .tasks-list .calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.task-summary .task-summary-container .tasks-list .calendar-header .calendar-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.task-summary .task-summary-container .tasks-list .calendar-header .calendar-nav h1 {
+  margin: 0;
+}
+.task-summary .task-summary-container .tasks-list .calendar-header .calendar-nav button {
+  background: var(--blue);
+  border: none;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  color: var(--light);
+  border-radius: 5px;
+}
 .task-summary .task-summary-container .tasks-list .grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -44,13 +70,15 @@
   align-items: flex-end;
   justify-content: flex-start;
   flex-direction: column;
-  height: 6vw;
+  height: 5.5vw;
   padding: 0.5rem;
 }
 .task-summary .task-summary-container .tasks-list .grid .weekdays {
   height: 2.5vw;
   align-items: center;
   justify-content: center;
+  background: var(--grey);
+  font-weight: bold;
 }
 .task-summary .task-summary-container .tasks-list .grid .today {
   background: var(--grey);
@@ -78,12 +106,6 @@
 .task-summary .task-summary-container .tasks-stats {
   display: flex;
   gap: 2rem;
-}
-.task-summary .task-summary-container .tasks-stats .tasks-stats-item {
-  padding: 1rem;
-  background: var(--light);
-  border-radius: 10px;
-  box-shadow: var(--box-shadow);
 }
 .task-summary .task-summary-container .tasks-stats .tasks-stats-item p {
   font-size: 0.9rem;

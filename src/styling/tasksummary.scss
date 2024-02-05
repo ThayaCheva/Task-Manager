@@ -8,6 +8,7 @@
   }
   .task-summary-container {
     gap: 1rem;
+    height: 100%;
     display: flex;
     flex-direction: column;
     h2 {
@@ -15,7 +16,7 @@
     }
     .tasks-list {
       width: 100%;
-      height: 78vh;
+      height: 95vh;
       border: 1px solid var(--grey-1);
       background: var(--light);
       border-radius: 15px;
@@ -30,24 +31,50 @@
       h2 {
         margin-bottom: 1rem;
       }
+      .calendar-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        .calendar-nav {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 1rem;
+          h1 {
+            margin: 0;
+          }
+          button {
+            background: var(--blue);
+            border: none;
+            padding: 0.5rem 1rem;
+            text-align: center;
+            font-weight: bold;
+            cursor: pointer;
+            color: var(--light);
+            border-radius: 5px;
+          }
+        }
+      }
       .grid {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
         width: 100%;
-
         .border {
           border: 1px solid var(--grey-1);
           display: flex;
           align-items: flex-end;
           justify-content: flex-start;
           flex-direction: column;
-          height: 6vw;
+          height: 5.5vw;
           padding: 0.5rem;
         }
         .weekdays {
           height: 2.5vw;
           align-items: center;
           justify-content: center;
+          background: var(--grey);
+          font-weight: bold;
         }
         .today {
           background: var(--grey);
@@ -78,10 +105,6 @@
       display: flex;
       gap: 2rem;
       .tasks-stats-item {
-        padding: 1rem;
-        background: var(--light);
-        border-radius: 10px;
-        box-shadow: var(--box-shadow);
         p {
           font-size: 0.9rem;
         }
