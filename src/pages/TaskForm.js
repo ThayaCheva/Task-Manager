@@ -1,6 +1,7 @@
 import React from "react";
 import "../styling/tasklist.css";
 import { TaskContext } from "../App";
+import { nanoid } from "nanoid";
 
 function TaskForm(props) {
   const { tasks, setTasks, editMode, setEditMode, taskImages } =
@@ -14,9 +15,8 @@ function TaskForm(props) {
     desc: "",
     dueDate: "",
     subTasks: [],
-    images: [],
+    images: null,
   });
-
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -32,7 +32,8 @@ function TaskForm(props) {
       ...tasks,
       {
         ...formData,
-        id: tasks.length + 1,
+        // id: tasks.length + 1,
+        id: nanoid(),
       },
     ]);
     setFormData({
@@ -41,11 +42,9 @@ function TaskForm(props) {
       desc: "",
       dueDate: "",
       subTasks: [],
-      images: [],
+      images: null,
     });
-    console.log(tasks);
   };
-  console.log(tasks);
 
   const addSubTask = (event) => {
     event.preventDefault();
@@ -63,9 +62,11 @@ function TaskForm(props) {
 
   const editTask = (event, taskID) => {
     event.preventDefault();
+    console.log(taskID);
     const index = tasks.findIndex((t) => t.id === taskID);
     if (index !== -1) {
       const updatedTask = [...tasks];
+      console.log(updatedTask[index]);
       // Subtasks
       const currentSubTasks = Array.isArray(formData.subTasks)
         ? formData.subTasks
@@ -74,13 +75,11 @@ function TaskForm(props) {
       const mergedSubTasks = Array.from(
         new Set([...currentSubTasks, ...updatedTask[index].subTasks])
       );
-      console.log(mergedSubTasks);
       const updatedForm = {
         ...formData,
         subTasks: mergedSubTasks,
         images: updatedTask[index].images,
       };
-      console.log(updatedForm);
       setFormData(updatedForm);
 
       // Update whole task
@@ -105,7 +104,7 @@ function TaskForm(props) {
 
   const removeSubTask = (indexToRemove) => {
     if (editMode.state) {
-      const updatedSubTasks = tasks[editMode.taskID - 1].subTasks.filter(
+      const updatedSubTasks = tasks[editMode.taskID].subTasks.filter(
         (_, index) => index !== indexToRemove
       );
       setTasks((prevTasks) =>
@@ -125,14 +124,22 @@ function TaskForm(props) {
 
   React.useEffect(() => {
     if (editMode.state === true) {
-      form.current.elements.title.value = tasks[editMode.taskID - 1].title;
-      form.current.elements.desc.value = tasks[editMode.taskID - 1].desc;
-      form.current.elements.dueDate.value = tasks[editMode.taskID - 1].dueDate;
-      setFormData({
-        title: tasks[editMode.taskID - 1].title,
-        desc: tasks[editMode.taskID - 1].desc,
-        dueDate: tasks[editMode.taskID - 1].dueDate,
-      });
+      const currTask = tasks.filter((t) => t.id === editMode.taskID)[0];
+      console.log(currTask.subTasks);
+      if (currTask) {
+        form.current.elements.title.value = currTask.title;
+        form.current.elements.desc.value = currTask.desc;
+        form.current.elements.dueDate.value = currTask.dueDate;
+        setFormData({
+          title: currTask.title,
+          desc: currTask.desc,
+          dueDate: currTask.dueDate,
+          dueDate: "",
+          subTasks: [],
+          images: [],
+        });
+        console.log(formData);
+      }
     }
   }, [editMode.state, editMode.taskID, tasks]);
 
@@ -227,12 +234,14 @@ function TaskForm(props) {
               ))}
 
             {editMode.state &&
-              tasks[editMode.taskID - 1].subTasks.map((st, index) => (
-                <div className="subtask-item">
-                  <button onClick={() => removeSubTask(index)}>-</button>
-                  <p>{st.task}</p>
-                </div>
-              ))}
+              tasks
+                .filter((t) => t.id === editMode.taskID)[0]
+                .subTasks.map((st, index) => (
+                  <div className="subtask-item">
+                    <button onClick={() => removeSubTask(index)}>-</button>
+                    <p>{st.task}</p>
+                  </div>
+                ))}
           </div>
         </form>
       </div>

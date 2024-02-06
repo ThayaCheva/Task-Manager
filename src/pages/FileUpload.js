@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { TaskContext } from "../App";
 function FileUpload(props) {
-  const [files, setFiles] = React.useState([]);
+  const [image, setImage] = React.useState();
   const { tasks, setTasks, taskImages, setTaskImages } =
     React.useContext(TaskContext);
   const fileInputRef = React.useRef();
@@ -13,30 +13,31 @@ function FileUpload(props) {
   };
 
   React.useEffect(() => {
-    if (!files) {
-      return;
+    const storedImage = localStorage.getItem("uploadedImage");
+    if (storedImage) {
+      setImage(storedImage);
     }
-    let temp = [];
-    for (let i = 0; i < files.length; i++) {
-      temp.push(URL.createObjectURL(files[i]));
-    }
-    const objectURLs = temp;
-    setTaskImages(objectURLs);
+  });
 
-    const updatedTask = tasks.map((task) => {
-      if (task.id === props.taskID) {
-        return { ...task, images: objectURLs };
-      }
-      return task;
-    });
-    setTasks(updatedTask);
-    for (let i = 0; i < objectURLs.length; i++) {
-      return () => {
-        URL.revokeObjectURL(objectURLs[i]);
-      };
-    }
-  }, [files]);
+  const handleimageChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const imageData = event.target.result;
+      setImage(imageData);
+      localStorage.setItem("uploadedImage", imageData);
 
+      const updatedTask = tasks.map((task) => {
+        if (task.id === props.taskID) {
+          return { ...task, images: image };
+        }
+        return task;
+      });
+      setTasks(updatedTask);
+    };
+    reader.readAsDataURL(file);
+  };
+  console.log(tasks);
   return (
     <div>
       <button onClick={handleImageImport}>
@@ -44,14 +45,9 @@ function FileUpload(props) {
       </button>
       <input
         type="file"
-        style={{ display: "none" }}
+        style={{ display: "none", width: "100px" }}
         accept="image/jpg, image/jpeg, image/png"
-        multiple
-        onChange={(e) => {
-          if (e.target.files && e.target.files.length > 0) {
-            setFiles(e.target.files);
-          }
-        }}
+        onChange={handleimageChange}
         ref={fileInputRef}
       />
     </div>

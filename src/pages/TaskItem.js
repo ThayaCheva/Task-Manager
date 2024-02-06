@@ -38,7 +38,7 @@ function TaskItem() {
   }, [selectedTaskRef]);
 
   const handleCheckList = (taskID, subTaskID) => {
-    var currSubTask = tasks[taskID - 1].subTasks[subTaskID];
+    var currSubTask = tasks[taskID].subTasks[subTaskID];
     if (!currSubTask.checked) {
       setTasks((prevTasks) =>
         prevTasks.map((taskItem) =>
@@ -70,15 +70,15 @@ function TaskItem() {
 
   const getTaskPercent = (id) => {
     var count = 0;
-    if (tasks[id - 1] && tasks[id - 1].subTasks) {
-      for (var i = 0; i < tasks[id - 1].subTasks.length; i++) {
-        if (tasks[id - 1].subTasks[i].checked) {
+    if (tasks[id] && tasks[id].subTasks) {
+      for (var i = 0; i < tasks[id].subTasks.length; i++) {
+        if (tasks[id].subTasks[i].checked) {
           count++;
         }
       }
     }
-    if (tasks[id - 1] && tasks[id - 1].subTasks) {
-      return Math.floor((count / tasks[id - 1].subTasks.length) * 100);
+    if (tasks[id] && tasks[id].subTasks) {
+      return Math.floor((count / tasks[id].subTasks.length) * 100);
     } else {
       return 0;
     }
@@ -170,11 +170,7 @@ function TaskItem() {
                   </div>
                 </div>
               </div>
-              {t.images &&
-                t.images.length > 0 &&
-                t.images.map((pic) => {
-                  return <img className="project-img" src={pic} />;
-                })}
+              {t.images && <img className="project-img" src={t.images} />}
             </div>
           ))}
         </div>
