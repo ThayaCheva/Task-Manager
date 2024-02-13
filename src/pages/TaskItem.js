@@ -8,6 +8,7 @@ import {
 import "../styling/taskitem.css";
 import { TaskContext } from "../App";
 import FileUpload from "./FileUpload.js";
+
 function TaskItem() {
   const { tasks, setTasks, editMode, setEditMode, selectedTask } =
     React.useContext(TaskContext);
@@ -17,28 +18,36 @@ function TaskItem() {
     id: null,
   });
 
+  // Remove selected task
   const removeTask = (id) => {
     setEditMode(false);
     const updatedTask = tasks.filter((task) => task.id !== id);
     setTasks(updatedTask);
   };
 
+  // Remove all tasks
   const clearAllTasks = () => {
     setTasks([]);
+    localStorage.clear();
   };
 
+  // Update the state to edit mode
   const editTask = (id) => {
     setEditMode({ ...editMode, state: true, taskID: id });
   };
 
+  // Clicking a task in summary will scroll to the selected task in home
   React.useEffect(() => {
     if (selectedTaskRef && selectedTaskRef.current) {
       selectedTaskRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [selectedTaskRef]);
 
+  // Manage CheckList for subtasks and when clicked update task progress bar
   const handleCheckList = (taskID, subTaskID) => {
-    var currSubTask = tasks[taskID].subTasks[subTaskID];
+    var currSubTask = tasks.filter((t) => t.id === taskID)[0].subTasks[
+      subTaskID
+    ];
     if (!currSubTask.checked) {
       setTasks((prevTasks) =>
         prevTasks.map((taskItem) =>
@@ -68,22 +77,26 @@ function TaskItem() {
     }
   };
 
-  const getTaskPercent = (id) => {
+  // Get the percentage for the amount of subtask completed
+  const getTaskPercent = (taskID) => {
+    const currTask = tasks.filter((t) => t.id === taskID)[0];
+    console.log(currTask);
     var count = 0;
-    if (tasks[id] && tasks[id].subTasks) {
-      for (var i = 0; i < tasks[id].subTasks.length; i++) {
-        if (tasks[id].subTasks[i].checked) {
+    if (currTask && currTask.subTasks) {
+      for (var i = 0; i < currTask.subTasks.length; i++) {
+        if (currTask.subTasks[i].checked) {
           count++;
         }
       }
     }
-    if (tasks[id] && tasks[id].subTasks) {
-      return Math.floor((count / tasks[id].subTasks.length) * 100);
+    if (currTask && currTask.subTasks) {
+      return Math.floor((count / currTask.subTasks.length) * 100);
     } else {
       return 0;
     }
   };
 
+  // Toggle dropdown list (settings menu dropdown)
   const handleDropdown = (id) => {
     if (!toggleDropdown.state && toggleDropdown.id === null) {
       setToggleDropdown((prevToggle) => ({ state: !prevToggle.state, id: id }));

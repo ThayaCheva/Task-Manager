@@ -17,13 +17,19 @@ function FileUpload(props) {
     if (storedImage) {
       setImage(storedImage);
     }
-  });
+  }, []);
 
   const handleimageChange = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
     reader.onload = (event) => {
       const imageData = event.target.result;
+      const maxStorageSize = 5242880
+      const imageDataSize = imageData ? imageData.length : 0;
+      if (imageDataSize > maxStorageSize) {
+        alert("Error: Image exceeded 5MB");
+        return;
+      }
       setImage(imageData);
       localStorage.setItem("uploadedImage", imageData);
 
@@ -37,7 +43,7 @@ function FileUpload(props) {
     };
     reader.readAsDataURL(file);
   };
-  console.log(tasks);
+
   return (
     <div>
       <button onClick={handleImageImport}>

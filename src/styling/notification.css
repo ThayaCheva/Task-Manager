@@ -1,0 +1,82 @@
+.notification {
+  width: 30vw;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  background: var(--light);
+  gap: 2rem;
+  box-shadow: var(--box-shadow);
+  padding: 2rem 0;
+}
+.notification .notification-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+.notification .notification-container h1 {
+  margin-left: 2rem;
+}
+.notification .notification-container .notification-nav {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  border-bottom: 1px solid var(--grey-1);
+  gap: 1rem;
+  padding: 1rem 2rem;
+}
+.notification .notification-container .notification-nav button {
+  background: 0;
+  border: 0;
+  cursor: pointer;
+}
+.notification .notification-container .notification-nav .active {
+  border-bottom: 2px solid var(--blue);
+}
+.notification .notification-container .notification-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid var(--grey-1);
+}
+.notification .notification-container .notification-item h2 {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.9rem;
+}
+.notification .notification-container .notification-item h2 span {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+.notification .notification-container .notification-item h2 span div {
+  transform: translateX(0.4px);
+}
+.notification .notification-container .notification-item h2 .red {
+  border: 2px solid var(--red);
+}
+.notification .notification-container .notification-item h2 .red div {
+  color: var(--red);
+}
+.notification .notification-container .notification-item h2 .yellow {
+  border: 2px solid var(--yellow);
+}
+.notification .notification-container .notification-item h2 .yellow div {
+  color: var(--yellow);
+}
+.notification .notification-container .notification-item h2 .blue {
+  border: 2px solid var(--blue);
+}
+.notification .notification-container .notification-item h2 .blue div {
+  color: var(--blue);
+}
+.notification .notification-container .notification-item p {
+  margin-left: 2rem;
+  font-size: 0.75rem;
+}/*# sourceMappingURL=notification.css.map */

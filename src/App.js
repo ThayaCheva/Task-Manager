@@ -19,6 +19,7 @@ function App() {
   const [editMode, setEditMode] = React.useState({ state: false, taskID: "" });
   const [selectedTask, setSelectedTask] = React.useState("");
   const [taskImages, setTaskImages] = React.useState([]);
+  const [allowNotification, setAllowNotification] = React.useState(false);
 
   React.useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -33,7 +34,11 @@ function App() {
               <FontAwesomeIcon className="icon" icon={faHome} /> Home
             </Link>
             <Link className="nav-item" to="/">
-              <FontAwesomeIcon className="icon" icon={faBell} /> Notification
+              <div
+                onClick={() => setAllowNotification((prevState) => !prevState)}
+              >
+                <FontAwesomeIcon className="icon" icon={faBell} /> Notification
+              </div>
             </Link>
             <Link className="nav-item" to="/summary">
               <FontAwesomeIcon className="icon" icon={faListCheck} /> Summary
@@ -59,6 +64,8 @@ function App() {
             setSelectedTask,
             taskImages,
             setTaskImages,
+            allowNotification,
+            setAllowNotification,
           }}
         >
           <Routes>

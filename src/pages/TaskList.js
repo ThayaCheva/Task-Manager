@@ -2,14 +2,18 @@ import React from "react";
 import "../styling/tasklist.css";
 import TaskItem from "./TaskItem.js";
 import TaskForm from "./TaskForm.js";
+import Notification from "./Notification.js";
 import { TaskContext } from "../App";
 
-function TaskList(props) {
-  const { editMode, setEditMode } = React.useContext(TaskContext);
+function TaskList() {
+  const { editMode, allowNotification } = React.useContext(TaskContext);
+  console.log(allowNotification);
   return (
     <section id="tasklist">
       <TaskItem />
-      {editMode.state ? (
+      {allowNotification ? (
+        <Notification />
+      ) : editMode.state ? (
         <TaskForm formTitle={"Edit Task:"} />
       ) : (
         <TaskForm formTitle={"Add Task:"} />

@@ -4,7 +4,7 @@ import { TaskContext } from "../App";
 import { nanoid } from "nanoid";
 
 function TaskForm(props) {
-  const { tasks, setTasks, editMode, setEditMode, taskImages } =
+  const { tasks, setTasks, editMode, setEditMode } =
     React.useContext(TaskContext);
   const form = React.useRef();
   const [subTask, setSubTask] = React.useState("");
@@ -125,7 +125,6 @@ function TaskForm(props) {
   React.useEffect(() => {
     if (editMode.state === true) {
       const currTask = tasks.filter((t) => t.id === editMode.taskID)[0];
-      console.log(currTask.subTasks);
       if (currTask) {
         form.current.elements.title.value = currTask.title;
         form.current.elements.desc.value = currTask.desc;
