@@ -97,7 +97,7 @@ function TaskSummary() {
           <div className="calendar-header">
             <div className="calendar-nav">
               <button onClick={() => decreaseMonth()}>{`<`}</button>
-              <h1>{format(selectedMonth.selectedMonth, "MMMM yyyy")}</h1>
+              <div>{format(selectedMonth.selectedMonth, "MMMM yyyy")}</div>
               <button onClick={() => increaseMonth()}>{`>`}</button>
             </div>
             <div className="tasks-stats">

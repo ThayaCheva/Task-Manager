@@ -26,18 +26,33 @@ body {
   height: 100%;
 }
 
+body {
+  font-size: 100%;
+}
+
 h1 {
   color: var(--dark);
-  font-size: 20px;
+  font-size: 1.4em;
 }
 
 h2 {
-  font-size: 16px;
+  font-size: 1.2em;
 }
 
 h3 {
-  font-size: 14px;
+  font-size: 1em;
 }
 p {
+  font-size: 0.8em;
   color: var(--paragraph);
+}
+
+button {
+  cursor: pointer;
+}
+.btn {
+  transition: all 0.2s ease;
+  &:hover {
+    transform: translateY(-5px);
+  }
 }

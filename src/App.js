@@ -27,52 +27,68 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <div className="navbar">
-          <div className="navbar-container">
-            <h1>Menu</h1>
-            <Link className="nav-item" to="/">
-              <FontAwesomeIcon className="icon" icon={faHome} /> Home
-            </Link>
-            <Link className="nav-item" to="/">
-              <div
-                onClick={() => setAllowNotification((prevState) => !prevState)}
-              >
-                <FontAwesomeIcon className="icon" icon={faBell} /> Notification
-              </div>
-            </Link>
-            <Link className="nav-item" to="/summary">
-              <FontAwesomeIcon className="icon" icon={faListCheck} /> Summary
-            </Link>
+        <header>
+          <div className="navbar">
+            <div className="navbar-container">
+              <h1>Menu</h1>
+              <Link className="nav-item" to="/">
+                <div>
+                  <FontAwesomeIcon className="icon" icon={faHome} /> Home
+                </div>
+              </Link>
+              <Link className="nav-item" to="/">
+                <div
+                  onClick={() =>
+                    setAllowNotification((prevState) => !prevState)
+                  }
+                >
+                  <FontAwesomeIcon className="icon" icon={faBell} />{" "}
+                  Notification
+                </div>
+              </Link>
+              <Link className="nav-item" to="/summary">
+                <div>
+                  <FontAwesomeIcon className="icon" icon={faListCheck} />{" "}
+                  Summary
+                </div>
+              </Link>
+            </div>
+            <div className="navbar-container">
+              <Link className="nav-item" to="/">
+                <div>
+                  <FontAwesomeIcon className="icon" icon={faSliders} /> Settings
+                </div>
+              </Link>
+              <Link className="nav-item sign-out" to="/">
+                <div>
+                  <FontAwesomeIcon className="icon" icon={faSignOut} /> Sign Out
+                </div>
+              </Link>
+            </div>
           </div>
-          <div className="navbar-container">
-            <Link className="nav-item" to="/">
-              <FontAwesomeIcon className="icon" icon={faSliders} /> Settings
-            </Link>
-            <Link className="nav-item sign-out" to="/">
-              <FontAwesomeIcon className="icon" icon={faSignOut} /> Sign Out
-            </Link>
-          </div>
-        </div>
+        </header>
 
-        <TaskContext.Provider
-          value={{
-            tasks,
-            setTasks,
-            editMode,
-            setEditMode,
-            selectedTask,
-            setSelectedTask,
-            taskImages,
-            setTaskImages,
-            allowNotification,
-            setAllowNotification,
-          }}
-        >
-          <Routes>
-            <Route path="/" element={<TaskList />} />
-            <Route path="/summary" element={<TaskSummary />} />
-          </Routes>
-        </TaskContext.Provider>
+        <main>
+          <TaskContext.Provider
+            value={{
+              tasks,
+              setTasks,
+              editMode,
+              setEditMode,
+              selectedTask,
+              setSelectedTask,
+              taskImages,
+              setTaskImages,
+              allowNotification,
+              setAllowNotification,
+            }}
+          >
+            <Routes>
+              <Route path="/" element={<TaskList />} />
+              <Route path="/summary" element={<TaskSummary />} />
+            </Routes>
+          </TaskContext.Provider>
+        </main>
       </div>
     </Router>
   );

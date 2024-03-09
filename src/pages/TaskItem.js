@@ -152,7 +152,7 @@ function TaskItem() {
                   </div>
                 )}
                 <div className="tasks-item-content">
-                  <h1>{t.title}</h1>
+                  <div className="task-item-title">{t.title}</div>
                   {t.dueDate && <p className="due-date">Due: {t.dueDate}</p>}
                   <p>{t.desc}</p>
                   {t.subTasks && t.subTasks.length > 0 && (

@@ -63,11 +63,8 @@
   gap: 0.5rem;
   width: 16vw;
 }
-.tasks-items .tasks-scroll .tasks-items-container .task-item .tasks-item-content h1 {
-  font-size: 1.2rem;
-}
-.tasks-items .tasks-scroll .tasks-items-container .task-item .tasks-item-content .due-date {
-  font-size: 0.9rem;
+.tasks-items .tasks-scroll .tasks-items-container .task-item .tasks-item-content .task-item-title {
+  font-size: 1em;
 }
 .tasks-items .tasks-scroll .tasks-items-container .task-item .tasks-item-content .task-progress {
   width: 100%;

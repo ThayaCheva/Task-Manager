@@ -96,6 +96,8 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+  block-size: -moz-fit-content;
+  block-size: fit-content;
   border-left: 5px solid var(--blue-dark);
 }
 .task-summary .task-summary-container .summary-task-item h2,

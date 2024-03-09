@@ -1,19 +1,27 @@
 import { React, useState, useContext } from "react";
 import "../styling/notification.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 import { differenceInDays, isToday, format } from "date-fns";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { TaskContext } from "../App.js";
 function Notification() {
-  const { tasks } = useContext(TaskContext);
-  const [notificationType, setNotificationType] = useState("due");
+  const { tasks, setAllowNotification } = useContext(TaskContext);
+  const [notificationType, setNotificationType] = useState("today");
+  const closeNotification = () => {
+    setAllowNotification(false);
+  };
   return (
     <div className="notification">
       <div className="notification-container">
-        <h1>Notification</h1>
+        <div className="notification-header">
+          <h1>Notifications</h1>
+          <button onClick={() => closeNotification()}>
+            <FontAwesomeIcon icon={faXmark} />
+          </button>
+        </div>
         <div className="notification-nav">
-          <div className={notificationType === "due" ? "active" : ""}>
-            <button onClick={() => setNotificationType("due")}>Due</button>
+          <div className={notificationType === "today" ? "active" : ""}>
+            <button onClick={() => setNotificationType("today")}>Today</button>
           </div>
           <div className={notificationType === "upcoming" ? "active" : ""}>
             <button onClick={() => setNotificationType("upcoming")}>
@@ -26,17 +34,15 @@ function Notification() {
             </button>
           </div>
         </div>
-        {notificationType === "due" &&
+        {notificationType === "today" &&
           tasks.map(
             (t) =>
               isToday(t.dueDate) && (
                 <div className="notification-item">
-                  <h2>
-                    <span className="red">
-                      <div>!</div>
-                    </span>
-                    Task '{t.title}' is due TODAY
-                  </h2>
+                  <div className="notification-text">
+                    <div className="dot"></div>
+                    <span>{t.title}</span>&nbsp; is due TODAY
+                  </div>
                   <p>Due: {t.dueDate}</p>
                 </div>
               )
@@ -47,13 +53,11 @@ function Notification() {
               Math.abs(differenceInDays(new Date(), t.dueDate)) > 0 &&
               Math.abs(differenceInDays(new Date(), t.dueDate)) < 7 && (
                 <div key={t.id} className="notification-item">
-                  <h2>
-                    <span className="yellow">
-                      <div>!</div>
-                    </span>
-                    {t.title} is due in{" "}
+                  <div className="notification-text">
+                    <div className="dot"></div>
+                    <span>{t.title}</span>&nbsp;is due in{" "}
                     {Math.abs(differenceInDays(new Date(), t.dueDate))} days
-                  </h2>
+                  </div>
                   <p>Due: {t.dueDate}</p>
                 </div>
               )
@@ -63,13 +67,11 @@ function Notification() {
             (t) =>
               differenceInDays(t.dueDate, new Date()) < 0 && (
                 <div key={t.id} className="notification-item">
-                  <h2>
-                    <span className="blue">
-                      <div>!</div>
-                    </span>
-                    {t.title} is dued{" "}
+                  <div className="notification-text">
+                    <div className="dot"></div>
+                    <span>{t.title}</span>&nbsp;is dued{" "}
                     {Math.abs(differenceInDays(new Date(), t.dueDate))} days
-                  </h2>
+                  </div>
                   <p>Due: {t.dueDate}</p>
                 </div>
               )
