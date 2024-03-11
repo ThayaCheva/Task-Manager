@@ -86,7 +86,7 @@
 }
 .task-summary .task-summary-container .summary-task-item {
   border: 1px solid var(--grey);
-  padding: 0 1rem;
+  padding: 0.25rem 0.5rem;
   border-radius: 5px;
   background: var(--blue);
   width: 100%;
@@ -98,14 +98,10 @@
   justify-content: center;
   block-size: -moz-fit-content;
   block-size: fit-content;
-  border-left: 5px solid var(--blue-dark);
 }
-.task-summary .task-summary-container .summary-task-item h2,
+.task-summary .task-summary-container .summary-task-item .summary-title,
 .task-summary .task-summary-container .summary-task-item p {
   color: var(--light);
-}
-.task-summary .task-summary-container .summary-task-item h2 {
-  margin: 0;
 }
 .task-summary .task-summary-container .tasks-stats {
   display: flex;

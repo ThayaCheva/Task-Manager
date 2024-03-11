@@ -3,13 +3,9 @@ import TaskList from "./pages/TaskList";
 import TaskSummary from "./pages/TaskSummary";
 import "./styling/nav.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHome,
-  faBell,
-  faListCheck,
-  faSliders,
-  faSignOut,
-} from "@fortawesome/free-solid-svg-icons";
+import { faSliders, faSignOut } from "@fortawesome/free-solid-svg-icons";
+import { BiHomeAlt, BiBell, BiListCheck } from "react-icons/bi";
+
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 export const TaskContext = React.createContext();
 function App() {
@@ -30,26 +26,20 @@ function App() {
         <header>
           <div className="navbar">
             <div className="navbar-container">
-              <h1>Menu</h1>
+              <h1>MyTodoList</h1>
               <Link className="nav-item" to="/">
-                <div>
-                  <FontAwesomeIcon className="icon" icon={faHome} /> Home
+                <div onClick={() => setAllowNotification(false)}>
+                  <BiHomeAlt className="icon" /> Home
                 </div>
               </Link>
               <Link className="nav-item" to="/">
-                <div
-                  onClick={() =>
-                    setAllowNotification((prevState) => !prevState)
-                  }
-                >
-                  <FontAwesomeIcon className="icon" icon={faBell} />{" "}
-                  Notification
+                <div onClick={() => setAllowNotification(true)}>
+                  <BiBell className="icon" /> Notification
                 </div>
               </Link>
               <Link className="nav-item" to="/summary">
                 <div>
-                  <FontAwesomeIcon className="icon" icon={faListCheck} />{" "}
-                  Summary
+                  <BiListCheck className="icon" /> Summary
                 </div>
               </Link>
             </div>

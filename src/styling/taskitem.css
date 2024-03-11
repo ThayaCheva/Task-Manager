@@ -7,24 +7,34 @@
   display: grid;
   grid-template-columns: 2fr 1fr;
   height: 40px;
+  grid-gap: 1rem;
 }
 .tasks-items .search-bar button,
 .tasks-items .search-bar input {
-  border-radius: 10px;
+  border-radius: 50px;
 }
 .tasks-items .search-bar input {
   border: 1px solid var(--grey-1);
   background: var(--light);
   padding: 0 1rem;
 }
-.tasks-items .search-bar button {
+.tasks-items .search-bar .btn-container button {
   border: none;
-  background: var(--blue);
+  background: var(--red);
   color: var(--light);
   font-weight: bold;
   width: 50%;
   justify-self: flex-end;
   cursor: pointer;
+}
+.tasks-items .search-bar .btn-container button:first-child {
+  background: none;
+  border: 1px solid var(--dark);
+  color: var(--dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 .tasks-items .tasks-scroll {
   width: 100%;
@@ -65,6 +75,7 @@
 }
 .tasks-items .tasks-scroll .tasks-items-container .task-item .tasks-item-content .task-item-title {
   font-size: 1em;
+  font-weight: bold;
 }
 .tasks-items .tasks-scroll .tasks-items-container .task-item .tasks-item-content .task-progress {
   width: 100%;
@@ -88,13 +99,21 @@
   background: var(--blue);
   border-radius: 50px;
 }
+.tasks-items .tasks-scroll .tasks-items-container .task-item .tasks-item-content .due-date {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tasks-items .tasks-scroll .tasks-items-container .task-item .tasks-item-content .due-date .icon {
+  color: var(--paragraph);
+}
 .tasks-items .tasks-scroll .tasks-items-container .task-item .tasks-item-content .subtask-item {
   display: flex;
   width: 100%;
   gap: 1rem;
 }
-.tasks-items .tasks-scroll .tasks-items-container .task-item .tasks-item-content .subtask-item div {
-  color: var(--paragraph);
+.tasks-items .tasks-scroll .tasks-items-container .task-item .tasks-item-content .subtask-item p {
+  margin: 0.25rem;
 }
 .tasks-items .tasks-scroll .tasks-items-container .task-item .edit-task {
   position: absolute;
@@ -146,6 +165,13 @@
   -o-object-position: center;
      object-position: center;
   border: 1px solid var(--grey-1);
+}
+.tasks-items .tasks-scroll .tasks-items-container .task-item .done-btn {
+  border: none;
+  background: var(--green);
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-weight: bold;
 }
 .tasks-items .header {
   font-size: 1.5rem;

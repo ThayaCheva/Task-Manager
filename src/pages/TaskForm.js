@@ -2,6 +2,7 @@ import React from "react";
 import "../styling/tasklist.css";
 import { TaskContext } from "../App";
 import { nanoid } from "nanoid";
+import { format } from "date-fns";
 
 function TaskForm(props) {
   const { tasks, setTasks, editMode, setEditMode } =
@@ -169,13 +170,14 @@ function TaskForm(props) {
           onChange={handleInputChange}
         />
         <div className="due-date">
-          <label>Due Date:</label>
+          <p>Due Date:</p>
           <input
             type="date"
             id="dueDate"
             name="dueDate"
             value={formData.dueDate}
             onChange={handleInputChange}
+            min={format(new Date(), "yyyy-MM-dd")}
           />
         </div>
         <div className="btn-container">

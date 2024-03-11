@@ -5,7 +5,9 @@ import {
   faPenToSquare,
   faEllipsisVertical,
 } from "@fortawesome/free-solid-svg-icons";
+import { BiAlarm, BiFilter } from "react-icons/bi";
 import "../styling/taskitem.css";
+import { format } from "date-fns";
 import { TaskContext } from "../App";
 import FileUpload from "./FileUpload.js";
 
@@ -119,7 +121,15 @@ function TaskItem() {
       <h1 className="header">My Tasks</h1>
       <div className="search-bar">
         <input type="text" placeholder="Search..."></input>
-        <button onClick={() => clearAllTasks()}>Clear All Tasks</button>
+        <div className="btn-container">
+          <button className="btn">
+            <BiFilter size={20} />
+            Sort By
+          </button>
+          <button className="btn" onClick={() => clearAllTasks()}>
+            Clear All Tasks
+          </button>
+        </div>
       </div>
 
       <div className="tasks-scroll">
@@ -153,12 +163,17 @@ function TaskItem() {
                 )}
                 <div className="tasks-item-content">
                   <div className="task-item-title">{t.title}</div>
-                  {t.dueDate && <p className="due-date">Due: {t.dueDate}</p>}
+                  {t.dueDate && (
+                    <p className="due-date">
+                      <BiAlarm className="icon" />
+                      Due {format(t.dueDate, "dd MMMM yyyy ")}
+                    </p>
+                  )}
                   <p>{t.desc}</p>
                   {t.subTasks && t.subTasks.length > 0 && (
                     <div className="task-progress">
                       <div className="task-progress-header">
-                        <h3>Task Progress</h3>
+                        <h5>Task Progress</h5>
                         <p>{getTaskPercent(t.id)}%</p>
                       </div>
                       <div className="task-progress-bar">
@@ -177,13 +192,16 @@ function TaskItem() {
                             type="checkbox"
                             checked={t.subTasks[index].checked}
                           />
-                          <div>{st.task}</div>
+                          <p>{st.task}</p>
                         </div>
                       ))}
                   </div>
                 </div>
               </div>
               {t.images && <img className="project-img" src={t.images} />}
+              <button className="done-btn btn" onClick={() => removeTask(t.id)}>
+                Mark as done
+              </button>
             </div>
           ))}
         </div>

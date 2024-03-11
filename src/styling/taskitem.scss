@@ -6,23 +6,35 @@
     display: grid;
     grid-template-columns: 2fr 1fr;
     height: 40px;
+    grid-gap: 1rem;
     button,
     input {
-      border-radius: 10px;
+      border-radius: 50px;
     }
     input {
       border: 1px solid var(--grey-1);
       background: var(--light);
       padding: 0 1rem;
     }
-    button {
-      border: none;
-      background: var(--blue);
-      color: var(--light);
-      font-weight: bold;
-      width: 50%;
-      justify-self: flex-end;
-      cursor: pointer;
+    .btn-container {
+      button {
+        border: none;
+        background: var(--red);
+        color: var(--light);
+        font-weight: bold;
+        width: 50%;
+        justify-self: flex-end;
+        cursor: pointer;
+        &:first-child {
+          background: none;
+          border: 1px solid var(--dark);
+          color: var(--dark);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+        }
+      }
     }
   }
   .tasks-scroll {
@@ -59,6 +71,7 @@
           width: 16vw;
           .task-item-title {
             font-size: 1em;
+            font-weight: bold;
           }
           .task-progress {
             width: 100%;
@@ -82,12 +95,20 @@
               }
             }
           }
+          .due-date {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            .icon {
+              color: var(--paragraph);
+            }
+          }
           .subtask-item {
             display: flex;
             width: 100%;
             gap: 1rem;
-            div {
-              color: var(--paragraph);
+            p {
+              margin: 0.25rem;
             }
           }
         }
@@ -139,6 +160,13 @@
           object-fit: fill;
           object-position: center;
           border: 1px solid var(--grey-1);
+        }
+        .done-btn {
+          border: none;
+          background: var(--green);
+          padding: 0.5rem 1rem;
+          border-radius: 5px;
+          font-weight: bold;
         }
       }
     }

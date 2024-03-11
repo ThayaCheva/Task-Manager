@@ -10,6 +10,11 @@ function Notification() {
   const closeNotification = () => {
     setAllowNotification(false);
   };
+
+  const limitWords = (text) => {
+    const newtext = text.length > 15 ? text.substring(0, 15) + "..." : text;
+    return newtext;
+  };
   return (
     <div className="notification">
       <div className="notification-container">
@@ -41,9 +46,9 @@ function Notification() {
                 <div className="notification-item">
                   <div className="notification-text">
                     <div className="dot"></div>
-                    <span>{t.title}</span>&nbsp; is due TODAY
+                    <span>{limitWords(t.title)}</span>&nbsp; is due TODAY
                   </div>
-                  <p>Due: {t.dueDate}</p>
+                  <p>{format(t.dueDate, "dd MMMM yyyy")}</p>
                 </div>
               )
           )}
@@ -55,10 +60,10 @@ function Notification() {
                 <div key={t.id} className="notification-item">
                   <div className="notification-text">
                     <div className="dot"></div>
-                    <span>{t.title}</span>&nbsp;is due in{" "}
+                    <span>{limitWords(t.title)}</span>&nbsp;is due in{" "}
                     {Math.abs(differenceInDays(new Date(), t.dueDate))} days
                   </div>
-                  <p>Due: {t.dueDate}</p>
+                  <p>{format(t.dueDate, "dd MMMM yyyy")}</p>
                 </div>
               )
           )}
@@ -69,10 +74,10 @@ function Notification() {
                 <div key={t.id} className="notification-item">
                   <div className="notification-text">
                     <div className="dot"></div>
-                    <span>{t.title}</span>&nbsp;is dued{" "}
+                    <span>{limitWords(t.title)}</span>&nbsp;was dued{" "}
                     {Math.abs(differenceInDays(new Date(), t.dueDate))} days
                   </div>
-                  <p>Due: {t.dueDate}</p>
+                  <p>{format(t.dueDate, "dd MMMM yyyy")}</p>
                 </div>
               )
           )}

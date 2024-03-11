@@ -7,16 +7,15 @@ import { TaskContext } from "../App";
 
 function TaskList() {
   const { editMode, allowNotification } = React.useContext(TaskContext);
-  console.log(allowNotification);
   return (
     <section id="tasklist">
       <TaskItem />
       {allowNotification ? (
         <Notification />
       ) : editMode.state ? (
-        <TaskForm formTitle={"Edit Task:"} />
+        <TaskForm formTitle={"Edit Task"} />
       ) : (
-        <TaskForm formTitle={"Add Task:"} />
+        <TaskForm formTitle={"Add Task"} />
       )}
     </section>
   );

@@ -1,24 +1,21 @@
-import React from "react";
+import { React, useState, useContext } from "react";
 import "../styling/tasksummary.css";
 import { useNavigate } from "react-router-dom";
 import {
   eachDayOfInterval,
   endOfMonth,
   format,
-  getDate,
   getDay,
-  getMonth,
   isSameDay,
   isToday,
   startOfMonth,
   addMonths,
-  setDay,
   subMonths,
 } from "date-fns";
 import { TaskContext } from "../App";
 
 function TaskSummary() {
-  const { tasks, setSelectedTask } = React.useContext(TaskContext);
+  const { tasks, setSelectedTask } = useContext(TaskContext);
   const navigate = useNavigate();
   const newTasks = [...tasks];
   const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -38,13 +35,18 @@ function TaskSummary() {
     return count;
   };
 
+  const limitWords = (text) => {
+    const newtext = text.length > 15 ? text.substring(0, 15) + "..." : text;
+    return newtext;
+  };
+
   const handleTaskClick = (id) => {
     setSelectedTask(id);
     navigate("/");
   };
 
   const currDate = new Date();
-  const [selectedMonth, setSelectedMonth] = React.useState({
+  const [selectedMonth, setSelectedMonth] = useState({
     selectedMonth: currDate,
     firstDayOfMonth: startOfMonth(currDate),
     lastDayOfMonth: endOfMonth(currDate),
@@ -141,8 +143,7 @@ function TaskSummary() {
                       className="summary-task-item"
                       key={taskIndex}
                     >
-                      <h2>{task.title}</h2>
-                      <p>{task.dueDate}</p>
+                      <p>{limitWords(task.title)}</p>
                     </div>
                   ))}
               </div>

@@ -45,9 +45,6 @@
 .notification .notification-container .notification-nav .active {
   border-bottom: 2px solid var(--blue);
 }
-.notification .notification-container .notification-nav .active button {
-  font-weight: bold;
-}
 .notification .notification-container .notification-item {
   display: flex;
   flex-direction: column;

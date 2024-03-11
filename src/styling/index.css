@@ -2,13 +2,17 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: sans-serif;
-  color: #403c44;
+  font-family: "Nunito", sans-serif;
 }
 
+@font-face {
+  font-family: Nunito;
+  src: url("../fonts/Nunito-VariableFont_wght.ttf");
+}
 :root {
   --light: #fff;
-  --dark: #2a3a3c;
+  --dark: #383c44;
+  --dark-hover: #494d55;
   --paragraph: #999999;
   --grey: #f2f3f4;
   --grey-1: #dfe0e1;
@@ -16,7 +20,7 @@
   --blue-dark: #5ba9bd;
   --red: #f1a1a1;
   --green: #a1eebd;
-  --yellow: #d8ac4c;
+  --yellow: #f9cf73;
   --box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
