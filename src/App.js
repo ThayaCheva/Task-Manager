@@ -1,23 +1,29 @@
-import React from "react";
+import { React, useState, useEffect, createContext } from "react";
 import TaskList from "./pages/TaskList";
 import TaskSummary from "./pages/TaskSummary";
 import "./styling/nav.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSliders, faSignOut } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSliders,
+  faSignOut,
+  faHome,
+  faBell,
+  faListCheck,
+} from "@fortawesome/free-solid-svg-icons";
 import { BiHomeAlt, BiBell, BiListCheck } from "react-icons/bi";
 
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-export const TaskContext = React.createContext();
+export const TaskContext = createContext();
 function App() {
-  const [tasks, setTasks] = React.useState(
+  const [tasks, setTasks] = useState(
     JSON.parse(localStorage.getItem("tasks")) || []
   );
-  const [editMode, setEditMode] = React.useState({ state: false, taskID: "" });
-  const [selectedTask, setSelectedTask] = React.useState("");
-  const [taskImages, setTaskImages] = React.useState([]);
-  const [allowNotification, setAllowNotification] = React.useState(false);
-
-  React.useEffect(() => {
+  const [editMode, setEditMode] = useState({ state: false, taskID: "" });
+  const [selectedTask, setSelectedTask] = useState("");
+  const [taskImages, setTaskImages] = useState([]);
+  const [allowNotification, setAllowNotification] = useState(false);
+  const [tagsList, setTagsList] = useState(false);
+  useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
   return (
@@ -29,17 +35,19 @@ function App() {
               <h1>MyTodoList</h1>
               <Link className="nav-item" to="/">
                 <div onClick={() => setAllowNotification(false)}>
-                  <BiHomeAlt className="icon" /> Home
+                  <FontAwesomeIcon className="icon" icon={faHome} /> Home
                 </div>
               </Link>
               <Link className="nav-item" to="/">
                 <div onClick={() => setAllowNotification(true)}>
-                  <BiBell className="icon" /> Notification
+                  <FontAwesomeIcon className="icon" icon={faBell} />
+                  Notification
                 </div>
               </Link>
               <Link className="nav-item" to="/summary">
                 <div>
-                  <BiListCheck className="icon" /> Summary
+                  <FontAwesomeIcon className="icon" icon={faListCheck} />{" "}
+                  Summary
                 </div>
               </Link>
             </div>

@@ -4,8 +4,7 @@ import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { TaskContext } from "../App";
 function FileUpload(props) {
   const [image, setImage] = React.useState();
-  const { tasks, setTasks, taskImages, setTaskImages } =
-    React.useContext(TaskContext);
+  const { tasks, setTasks } = React.useContext(TaskContext);
   const fileInputRef = React.useRef();
 
   const handleImageImport = () => {
@@ -24,7 +23,7 @@ function FileUpload(props) {
     const reader = new FileReader();
     reader.onload = (event) => {
       const imageData = event.target.result;
-      const maxStorageSize = 5242880
+      const maxStorageSize = 5242880;
       const imageDataSize = imageData ? imageData.length : 0;
       if (imageDataSize > maxStorageSize) {
         alert("Error: Image exceeded 5MB");

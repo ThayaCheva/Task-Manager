@@ -10,15 +10,24 @@ import "../styling/taskitem.css";
 import { format } from "date-fns";
 import { TaskContext } from "../App";
 import FileUpload from "./FileUpload.js";
-
+import TagDropDown from "./TagDropDown.js";
 function TaskItem() {
   const { tasks, setTasks, editMode, setEditMode, selectedTask } =
     React.useContext(TaskContext);
   const selectedTaskRef = React.useRef(null);
-  const [toggleDropdown, setToggleDropdown] = React.useState({
+  const [menuDropdown, setMenuDropdown] = React.useState({
     state: false,
     id: null,
   });
+  const [tagDropdown, setTagDropdown] = React.useState(false);
+
+  const handleMenuDropdownn = () => {
+    setTagDropdown(false);
+  };
+
+  const handleTagDropdown = () => {
+    setTagDropdown(true);
+  };
 
   // Remove selected task
   const removeTask = (id) => {
@@ -100,19 +109,19 @@ function TaskItem() {
 
   // Toggle dropdown list (settings menu dropdown)
   const handleDropdown = (id) => {
-    if (!toggleDropdown.state && toggleDropdown.id === null) {
-      setToggleDropdown((prevToggle) => ({ state: !prevToggle.state, id: id }));
-    } else if (toggleDropdown.state && toggleDropdown.id !== null) {
-      if (toggleDropdown.id === id) {
-        setToggleDropdown((prevToggle) => ({
+    if (!menuDropdown.state && menuDropdown.id === null) {
+      setMenuDropdown((prevToggle) => ({ state: !prevToggle.state, id: id }));
+    } else if (menuDropdown.state && menuDropdown.id !== null) {
+      if (menuDropdown.id === id) {
+        setMenuDropdown((prevToggle) => ({
           state: !prevToggle.state,
           id: id,
         }));
       } else {
-        setToggleDropdown({ state: true, id: id });
+        setMenuDropdown({ state: true, id: id });
       }
     } else {
-      setToggleDropdown((prevToggle) => ({ state: !prevToggle.state, id: id }));
+      setMenuDropdown((prevToggle) => ({ state: !prevToggle.state, id: id }));
     }
   };
 
@@ -145,7 +154,7 @@ function TaskItem() {
                     <FontAwesomeIcon icon={faEllipsisVertical} />
                   </button>
                 </div>
-                {t.id === toggleDropdown.id && toggleDropdown.state && (
+                {t.id === menuDropdown.id && menuDropdown.state && (
                   <div className="task-item-buttons">
                     <button onClick={() => editTask(t.id)}>
                       <FontAwesomeIcon title="Edit Task" icon={faPenToSquare} />
@@ -169,6 +178,15 @@ function TaskItem() {
                       Due {format(t.dueDate, "dd MMMM yyyy ")}
                     </p>
                   )}
+                  <div className="task-item-tags">
+                    <p>Tags: </p>
+                    <button
+                      onClick={() => setTagDropdown((prevState) => !prevState)}
+                    >
+                      +
+                    </button>
+                    {tagDropdown && <TagDropDown></TagDropDown>}
+                  </div>
                   <p>{t.desc}</p>
                   {t.subTasks && t.subTasks.length > 0 && (
                     <div className="task-progress">
@@ -198,7 +216,10 @@ function TaskItem() {
                   </div>
                 </div>
               </div>
-              {t.images && <img className="project-img" src={t.images} />}
+              <div className="project-image-container">
+                <div className="project-image-overlay"></div>
+                {t.images && <img src={t.images} />}
+              </div>
               <button className="done-btn btn" onClick={() => removeTask(t.id)}>
                 Mark as done
               </button>

@@ -73,6 +73,23 @@
             font-size: 1em;
             font-weight: bold;
           }
+          .task-item-tags {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            button {
+              width: 1rem;
+              height: 1rem;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background: none;
+              border: 1px solid var(--paragraph);
+              color: var(--paragraph);
+              border-radius: 5px;
+              margin-left: 0.5rem;
+            }
+          }
           .task-progress {
             width: 100%;
             display: flex;
@@ -153,13 +170,26 @@
             font-size: 1rem;
           }
         }
-        .project-img {
-          max-width: 100%;
-          height: auto;
-          border-radius: 15px;
-          object-fit: fill;
-          object-position: center;
-          border: 1px solid var(--grey-1);
+        .project-image-container {
+          // position: relative;
+          width: 100%;
+          .project-image-overlay {
+            position: absolute;
+            width: 100%;
+            max-width: 100%;
+            background: black;
+            z-index: 100;
+          }
+          img {
+            position: relative;
+            max-width: 100%;
+            block-size: fit-content;
+            height: auto;
+            border-radius: 15px;
+            object-fit: fill;
+            object-position: center;
+            border: 1px solid var(--grey-1);
+          }
         }
         .done-btn {
           border: none;
