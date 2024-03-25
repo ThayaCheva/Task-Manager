@@ -19,15 +19,10 @@ function TaskItem() {
     state: false,
     id: null,
   });
-  const [tagDropdown, setTagDropdown] = React.useState(false);
-
-  const handleMenuDropdownn = () => {
-    setTagDropdown(false);
-  };
-
-  const handleTagDropdown = () => {
-    setTagDropdown(true);
-  };
+  const [tagDropdown, setTagDropdown] = React.useState({
+    state: false,
+    id: null,
+  });
 
   // Remove selected task
   const removeTask = (id) => {
@@ -91,7 +86,6 @@ function TaskItem() {
   // Get the percentage for the amount of subtask completed
   const getTaskPercent = (taskID) => {
     const currTask = tasks.filter((t) => t.id === taskID)[0];
-    console.log(currTask);
     var count = 0;
     if (currTask && currTask.subTasks) {
       for (var i = 0; i < currTask.subTasks.length; i++) {
@@ -170,6 +164,7 @@ function TaskItem() {
                     </button>
                   </div>
                 )}
+
                 <div className="tasks-item-content">
                   <div className="task-item-title">{t.title}</div>
                   {t.dueDate && (
@@ -178,16 +173,23 @@ function TaskItem() {
                       Due {format(t.dueDate, "dd MMMM yyyy ")}
                     </p>
                   )}
+
                   <div className="task-item-tags">
                     <p>Tags: </p>
                     <button
-                      onClick={() => setTagDropdown((prevState) => !prevState)}
+                      onClick={() => setTagDropdown({ state: true, id: t.id })}
                     >
                       +
                     </button>
-                    {tagDropdown && <TagDropDown></TagDropDown>}
+                    {tagDropdown && tagDropdown.id == t.id && (
+                      <TagDropDown
+                        setTagDropdown={setTagDropdown}
+                      ></TagDropDown>
+                    )}
                   </div>
+
                   <p>{t.desc}</p>
+
                   {t.subTasks && t.subTasks.length > 0 && (
                     <div className="task-progress">
                       <div className="task-progress-header">
@@ -201,11 +203,13 @@ function TaskItem() {
                       </div>
                     </div>
                   )}
+
                   <div>
                     {t.subTasks &&
                       t.subTasks.map((st, index) => (
                         <div className="subtask-item">
                           <input
+                            key={index}
                             onChange={() => handleCheckList(t.id, index)}
                             type="checkbox"
                             checked={t.subTasks[index].checked}

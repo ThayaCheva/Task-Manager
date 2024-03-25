@@ -15,6 +15,15 @@ function Notification() {
     const newtext = text.length > 15 ? text.substring(0, 15) + "..." : text;
     return newtext;
   };
+  const todayTasks = tasks.filter((t) => isToday(t.dueDate));
+  const upcomingTasks = tasks.filter(
+    (t) =>
+      Math.abs(differenceInDays(new Date(), t.dueDate)) > 0 &&
+      Math.abs(differenceInDays(new Date(), t.dueDate)) < 7
+  );
+  const overDuedTasks = tasks.filter(
+    (t) => differenceInDays(t.dueDate, new Date()) < 0
+  );
   return (
     <div className="notification">
       <div className="notification-container">
@@ -39,48 +48,70 @@ function Notification() {
             </button>
           </div>
         </div>
-        {notificationType === "today" &&
-          tasks.map(
-            (t) =>
-              isToday(t.dueDate) && (
-                <div className="notification-item">
-                  <div className="notification-text">
-                    <div className="dot"></div>
-                    <span>{limitWords(t.title)}</span>&nbsp; is due TODAY
-                  </div>
-                  <p>{format(t.dueDate, "dd MMMM yyyy")}</p>
-                </div>
+        {notificationType === "today" && (
+          <div>
+            {todayTasks.length > 0 ? (
+              tasks.map(
+                (t) =>
+                  isToday(t.dueDate) && (
+                    <div className="notification-item">
+                      <div className="notification-text">
+                        <div className="dot"></div>
+                        <span>{limitWords(t.title)}</span>&nbsp; is due TODAY
+                      </div>
+                      <p>Due {format(t.dueDate, "dd MMMM yyyy")}</p>
+                    </div>
+                  )
               )
-          )}
-        {notificationType === "upcoming" &&
-          tasks.map(
-            (t) =>
-              Math.abs(differenceInDays(new Date(), t.dueDate)) > 0 &&
-              Math.abs(differenceInDays(new Date(), t.dueDate)) < 7 && (
-                <div key={t.id} className="notification-item">
-                  <div className="notification-text">
-                    <div className="dot"></div>
-                    <span>{limitWords(t.title)}</span>&nbsp;is due in{" "}
-                    {Math.abs(differenceInDays(new Date(), t.dueDate))} days
-                  </div>
-                  <p>{format(t.dueDate, "dd MMMM yyyy")}</p>
-                </div>
+            ) : (
+              <div className="notification-item">Nothing due today</div>
+            )}
+          </div>
+        )}
+        {notificationType === "upcoming" && (
+          <div>
+            {upcomingTasks.length > 0 ? (
+              tasks.map(
+                (t) =>
+                  Math.abs(differenceInDays(new Date(), t.dueDate)) > 0 &&
+                  Math.abs(differenceInDays(new Date(), t.dueDate)) < 7 && (
+                    <div key={t.id} className="notification-item">
+                      <div className="notification-text">
+                        <div className="dot"></div>
+                        <span>{limitWords(t.title)}</span>&nbsp;is due in{" "}
+                        {Math.abs(differenceInDays(new Date(), t.dueDate))} days
+                      </div>
+                      <p>Due {format(t.dueDate, "dd MMMM yyyy")}</p>
+                    </div>
+                  )
               )
-          )}
-        {notificationType === "overdue" &&
-          tasks.map(
-            (t) =>
-              differenceInDays(t.dueDate, new Date()) < 0 && (
-                <div key={t.id} className="notification-item">
-                  <div className="notification-text">
-                    <div className="dot"></div>
-                    <span>{limitWords(t.title)}</span>&nbsp;was dued{" "}
-                    {Math.abs(differenceInDays(new Date(), t.dueDate))} days
-                  </div>
-                  <p>{format(t.dueDate, "dd MMMM yyyy")}</p>
-                </div>
+            ) : (
+              <div className="notification-item">Nothing upcoming</div>
+            )}
+          </div>
+        )}
+        {notificationType === "overdue" && (
+          <div>
+            {overDuedTasks.length > 0 ? (
+              tasks.map(
+                (t) =>
+                  differenceInDays(t.dueDate, new Date()) < 0 && (
+                    <div key={t.id} className="notification-item">
+                      <div className="notification-text">
+                        <div className="dot"></div>
+                        <span>{limitWords(t.title)}</span>&nbsp;was due{" "}
+                        {Math.abs(differenceInDays(new Date(), t.dueDate))} days
+                        ago
+                      </div>
+                      <p>Dued {format(t.dueDate, "dd MMMM yyyy")}</p>
+                    </div>
+                  )
               )
-          )}
+            ) : (
+              <div className="notification-item">Nothing overdued</div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

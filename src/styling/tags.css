@@ -1,10 +1,13 @@
 .tags-menu {
   position: absolute;
+  top: 12.5%;
+  left: 12.5%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  gap: 1rem;
+  width: 15vw;
   margin-left: 1rem;
   background: var(--light);
   border: 1px solid var(--grey);
@@ -13,14 +16,33 @@
   padding: 1rem;
   z-index: 999;
 }
-.tags-menu .close-btn {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
+.tags-menu .tags-menu-header {
+  position: relative;
+  width: 100%;
+  text-align: center;
+  padding-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.tags-menu .tags-menu-header .tags-menu-header-text {
+  text-align: right;
+  color: var(--paragraph);
+}
+.tags-menu .tags-menu-header .close-btn {
   background: 0;
   border: none !important;
 }
-.tags-menu .tags-template {
+.tags-menu .tags-menu-header::before {
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: var(--grey-1);
+  bottom: 0;
+  left: 0;
+  content: "";
+}
+.tags-menu .tags-menu-template {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,25 +50,50 @@
   gap: 0.25rem;
   width: 100%;
 }
-.tags-menu .tags-template .tags-template-item {
+.tags-menu .tags-menu-template .tags-menu-item {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
 }
-.tags-menu .tags-template .tags-template-item .tags-template-name {
+.tags-menu .tags-menu-template .tags-menu-item .tags-menu-checkbox {
+  cursor: pointer;
+}
+.tags-menu .tags-menu-template .tags-menu-item .tags-menu-name {
   border-radius: 5px;
-  padding: 0.5rem;
+  padding: 0.25rem 0.5rem;
   width: 100%;
 }
-.tags-menu .tags-template .tags-template-item button {
+.tags-menu .tags-menu-template .tags-menu-item button {
   border: 0 !important;
 }
-.tags-menu .tags-input-container {
+.tags-menu .tags-menu-create {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
   width: 100%;
+}
+.tags-menu .tags-menu-create input,
+.tags-menu .tags-menu-create button {
+  width: 100% !important;
+  margin: 0 !important;
+}
+.tags-menu .tags-menu-create input {
+  padding: 0.5rem;
+  border: 1px solid var(--grey-1);
+}
+.tags-menu .tags-menu-create input:focus {
+  outline: none;
+}
+.tags-menu .tags-menu-create button {
   padding: 1rem;
+  border: none !important;
+  background: var(--grey) !important;
+  color: var(--dark) !important;
+}
+.tags-menu .tags-menu-create button:hover {
+  background: #e5e5e5 !important;
 }/*# sourceMappingURL=tags.css.map */

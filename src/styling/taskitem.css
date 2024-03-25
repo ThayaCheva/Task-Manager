@@ -81,6 +81,9 @@
   display: flex;
   align-items: center;
   width: 100%;
+  height: 0;
+  position: relative;
+  margin: 0.5rem 0;
 }
 .tasks-items .tasks-scroll .tasks-items-container .task-item .tasks-item-content .task-item-tags button {
   width: 1rem;

@@ -31,6 +31,9 @@
 .App .navbar .nav-item {
   text-decoration: none;
 }
+.App .navbar .nav-item .nav-item-active {
+  border-left: 5px solid var(--light);
+}
 .App .navbar .nav-item div {
   display: flex;
   align-items: center;

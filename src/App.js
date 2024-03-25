@@ -10,8 +10,6 @@ import {
   faBell,
   faListCheck,
 } from "@fortawesome/free-solid-svg-icons";
-import { BiHomeAlt, BiBell, BiListCheck } from "react-icons/bi";
-
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 export const TaskContext = createContext();
 function App() {
@@ -22,30 +20,49 @@ function App() {
   const [selectedTask, setSelectedTask] = useState("");
   const [taskImages, setTaskImages] = useState([]);
   const [allowNotification, setAllowNotification] = useState(false);
-  const [tagsList, setTagsList] = useState(false);
+  const [currentPage, setCurrentPage] = useState("Home");
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
+  const handleNavClick = (page, isNotification) => {
+    setCurrentPage(page);
+    if (isNotification) {
+      setAllowNotification(true);
+    } else {
+      setAllowNotification(false);
+    }
+  };
   return (
     <Router>
       <div className="App">
         <header>
           <div className="navbar">
             <div className="navbar-container">
-              <h1>MyTodoList</h1>
+              <h1>TaskUp</h1>
               <Link className="nav-item" to="/">
-                <div onClick={() => setAllowNotification(false)}>
+                <div
+                  onClick={() => handleNavClick("Home", false)}
+                  className={currentPage == "Home" ? "nav-item-active" : ""}
+                >
                   <FontAwesomeIcon className="icon" icon={faHome} /> Home
                 </div>
               </Link>
               <Link className="nav-item" to="/">
-                <div onClick={() => setAllowNotification(true)}>
+                <div
+                  onClick={() => handleNavClick("Notification", true)}
+                  className={
+                    currentPage == "Notification" ? "nav-item-active" : ""
+                  }
+                >
                   <FontAwesomeIcon className="icon" icon={faBell} />
                   Notification
                 </div>
               </Link>
               <Link className="nav-item" to="/summary">
-                <div>
+                <div
+                  onClick={() => handleNavClick("Summary", false)}
+                  className={currentPage == "Summary" ? "nav-item-active" : ""}
+                >
                   <FontAwesomeIcon className="icon" icon={faListCheck} />{" "}
                   Summary
                 </div>
@@ -62,6 +79,7 @@ function App() {
                   <FontAwesomeIcon className="icon" icon={faSignOut} /> Sign Out
                 </div>
               </Link>
+              <p>© Thaya Chevaphatrakul</p>
             </div>
           </div>
         </header>
