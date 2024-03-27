@@ -21,6 +21,10 @@
   gap: 1rem;
   width: 100%;
 }
+.App .navbar .navbar-container .copyright {
+  text-align: center;
+  color: var(--light);
+}
 .App .navbar h1 {
   font-size: 1.5rem;
   display: flex;
@@ -32,7 +36,7 @@
   text-decoration: none;
 }
 .App .navbar .nav-item .nav-item-active {
-  border-left: 5px solid var(--light);
+  background: var(--dark-hover);
 }
 .App .navbar .nav-item div {
   display: flex;

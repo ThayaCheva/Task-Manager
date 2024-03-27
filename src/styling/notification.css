@@ -29,8 +29,6 @@
 }
 .notification .notification-container .notification-nav {
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
   border-bottom: 1px solid var(--grey-1);
   gap: 2rem;
   padding: 0 2rem;
@@ -41,9 +39,34 @@
   border: 0;
   cursor: pointer;
   margin: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 1em;
+}
+.notification .notification-container .notification-nav button .notification-count {
+  background: var(--paragraph);
+  padding: 0 0.5rem;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.75rem;
+  color: var(--light);
 }
 .notification .notification-container .notification-nav .active {
   border-bottom: 2px solid var(--blue);
+}
+.notification .notification-container .today-tasks .dot {
+  background: var(--green);
+}
+.notification .notification-container .upcoming-tasks .dot {
+  background: var(--blue);
+}
+.notification .notification-container .overdue-tasks .dot {
+  background: var(--red);
 }
 .notification .notification-container .notification-item {
   display: flex;
@@ -56,12 +79,10 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  font-size: 0.9rem;
 }
 .notification .notification-container .notification-item .notification-text .dot {
   width: 0.5em;
   height: 0.5em;
-  background: var(--green);
   border-radius: 50px;
   margin-right: 1rem;
 }
@@ -71,5 +92,4 @@
 }
 .notification .notification-container .notification-item p {
   margin-left: 1.5rem;
-  font-size: 0.75rem;
 }/*# sourceMappingURL=notification.css.map */

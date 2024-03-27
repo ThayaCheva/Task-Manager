@@ -1,17 +1,18 @@
-import React from "react";
+import { React, useContext } from "react";
 import "../styling/tasklist.css";
 import TaskItem from "./TaskItem.js";
 import TaskForm from "./TaskForm.js";
 import Notification from "./Notification.js";
-import { TaskContext } from "../App";
+import { TaskContext, NavContext } from "../App";
 
 function TaskList() {
-  const { editMode, allowNotification } = React.useContext(TaskContext);
+  const { editMode, allowNotification } = useContext(TaskContext);
+  const { handleNavClick } = useContext(NavContext);
   return (
     <section id="tasklist">
       <TaskItem />
       {allowNotification ? (
-        <Notification />
+        <Notification handleNavClick={handleNavClick} />
       ) : editMode.state ? (
         <TaskForm formTitle={"Edit Task"} />
       ) : (

@@ -1,6 +1,7 @@
 import { React, useState, useEffect, createContext } from "react";
 import TaskList from "./pages/TaskList";
 import TaskSummary from "./pages/TaskSummary";
+import Notification from "./pages/Notification";
 import "./styling/nav.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -12,6 +13,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 export const TaskContext = createContext();
+export const NavContext = createContext();
+
 function App() {
   const [tasks, setTasks] = useState(
     JSON.parse(localStorage.getItem("tasks")) || []
@@ -21,9 +24,11 @@ function App() {
   const [taskImages, setTaskImages] = useState([]);
   const [allowNotification, setAllowNotification] = useState(false);
   const [currentPage, setCurrentPage] = useState("Home");
+
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
+
   const handleNavClick = (page, isNotification) => {
     setCurrentPage(page);
     if (isNotification) {
@@ -44,7 +49,7 @@ function App() {
                   onClick={() => handleNavClick("Home", false)}
                   className={currentPage == "Home" ? "nav-item-active" : ""}
                 >
-                  <FontAwesomeIcon className="icon" icon={faHome} /> Home
+                  <FontAwesomeIcon className="icon" icon={faHome} /> My Tasks
                 </div>
               </Link>
               <Link className="nav-item" to="/">
@@ -79,31 +84,32 @@ function App() {
                   <FontAwesomeIcon className="icon" icon={faSignOut} /> Sign Out
                 </div>
               </Link>
-              <p>© Thaya Chevaphatrakul</p>
             </div>
           </div>
         </header>
 
         <main>
-          <TaskContext.Provider
-            value={{
-              tasks,
-              setTasks,
-              editMode,
-              setEditMode,
-              selectedTask,
-              setSelectedTask,
-              taskImages,
-              setTaskImages,
-              allowNotification,
-              setAllowNotification,
-            }}
-          >
-            <Routes>
-              <Route path="/" element={<TaskList />} />
-              <Route path="/summary" element={<TaskSummary />} />
-            </Routes>
-          </TaskContext.Provider>
+          <NavContext.Provider value={{ handleNavClick }}>
+            <TaskContext.Provider
+              value={{
+                tasks,
+                setTasks,
+                editMode,
+                setEditMode,
+                selectedTask,
+                setSelectedTask,
+                taskImages,
+                setTaskImages,
+                allowNotification,
+                setAllowNotification,
+              }}
+            >
+              <Routes>
+                <Route path="/" element={<TaskList />} />
+                <Route path="/summary" element={<TaskSummary />} />
+              </Routes>
+            </TaskContext.Provider>
+          </NavContext.Provider>
         </main>
       </div>
     </Router>
