@@ -1,6 +1,47 @@
 .tasks-items {
   width: 100%;
   padding: 1rem;
+  .confirm-menu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.25);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .confirm-menu-container {
+      background: var(--light);
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      gap: 1rem;
+      border-radius: 15px;
+      .confirm-menu-buttons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        button {
+          padding: 0.5rem 1rem;
+          border-radius: 5px;
+          font-weight: bold;
+          &:first-child {
+            background: var(--red);
+            color: var(--light);
+            border: 0;
+          }
+          &:last-child {
+            background: 0;
+            border: 1px solid var(--dark);
+          }
+        }
+      }
+    }
+  }
   .search-bar {
     margin-top: 1rem;
     display: grid;

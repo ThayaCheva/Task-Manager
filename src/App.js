@@ -1,7 +1,6 @@
 import { React, useState, useEffect, createContext } from "react";
-import TaskList from "./pages/TaskList";
+import TaskSections from "./pages/TaskList";
 import TaskSummary from "./pages/TaskSummary";
-import Notification from "./pages/Notification";
 import "./styling/nav.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -47,7 +46,7 @@ function App() {
               <Link className="nav-item" to="/">
                 <div
                   onClick={() => handleNavClick("Home", false)}
-                  className={currentPage == "Home" ? "nav-item-active" : ""}
+                  className={currentPage === "Home" ? "nav-item-active" : ""}
                 >
                   <FontAwesomeIcon className="icon" icon={faHome} /> My Tasks
                 </div>
@@ -56,7 +55,7 @@ function App() {
                 <div
                   onClick={() => handleNavClick("Notification", true)}
                   className={
-                    currentPage == "Notification" ? "nav-item-active" : ""
+                    currentPage === "Notification" ? "nav-item-active" : ""
                   }
                 >
                   <FontAwesomeIcon className="icon" icon={faBell} />
@@ -66,7 +65,7 @@ function App() {
               <Link className="nav-item" to="/summary">
                 <div
                   onClick={() => handleNavClick("Summary", false)}
-                  className={currentPage == "Summary" ? "nav-item-active" : ""}
+                  className={currentPage === "Summary" ? "nav-item-active" : ""}
                 >
                   <FontAwesomeIcon className="icon" icon={faListCheck} />{" "}
                   Summary
@@ -105,7 +104,7 @@ function App() {
               }}
             >
               <Routes>
-                <Route path="/" element={<TaskList />} />
+                <Route path="/" element={<TaskSections />} />
                 <Route path="/summary" element={<TaskSummary />} />
               </Routes>
             </TaskContext.Provider>

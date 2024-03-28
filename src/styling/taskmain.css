@@ -2,6 +2,47 @@
   width: 100%;
   padding: 1rem;
 }
+.tasks-items .confirm-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tasks-items .confirm-menu .confirm-menu-container {
+  background: var(--light);
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 1rem;
+  border-radius: 15px;
+}
+.tasks-items .confirm-menu .confirm-menu-container .confirm-menu-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+.tasks-items .confirm-menu .confirm-menu-container .confirm-menu-buttons button {
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-weight: bold;
+}
+.tasks-items .confirm-menu .confirm-menu-container .confirm-menu-buttons button:first-child {
+  background: var(--red);
+  color: var(--light);
+  border: 0;
+}
+.tasks-items .confirm-menu .confirm-menu-container .confirm-menu-buttons button:last-child {
+  background: 0;
+  border: 1px solid var(--dark);
+}
 .tasks-items .search-bar {
   margin-top: 1rem;
   display: grid;
@@ -226,4 +267,4 @@
   width: 15px;
   height: 15px;
   border-radius: 50%;
-}/*# sourceMappingURL=taskitem.css.map */
+}/*# sourceMappingURL=taskmain.css.map */

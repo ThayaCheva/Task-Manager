@@ -4,6 +4,7 @@ import { differenceInDays, isToday, format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { TaskContext } from "../App.js";
+
 function Notification(props) {
   const { tasks, setAllowNotification } = useContext(TaskContext);
   const [notificationType, setNotificationType] = useState("today");
@@ -27,7 +28,8 @@ function Notification(props) {
   const overDuedTasks = tasks.filter(
     (t) => differenceInDays(t.dueDate, new Date()) < 0
   );
-
+  console.log(upcomingTasks);
+  console.log(upcomingTasks.length);
   return (
     <div className="notification">
       <div className="notification-container">
@@ -51,7 +53,7 @@ function Notification(props) {
           <div className={notificationType === "upcoming" ? "active" : ""}>
             <button onClick={() => setNotificationType("upcoming")}>
               Upcoming
-              {upcomingTasks.lenght > 0 && (
+              {upcomingTasks.length > 0 && (
                 <div className="notification-count">
                   {upcomingTasks.length > 10 ? "10+" : upcomingTasks.length}
                 </div>
