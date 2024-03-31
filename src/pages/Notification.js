@@ -28,8 +28,7 @@ function Notification(props) {
   const overDuedTasks = tasks.filter(
     (t) => differenceInDays(t.dueDate, new Date()) < 0
   );
-  console.log(upcomingTasks);
-  console.log(upcomingTasks.length);
+
   return (
     <div className="notification">
       <div className="notification-container">

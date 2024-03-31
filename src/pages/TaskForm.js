@@ -63,7 +63,7 @@ function TaskForm(props) {
 
   const editTask = (event, taskID) => {
     event.preventDefault();
-    console.log(taskID);
+    console.log(tasks.dueDate);
     const index = tasks.findIndex((t) => t.id === taskID);
     if (index !== -1) {
       const updatedTask = [...tasks];
@@ -122,6 +122,8 @@ function TaskForm(props) {
       setFormData((prevForm) => ({ ...prevForm, subTasks: updatedSubTasks }));
     }
   };
+  console.log(formData.dueDate);
+  console.log(formData.title);
 
   React.useEffect(() => {
     if (editMode.state === true) {
@@ -134,7 +136,6 @@ function TaskForm(props) {
           title: currTask.title,
           desc: currTask.desc,
           dueDate: currTask.dueDate,
-          dueDate: "",
           subTasks: [],
           images: [],
         });
@@ -175,7 +176,7 @@ function TaskForm(props) {
             type="date"
             id="dueDate"
             name="dueDate"
-            value={formData.dueDate}
+            value={formData.dueDate.toString()}
             onChange={handleInputChange}
             min={format(new Date(), "yyyy-MM-dd")}
           />

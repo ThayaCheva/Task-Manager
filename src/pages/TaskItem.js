@@ -12,8 +12,14 @@ import { BiAlarm } from "react-icons/bi";
 import { TaskContext } from "../App.js";
 
 function TaskItem(props) {
-  const { tasks, setTasks, editMode, setEditMode, selectedTask } =
-    useContext(TaskContext);
+  const {
+    tasks,
+    setTasks,
+    editMode,
+    setEditMode,
+    selectedTask,
+    setAllowNotification,
+  } = useContext(TaskContext);
   const selectedTaskRef = useRef(null);
   const [tagDropdown, setTagDropdown] = useState({
     state: false,
@@ -27,6 +33,7 @@ function TaskItem(props) {
 
   // Update the state to edit mode
   const editTask = (id) => {
+    setAllowNotification(false);
     setEditMode({ ...editMode, state: true, taskID: id });
   };
 
@@ -123,7 +130,12 @@ function TaskItem(props) {
         </div>
         {props.task.id === menuDropdown.id && menuDropdown.state && (
           <div className="task-item-buttons">
-            <button onClick={() => editTask(props.task.id)}>
+            <button
+              onClick={() => {
+                editTask(props.task.id);
+                setMenuDropdown(false);
+              }}
+            >
               <FontAwesomeIcon title="Edit Task" icon={faPenToSquare} />
             </button>
 
@@ -131,7 +143,10 @@ function TaskItem(props) {
 
             <button
               className="delete-btn"
-              onClick={() => removeTask(props.task.id)}
+              onClick={() => {
+                removeTask(props.task.id);
+                setMenuDropdown(false);
+              }}
             >
               <FontAwesomeIcon title="Delete Task" icon={faTrash} />
             </button>

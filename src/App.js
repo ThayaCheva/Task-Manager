@@ -1,6 +1,7 @@
 import { React, useState, useEffect, createContext } from "react";
 import TaskSections from "./pages/TaskList";
 import TaskSummary from "./pages/TaskSummary";
+import { differenceInDays, isToday } from "date-fns";
 import "./styling/nav.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -22,6 +23,7 @@ function App() {
   const [selectedTask, setSelectedTask] = useState("");
   const [taskImages, setTaskImages] = useState([]);
   const [allowNotification, setAllowNotification] = useState(false);
+  const [notificationCount, setNotificationCount] = useState(0);
   const [currentPage, setCurrentPage] = useState("Home");
 
   useEffect(() => {
@@ -36,6 +38,23 @@ function App() {
       setAllowNotification(false);
     }
   };
+
+  useEffect(() => {
+    const todayTasks = tasks.filter((t) => isToday(t.dueDate));
+    const upcomingTasks = tasks.filter(
+      (t) =>
+        Math.abs(differenceInDays(new Date(), t.dueDate)) > 0 &&
+        Math.abs(differenceInDays(new Date(), t.dueDate)) < 7
+    );
+    const overDuedTasks = tasks.filter(
+      (t) => differenceInDays(t.dueDate, new Date()) < 0
+    );
+
+    setNotificationCount(
+      todayTasks.length + upcomingTasks.length + overDuedTasks.length
+    );
+  }, [tasks]);
+
   return (
     <Router>
       <div className="App">
@@ -43,29 +62,40 @@ function App() {
           <div className="navbar">
             <div className="navbar-container">
               <h1>TaskUp</h1>
-              <Link className="nav-item" to="/">
+              <Link className="link" to="/">
                 <div
                   onClick={() => handleNavClick("Home", false)}
-                  className={currentPage === "Home" ? "nav-item-active" : ""}
+                  className={
+                    currentPage === "Home"
+                      ? "nav-item-active nav-item"
+                      : "nav-item"
+                  }
                 >
                   <FontAwesomeIcon className="icon" icon={faHome} /> My Tasks
                 </div>
               </Link>
-              <Link className="nav-item" to="/">
+              <Link className="link" to="/">
                 <div
                   onClick={() => handleNavClick("Notification", true)}
                   className={
-                    currentPage === "Notification" ? "nav-item-active" : ""
+                    currentPage === "Notification"
+                      ? "nav-item-active nav-item"
+                      : "nav-item"
                   }
                 >
                   <FontAwesomeIcon className="icon" icon={faBell} />
                   Notification
+                  <div className="notification-count">{notificationCount}</div>
                 </div>
               </Link>
-              <Link className="nav-item" to="/summary">
+              <Link className="link" to="/summary">
                 <div
                   onClick={() => handleNavClick("Summary", false)}
-                  className={currentPage === "Summary" ? "nav-item-active" : ""}
+                  className={
+                    currentPage === "Summary"
+                      ? "nav-item-active nav-item"
+                      : "nav-item"
+                  }
                 >
                   <FontAwesomeIcon className="icon" icon={faListCheck} />{" "}
                   Summary
@@ -73,13 +103,13 @@ function App() {
               </Link>
             </div>
             <div className="navbar-container">
-              <Link className="nav-item" to="/">
-                <div>
+              <Link className="link" to="/">
+                <div className="nav-item">
                   <FontAwesomeIcon className="icon" icon={faSliders} /> Settings
                 </div>
               </Link>
-              <Link className="nav-item sign-out" to="/">
-                <div>
+              <Link className="link sign-out" to="/">
+                <div className="nav-item">
                   <FontAwesomeIcon className="icon" icon={faSignOut} /> Sign Out
                 </div>
               </Link>
@@ -101,6 +131,8 @@ function App() {
                 setTaskImages,
                 allowNotification,
                 setAllowNotification,
+                notificationCount,
+                setNotificationCount,
               }}
             >
               <Routes>
