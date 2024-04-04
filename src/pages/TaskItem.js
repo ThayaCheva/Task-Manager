@@ -163,15 +163,28 @@ function TaskItem(props) {
           )}
 
           <div className="task-item-tags">
-            <p>Tags: </p>
-            <button
-              onClick={() => setTagDropdown({ state: true, id: props.task.id })}
-            >
-              +
-            </button>
-            {tagDropdown && tagDropdown.id === props.task.id && (
-              <TagDropDown setTagDropdown={setTagDropdown}></TagDropDown>
-            )}
+            <div className="task-item-tags-header">
+              <p>Tags: </p>
+              <button
+                onClick={() =>
+                  setTagDropdown({ state: true, id: props.task.id })
+                }
+              >
+                +
+              </button>
+              {tagDropdown && tagDropdown.id === props.task.id && (
+                <TagDropDown
+                  taskID={props.task.id}
+                  setTagDropdown={setTagDropdown}
+                ></TagDropDown>
+              )}
+            </div>
+            <div className="task-tags">
+              {props.task.tags &&
+                props.task.tags.map((t) => (
+                  <div style={{ backgroundColor: t.tagColor }}>{t.tagName}</div>
+                ))}
+            </div>
           </div>
 
           <p>{props.task.desc}</p>

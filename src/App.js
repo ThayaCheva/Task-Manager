@@ -85,7 +85,11 @@ function App() {
                 >
                   <FontAwesomeIcon className="icon" icon={faBell} />
                   Notification
-                  <div className="notification-count">{notificationCount}</div>
+                  {notificationCount > 0 && (
+                    <div className="notification-count">
+                      {notificationCount}
+                    </div>
+                  )}
                 </div>
               </Link>
               <Link className="link" to="/summary">

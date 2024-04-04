@@ -17,6 +17,7 @@ function TaskForm(props) {
     dueDate: "",
     subTasks: [],
     images: null,
+    tags: [],
   });
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -44,6 +45,7 @@ function TaskForm(props) {
       dueDate: "",
       subTasks: [],
       images: null,
+      tags: [],
     });
   };
 
@@ -63,11 +65,9 @@ function TaskForm(props) {
 
   const editTask = (event, taskID) => {
     event.preventDefault();
-    console.log(tasks.dueDate);
     const index = tasks.findIndex((t) => t.id === taskID);
     if (index !== -1) {
       const updatedTask = [...tasks];
-      console.log(updatedTask[index]);
       // Subtasks
       const currentSubTasks = Array.isArray(formData.subTasks)
         ? formData.subTasks
@@ -97,6 +97,7 @@ function TaskForm(props) {
         dueDate: "",
         subTasks: [],
         images: [],
+        tags: [],
       });
       setSubTask("");
     }
@@ -122,8 +123,6 @@ function TaskForm(props) {
       setFormData((prevForm) => ({ ...prevForm, subTasks: updatedSubTasks }));
     }
   };
-  console.log(formData.dueDate);
-  console.log(formData.title);
 
   React.useEffect(() => {
     if (editMode.state === true) {
@@ -138,8 +137,8 @@ function TaskForm(props) {
           dueDate: currTask.dueDate,
           subTasks: [],
           images: [],
+          tags: [],
         });
-        console.log(formData);
       }
     }
   }, [editMode.state, editMode.taskID, tasks]);

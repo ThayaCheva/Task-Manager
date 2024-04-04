@@ -120,11 +120,16 @@
 }
 .tasks-items .tasks-scroll .tasks-items-container .task-item .tasks-item-content .task-item-tags {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   width: 100%;
+  gap: 0.5rem;
   height: 0;
   position: relative;
   margin: 0.5rem 0;
+}
+.tasks-items .tasks-scroll .tasks-items-container .task-item .tasks-item-content .task-item-tags .task-item-tags-header {
+  display: flex;
+  align-items: center;
 }
 .tasks-items .tasks-scroll .tasks-items-container .task-item .tasks-item-content .task-item-tags button {
   width: 1rem;
@@ -137,6 +142,15 @@
   color: var(--paragraph);
   border-radius: 5px;
   margin-left: 0.5rem;
+}
+.tasks-items .tasks-scroll .tasks-items-container .task-item .tasks-item-content .task-item-tags .task-tags {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+.tasks-items .tasks-scroll .tasks-items-container .task-item .tasks-item-content .task-item-tags .task-tags div {
+  padding: 0 0.5rem;
+  border-radius: 5px;
 }
 .tasks-items .tasks-scroll .tasks-items-container .task-item .tasks-item-content .task-progress {
   width: 100%;

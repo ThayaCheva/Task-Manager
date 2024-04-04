@@ -68,32 +68,46 @@
 .tags-menu .tags-menu-template .tags-menu-item button {
   border: 0 !important;
 }
-.tags-menu .tags-menu-create {
+.tags-menu .tags-create-form {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   gap: 0.5rem;
   width: 100%;
 }
-.tags-menu .tags-menu-create input,
-.tags-menu .tags-menu-create button {
+.tags-menu .tags-create-form input,
+.tags-menu .tags-create-form button {
   width: 100% !important;
   margin: 0 !important;
 }
-.tags-menu .tags-menu-create input {
+.tags-menu .tags-create-form input {
   padding: 0.5rem;
   border: 1px solid var(--grey-1);
 }
-.tags-menu .tags-menu-create input:focus {
+.tags-menu .tags-create-form input:focus {
   outline: none;
 }
-.tags-menu .tags-menu-create button {
+.tags-menu .tags-create-form .tags-create-color p {
+  margin-bottom: 0.5rem;
+}
+.tags-menu .tags-create-form .tags-create-color .tags-color-container {
+  display: flex;
+  gap: 0.25rem;
+}
+.tags-menu .tags-create-form .tags-create-color .tags-color-container .color-item {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tags-menu .tags-create-form button {
   padding: 1rem;
   border: none !important;
   background: var(--grey) !important;
   color: var(--dark) !important;
 }
-.tags-menu .tags-menu-create button:hover {
+.tags-menu .tags-create-form button:hover {
   background: #e5e5e5 !important;
 }/*# sourceMappingURL=tags.css.map */

@@ -116,11 +116,16 @@
           }
           .task-item-tags {
             display: flex;
-            align-items: center;
+            flex-direction: column;
             width: 100%;
+            gap: 0.5rem;
             height: 0;
             position: relative;
             margin: 0.5rem 0;
+            .task-item-tags-header {
+              display: flex;
+              align-items: center;
+            }
             button {
               width: 1rem;
               height: 1rem;
@@ -132,6 +137,15 @@
               color: var(--paragraph);
               border-radius: 5px;
               margin-left: 0.5rem;
+            }
+            .task-tags {
+              display: flex;
+              gap: 0.5rem;
+              font-size: 0.9rem;
+              div {
+                padding: 0 0.5rem;
+                border-radius: 5px;
+              }
             }
           }
           .task-progress {
