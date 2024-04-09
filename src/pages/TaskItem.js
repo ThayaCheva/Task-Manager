@@ -20,6 +20,7 @@ function TaskItem(props) {
     selectedTask,
     setAllowNotification,
   } = useContext(TaskContext);
+
   const selectedTaskRef = useRef(null);
   const [tagDropdown, setTagDropdown] = useState({
     state: false,
@@ -181,8 +182,13 @@ function TaskItem(props) {
             </div>
             <div className="task-tags">
               {props.task.tags &&
-                props.task.tags.map((t) => (
-                  <div style={{ backgroundColor: t.tagColor }}>{t.tagName}</div>
+                props.task.tags.map((t, index) => (
+                  <div
+                    key={index}
+                    style={{ backgroundColor: t.tagInfo.tagColor }}
+                  >
+                    {t.tagInfo.tagName}
+                  </div>
                 ))}
             </div>
           </div>
@@ -221,7 +227,7 @@ function TaskItem(props) {
       </div>
       <div className="project-image-container">
         <div className="project-image-overlay"></div>
-        {props.task.images && <img src={props.task.images} />}
+        {props.task.images && <img alt="my task" src={props.task.images} />}
       </div>
       <button
         className="done-btn btn"

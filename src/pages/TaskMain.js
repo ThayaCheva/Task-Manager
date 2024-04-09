@@ -65,8 +65,8 @@ function TaskMain() {
 
       <div className="tasks-scroll">
         <div className="tasks-items-container">
-          {tasks.map((t) => (
-            <TaskItem task={t} subTask={t.subTasks} />
+          {tasks.map((t, index) => (
+            <TaskItem key={index} task={t} subTask={t.subTasks} />
           ))}
         </div>
       </div>
