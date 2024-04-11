@@ -1,6 +1,7 @@
 import React, { useState, useContext, useRef } from "react";
 import FileUpload from "./FileUpload.js";
 import TagDropDown from "./TagDropDown.js";
+import "../styling/taskitem.css";
 import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -63,24 +64,6 @@ function TaskItem(props) {
     }
   };
 
-  // Toggle dropdown list (settings menu dropdown)
-  const handleDropdown = (id) => {
-    if (!menuDropdown.state && menuDropdown.id === null) {
-      setMenuDropdown((prevToggle) => ({ state: !prevToggle.state, id: id }));
-    } else if (menuDropdown.state && menuDropdown.id !== null) {
-      if (menuDropdown.id === id) {
-        setMenuDropdown((prevToggle) => ({
-          state: !prevToggle.state,
-          id: id,
-        }));
-      } else {
-        setMenuDropdown({ state: true, id: id });
-      }
-    } else {
-      setMenuDropdown((prevToggle) => ({ state: !prevToggle.state, id: id }));
-    }
-  };
-
   // Manage CheckList for subtasks and when clicked update task progress bar
   const handleCheckList = (taskID, subTaskID) => {
     var currSubTask = tasks.filter((t) => t.id === taskID)[0].subTasks[
@@ -123,7 +106,12 @@ function TaskItem(props) {
       <div>
         <div
           className="edit-task"
-          onClick={() => handleDropdown(props.task.id)}
+          onClick={() =>
+            setMenuDropdown({
+              state: !menuDropdown.state,
+              id: props.task.id,
+            })
+          }
         >
           <button>
             <FontAwesomeIcon icon={faEllipsisVertical} />
@@ -134,7 +122,10 @@ function TaskItem(props) {
             <button
               onClick={() => {
                 editTask(props.task.id);
-                setMenuDropdown(false);
+                setMenuDropdown({
+                  state: false,
+                  id: props.task.id,
+                });
               }}
             >
               <FontAwesomeIcon title="Edit Task" icon={faPenToSquare} />
@@ -168,21 +159,24 @@ function TaskItem(props) {
               <p>Tags: </p>
               <button
                 onClick={() =>
-                  setTagDropdown({ state: true, id: props.task.id })
+                  setTagDropdown((prevToggle) => ({
+                    state: !prevToggle.state,
+                    id: props.task.id,
+                  }))
                 }
               >
                 +
               </button>
-              {tagDropdown && tagDropdown.id === props.task.id && (
+              {tagDropdown.state && tagDropdown.id === props.task.id && (
                 <TagDropDown
                   taskID={props.task.id}
                   setTagDropdown={setTagDropdown}
                 ></TagDropDown>
               )}
             </div>
-            <div className="task-tags">
-              {props.task.tags &&
-                props.task.tags.map((t, index) => (
+            {props.task.tags && (
+              <div className="task-tags">
+                {props.task.tags.map((t, index) => (
                   <div
                     key={index}
                     style={{ backgroundColor: t.tagInfo.tagColor }}
@@ -190,7 +184,8 @@ function TaskItem(props) {
                     {t.tagInfo.tagName}
                   </div>
                 ))}
-            </div>
+              </div>
+            )}
           </div>
 
           <p>{props.task.desc}</p>
@@ -209,9 +204,9 @@ function TaskItem(props) {
             </div>
           )}
 
-          <div>
-            {props.task.subTasks &&
-              props.task.subTasks.map((st, index) => (
+          {props.task.subTasks && (
+            <div>
+              {props.task.subTasks.map((st, index) => (
                 <div className="subtask-item">
                   <input
                     key={index}
@@ -222,19 +217,22 @@ function TaskItem(props) {
                   <p>{st.task}</p>
                 </div>
               ))}
-          </div>
+            </div>
+          )}
+          {props.task.images && (
+            <div className="project-image-container">
+              <div className="project-image-overlay"></div>
+              <img alt="my task" src={props.task.images} />
+            </div>
+          )}
+          <button
+            className="done-btn btn"
+            onClick={() => removeTask(props.task.id)}
+          >
+            Mark as done
+          </button>
         </div>
       </div>
-      <div className="project-image-container">
-        <div className="project-image-overlay"></div>
-        {props.task.images && <img alt="my task" src={props.task.images} />}
-      </div>
-      <button
-        className="done-btn btn"
-        onClick={() => removeTask(props.task.id)}
-      >
-        Mark as done
-      </button>
     </div>
   );
 }

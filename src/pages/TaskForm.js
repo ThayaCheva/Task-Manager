@@ -19,6 +19,7 @@ function TaskForm(props) {
     images: null,
     tags: [],
   });
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -34,7 +35,6 @@ function TaskForm(props) {
       ...tasks,
       {
         ...formData,
-        // id: tasks.length + 1,
         id: nanoid(),
       },
     ]);
@@ -80,6 +80,7 @@ function TaskForm(props) {
         ...formData,
         subTasks: mergedSubTasks,
         images: updatedTask[index].images,
+        tags: updatedTask[index].tags,
       };
       setFormData(updatedForm);
 
@@ -199,6 +200,15 @@ function TaskForm(props) {
               className={`${editMode.state ? "edit-mode" : ""} btn cancel`}
               onClick={() => {
                 setEditMode(false);
+                setFormData({
+                  id: "",
+                  title: "",
+                  desc: "",
+                  dueDate: "",
+                  subTasks: [],
+                  images: [],
+                  tags: [],
+                });
               }}
             >
               Cancel

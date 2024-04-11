@@ -91,6 +91,7 @@
 }
 .tags-menu .tags-create-form .tags-create-color .tags-color-container {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.25rem;
 }
 .tags-menu .tags-create-form .tags-create-color .tags-color-container .color-item {
