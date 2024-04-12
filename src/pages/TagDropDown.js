@@ -87,27 +87,17 @@ function TagDropDown(props) {
   };
 
   const removeTag = (tagName) => {
-    const updatedTask = tasks.map((task) => {
-      if (task.id === props.taskID) {
-        const tagsArray = Array.isArray(task.tags) ? task.tags : [];
-        if (
-          // check if tag already in array
-          tagsArray.some((item) => item.tagInfo.tagName === tagName)
-        ) {
-          for (var i = 0; i < tagsArray.length; i++) {
-            var currTask = null;
-            if (tagsArray[i].tagInfo.tagName === tagName) {
-              currTask = tagsArray[i];
-            }
-            if (currTask) {
-              const tagIndex = task.tags.indexOf(currTask);
-              task.tags.splice(tagIndex, 1);
-            }
-          }
+    var updatedTask = [];
+    for (var i = 0; i < tasks.length; i++) {
+      const tagsArray = Array.isArray(tasks[i].tags) ? tasks[i].tags : [];
+      for (var j = 0; j < tagsArray.length; j++) {
+        if (tagsArray[j].tagInfo.tagName === tagName) {
+          const tagIndex = tasks[i].tags.indexOf(tagsArray[j]);
+          tasks[i].tags.splice(tagIndex, 1);
         }
       }
-      return task;
-    });
+      updatedTask.push(tasks[i]);
+    }
     setTasks(updatedTask);
     const updatedTags = tagList.filter((tag) => tag.tagName !== tagName);
     setTagList(updatedTags);

@@ -98,6 +98,7 @@ function TaskItem(props) {
     }
   };
 
+  console.log(menuDropdown);
   return (
     <div
       ref={props.task.id === selectedTask ? selectedTaskRef : null}
