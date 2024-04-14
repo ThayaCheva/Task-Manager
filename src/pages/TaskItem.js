@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useContext, useRef } from "react";
 import FileUpload from "./FileUpload.js";
 import TagDropDown from "./TagDropDown.js";
 import "../styling/taskitem.css";
@@ -23,15 +23,6 @@ function TaskItem(props) {
   } = useContext(TaskContext);
 
   const selectedTaskRef = useRef(null);
-  const [tagDropdown, setTagDropdown] = useState({
-    state: false,
-    id: null,
-  });
-
-  const [menuDropdown, setMenuDropdown] = useState({
-    state: false,
-    id: null,
-  });
 
   // Update the state to edit mode
   const editTask = (id) => {
@@ -98,7 +89,34 @@ function TaskItem(props) {
     }
   };
 
-  console.log(menuDropdown);
+  // Dropdown menu for task edit, image and delete
+  const TaskDropDown = () => {
+    return (
+      <div className="task-item-buttons">
+        <button
+          onClick={() => {
+            editTask(props.task.id);
+            props.handleToggleMenu(props.task.id);
+          }}
+        >
+          <FontAwesomeIcon title="Edit Task" icon={faPenToSquare} />
+        </button>
+
+        <FileUpload taskID={props.task.id}></FileUpload>
+
+        <button
+          className="delete-btn"
+          onClick={() => {
+            removeTask(props.task.id);
+            props.handleToggleMenu(props.task.id);
+          }}
+        >
+          <FontAwesomeIcon title="Delete Task" icon={faTrash} />
+        </button>
+      </div>
+    );
+  };
+
   return (
     <div
       ref={props.task.id === selectedTask ? selectedTaskRef : null}
@@ -107,43 +125,14 @@ function TaskItem(props) {
       <div>
         <div
           className="edit-task"
-          onClick={() =>
-            setMenuDropdown({
-              state: !menuDropdown.state,
-              id: props.task.id,
-            })
-          }
+          onClick={() => props.handleToggleMenu(props.task.id)}
         >
           <button>
             <FontAwesomeIcon icon={faEllipsisVertical} />
           </button>
         </div>
-        {props.task.id === menuDropdown.id && menuDropdown.state && (
-          <div className="task-item-buttons">
-            <button
-              onClick={() => {
-                editTask(props.task.id);
-                setMenuDropdown({
-                  state: false,
-                  id: props.task.id,
-                });
-              }}
-            >
-              <FontAwesomeIcon title="Edit Task" icon={faPenToSquare} />
-            </button>
-
-            <FileUpload taskID={props.task.id}></FileUpload>
-
-            <button
-              className="delete-btn"
-              onClick={() => {
-                removeTask(props.task.id);
-                setMenuDropdown(false);
-              }}
-            >
-              <FontAwesomeIcon title="Delete Task" icon={faTrash} />
-            </button>
-          </div>
+        {props.task.id === props.toggleMenu.id && props.toggleMenu.state && (
+          <TaskDropDown />
         )}
 
         <div className="tasks-item-content">
@@ -158,22 +147,16 @@ function TaskItem(props) {
           <div className="task-item-tags">
             <div className="task-item-tags-header">
               <p>Tags: </p>
-              <button
-                onClick={() =>
-                  setTagDropdown((prevToggle) => ({
-                    state: !prevToggle.state,
-                    id: props.task.id,
-                  }))
-                }
-              >
+              <button onClick={() => props.handleTagDropdown(props.task.id)}>
                 +
               </button>
-              {tagDropdown.state && tagDropdown.id === props.task.id && (
-                <TagDropDown
-                  taskID={props.task.id}
-                  setTagDropdown={setTagDropdown}
-                ></TagDropDown>
-              )}
+              {props.tagDropdown.state &&
+                props.tagDropdown.id === props.task.id && (
+                  <TagDropDown
+                    taskID={props.task.id}
+                    handleTagDropdown={props.handleTagDropdown}
+                  ></TagDropDown>
+                )}
             </div>
             {props.task.tags && (
               <div className="task-tags">

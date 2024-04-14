@@ -91,7 +91,7 @@ function TaskSummary() {
       ),
     }));
   };
-
+  console.log(tasks);
   return (
     <section className="task-summary">
       <div className="task-summary-container">
@@ -142,6 +142,12 @@ function TaskSummary() {
                       onClick={() => handleTaskClick(task.id)}
                       className="summary-task-item"
                       key={taskIndex}
+                      style={{
+                        backgroundColor:
+                          task.tags.length > 0
+                            ? task.tags[0].tagInfo.tagColor
+                            : "#7bd3ea",
+                      }}
                     >
                       <p>{limitWords(task.title)}</p>
                     </div>

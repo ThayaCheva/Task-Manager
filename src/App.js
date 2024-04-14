@@ -61,7 +61,7 @@ function App() {
         <header>
           <div className="navbar">
             <div className="navbar-container">
-              <h1>TaskUp</h1>
+              <h1>Task Manager</h1>
               <Link className="link" to="/">
                 <div
                   onClick={() => handleNavClick("Home", false)}

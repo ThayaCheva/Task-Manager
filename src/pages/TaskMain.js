@@ -13,8 +13,34 @@ function TaskMain() {
   // Remove all tasks
   const clearAllTasks = () => {
     setTasks([]);
-    localStorage.clear();
   };
+
+  const [tagDropdown, setTagDropdown] = useState({
+    state: false,
+    id: null,
+  });
+
+  const [toggleMenu, setToggleMenu] = useState({
+    state: false,
+    id: null,
+  });
+
+  const handleToggleMenu = (taskID) => {
+    if (toggleMenu.id === taskID) {
+      setToggleMenu({ state: !toggleMenu.state, id: taskID });
+    } else {
+      setToggleMenu({ state: true, id: taskID });
+    }
+  };
+
+  const handleTagDropdown = (taskID) => {
+    if (tagDropdown.id === taskID) {
+      setTagDropdown({ state: !tagDropdown.state, id: taskID });
+    } else {
+      setTagDropdown({ state: true, id: taskID });
+    }
+  };
+  console.log(toggleMenu);
 
   // Clicking a task in summary will scroll to the selected task in home
   useEffect(() => {
@@ -65,7 +91,15 @@ function TaskMain() {
 
       <div className="tasks-items-container">
         {tasks.map((t, index) => (
-          <TaskItem key={index} task={t} subTask={t.subTasks} />
+          <TaskItem
+            key={index}
+            task={t}
+            subTask={t.subTasks}
+            tagDropdown={tagDropdown}
+            handleTagDropdown={handleTagDropdown}
+            toggleMenu={toggleMenu}
+            handleToggleMenu={handleToggleMenu}
+          />
         ))}
       </div>
     </div>

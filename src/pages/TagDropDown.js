@@ -180,9 +180,7 @@ function TagDropDown(props) {
       <div className="tags-menu-header">
         <div className="tags-menu-header-text">Add Tags</div>
         <button
-          onClick={() =>
-            props.setTagDropdown({ state: false, id: props.taskID })
-          }
+          onClick={() => props.handleTagDropdown(props.taskID)}
           className="close-btn"
         >
           <FontAwesomeIcon icon={faX} />
