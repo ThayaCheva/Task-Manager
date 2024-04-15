@@ -57,21 +57,6 @@
         border-bottom: 2px solid var(--blue);
       }
     }
-    .today-tasks {
-      .dot {
-        background: var(--green);
-      }
-    }
-    .upcoming-tasks {
-      .dot {
-        background: var(--blue);
-      }
-    }
-    .overdue-tasks {
-      .dot {
-        background: var(--red);
-      }
-    }
     .notification-item {
       display: flex;
       flex-direction: column;

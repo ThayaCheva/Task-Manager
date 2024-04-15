@@ -59,15 +59,6 @@
 .notification .notification-container .notification-nav .active {
   border-bottom: 2px solid var(--blue);
 }
-.notification .notification-container .today-tasks .dot {
-  background: var(--green);
-}
-.notification .notification-container .upcoming-tasks .dot {
-  background: var(--blue);
-}
-.notification .notification-container .overdue-tasks .dot {
-  background: var(--red);
-}
 .notification .notification-container .notification-item {
   display: flex;
   flex-direction: column;

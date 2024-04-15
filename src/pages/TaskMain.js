@@ -26,6 +26,7 @@ function TaskMain() {
   });
 
   const handleToggleMenu = (taskID) => {
+    setTagDropdown({ state: false, id: taskID });
     if (toggleMenu.id === taskID) {
       setToggleMenu({ state: !toggleMenu.state, id: taskID });
     } else {
@@ -34,13 +35,21 @@ function TaskMain() {
   };
 
   const handleTagDropdown = (taskID) => {
+    setToggleMenu({ state: false, id: taskID });
     if (tagDropdown.id === taskID) {
       setTagDropdown({ state: !tagDropdown.state, id: taskID });
     } else {
       setTagDropdown({ state: true, id: taskID });
     }
   };
-  console.log(toggleMenu);
+
+  const [searchWord, setSearchWord] = useState({ word: "", foundTasks: [] });
+  const handleSearchTasks = (event) => {
+    const updatedTask = tasks.filter((task) =>
+      task.title.includes(event.target.value.toLowerCase())
+    );
+    setSearchWord({ word: event.target.value, foundTasks: updatedTask });
+  };
 
   // Clicking a task in summary will scroll to the selected task in home
   useEffect(() => {
@@ -77,7 +86,11 @@ function TaskMain() {
       <h1 className="header">My Tasks</h1>
 
       <div className="search-bar">
-        <input type="text" placeholder="Search..."></input>
+        <input
+          type="text"
+          placeholder="Search..."
+          onChange={handleSearchTasks}
+        ></input>
         <div className="btn-container">
           <button className="btn">
             <BiFilter size={20} />
@@ -90,17 +103,29 @@ function TaskMain() {
       </div>
 
       <div className="tasks-items-container">
-        {tasks.map((t, index) => (
-          <TaskItem
-            key={index}
-            task={t}
-            subTask={t.subTasks}
-            tagDropdown={tagDropdown}
-            handleTagDropdown={handleTagDropdown}
-            toggleMenu={toggleMenu}
-            handleToggleMenu={handleToggleMenu}
-          />
-        ))}
+        {searchWord.word === ""
+          ? tasks.map((t, index) => (
+              <TaskItem
+                key={index}
+                task={t}
+                subTask={t.subTasks}
+                tagDropdown={tagDropdown}
+                handleTagDropdown={handleTagDropdown}
+                toggleMenu={toggleMenu}
+                handleToggleMenu={handleToggleMenu}
+              />
+            ))
+          : searchWord.foundTasks.map((t, index) => (
+              <TaskItem
+                key={index}
+                task={t}
+                subTask={t.subTasks}
+                tagDropdown={tagDropdown}
+                handleTagDropdown={handleTagDropdown}
+                toggleMenu={toggleMenu}
+                handleToggleMenu={handleToggleMenu}
+              />
+            ))}
       </div>
     </div>
   );

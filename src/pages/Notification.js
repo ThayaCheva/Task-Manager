@@ -78,7 +78,15 @@ function Notification(props) {
                   isToday(t.dueDate) && (
                     <div className="notification-item">
                       <div className="notification-text">
-                        <div className="dot"></div>
+                        <div
+                          className="dot"
+                          style={{
+                            backgroundColor:
+                              t.tags.length > 0
+                                ? t.tags[0].tagInfo.tagColor
+                                : "#7bd3ea",
+                          }}
+                        ></div>
                         <span>{limitWords(t.title)}</span>&nbsp;is due TODAY
                       </div>
                       <p>Due {format(t.dueDate, "dd MMMM yyyy")}</p>
@@ -99,7 +107,15 @@ function Notification(props) {
                   Math.abs(differenceInDays(new Date(), t.dueDate)) < 7 && (
                     <div key={t.id} className="notification-item">
                       <div className="notification-text">
-                        <div className="dot"></div>
+                        <div
+                          className="dot"
+                          style={{
+                            backgroundColor:
+                              t.tags.length > 0
+                                ? t.tags[0].tagInfo.tagColor
+                                : "#7bd3ea",
+                          }}
+                        ></div>
                         <span>{limitWords(t.title)}</span>&nbsp;is due in{" "}
                         {Math.abs(differenceInDays(new Date(), t.dueDate))} days
                       </div>
@@ -120,7 +136,15 @@ function Notification(props) {
                   differenceInDays(t.dueDate, new Date()) < 0 && (
                     <div key={t.id} className="notification-item">
                       <div className="notification-text">
-                        <div className="dot"></div>
+                        <div
+                          className="dot"
+                          style={{
+                            backgroundColor:
+                              t.tags.length > 0
+                                ? t.tags[0].tagInfo.tagColor
+                                : "#7bd3ea",
+                          }}
+                        ></div>
                         <span>{limitWords(t.title)}</span>&nbsp;was due{" "}
                         {Math.abs(differenceInDays(new Date(), t.dueDate))} days
                         ago
