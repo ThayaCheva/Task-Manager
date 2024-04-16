@@ -43,8 +43,8 @@ function App() {
     const todayTasks = tasks.filter((t) => isToday(t.dueDate));
     const upcomingTasks = tasks.filter(
       (t) =>
-        Math.abs(differenceInDays(new Date(), t.dueDate)) > 0 &&
-        Math.abs(differenceInDays(new Date(), t.dueDate)) < 7
+        differenceInDays(t.dueDate, new Date()) > 0 &&
+        differenceInDays(t.dueDate, new Date()) < 7
     );
     const overDuedTasks = tasks.filter(
       (t) => differenceInDays(t.dueDate, new Date()) < 0

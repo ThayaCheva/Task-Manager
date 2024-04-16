@@ -60,7 +60,6 @@ function TagDropDown(props) {
 
   const handleTagForm = (event) => {
     setFormData({ ...formData, name: event.target.value });
-    console.log(formData);
   };
 
   const updatedFormTagColor = (index, color) => {

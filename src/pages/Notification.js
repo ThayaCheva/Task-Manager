@@ -22,9 +22,10 @@ function Notification(props) {
   const todayTasks = tasks.filter((t) => isToday(t.dueDate));
   const upcomingTasks = tasks.filter(
     (t) =>
-      Math.abs(differenceInDays(new Date(), t.dueDate)) > 0 &&
-      Math.abs(differenceInDays(new Date(), t.dueDate)) < 7
+      differenceInDays(t.dueDate, new Date()) > 0 &&
+      differenceInDays(t.dueDate, new Date()) < 7
   );
+
   const overDuedTasks = tasks.filter(
     (t) => differenceInDays(t.dueDate, new Date()) < 0
   );
@@ -103,8 +104,8 @@ function Notification(props) {
             {upcomingTasks.length > 0 ? (
               tasks.map(
                 (t) =>
-                  Math.abs(differenceInDays(new Date(), t.dueDate)) > 0 &&
-                  Math.abs(differenceInDays(new Date(), t.dueDate)) < 7 && (
+                  differenceInDays(t.dueDate, new Date()) > 0 &&
+                  differenceInDays(t.dueDate, new Date()) < 7 && (
                     <div key={t.id} className="notification-item">
                       <div className="notification-text">
                         <div
@@ -117,7 +118,7 @@ function Notification(props) {
                           }}
                         ></div>
                         <span>{limitWords(t.title)}</span>&nbsp;is due in{" "}
-                        {Math.abs(differenceInDays(new Date(), t.dueDate))} days
+                        {differenceInDays(t.dueDate, new Date())} days
                       </div>
                       <p>Due {format(t.dueDate, "dd MMMM yyyy")}</p>
                     </div>

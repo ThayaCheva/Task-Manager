@@ -1,5 +1,5 @@
 import React from "react";
-import "../styling/tasklist.css";
+import "../styling/taskform.css";
 import { TaskContext } from "../App";
 import { nanoid } from "nanoid";
 import { format } from "date-fns";
@@ -49,20 +49,6 @@ function TaskForm(props) {
     });
   };
 
-  const addSubTask = (event) => {
-    event.preventDefault();
-    const currentSubTasks = Array.isArray(formData.subTasks)
-      ? formData.subTasks.map((t) => ({ task: t.task, checked: false }))
-      : [];
-    const newSubTask = { task: subTask, checked: false };
-    const updatedForm = {
-      ...formData,
-      subTasks: [...currentSubTasks, newSubTask],
-    };
-    setFormData(updatedForm);
-    setSubTask("");
-  };
-
   const editTask = (event, taskID) => {
     event.preventDefault();
     const index = tasks.findIndex((t) => t.id === taskID);
@@ -97,7 +83,7 @@ function TaskForm(props) {
         desc: "",
         dueDate: "",
         subTasks: [],
-        images: [],
+        images: null,
         tags: [],
       });
       setSubTask("");
@@ -105,18 +91,42 @@ function TaskForm(props) {
     setEditMode(false);
   };
 
+  const addSubTask = (event) => {
+    event.preventDefault();
+    const currentSubTasks = Array.isArray(formData.subTasks)
+      ? formData.subTasks.map((t) => ({ task: t.task, checked: false }))
+      : [];
+    const newSubTask = { task: subTask, checked: false };
+    const updatedForm = {
+      ...formData,
+      subTasks: [...currentSubTasks, newSubTask],
+    };
+    setFormData(updatedForm);
+    setSubTask("");
+  };
+
   const removeSubTask = (indexToRemove) => {
+    // Checks if removetask in edit mode or normal mod
     if (editMode.state) {
-      const updatedSubTasks = tasks[editMode.taskID].subTasks.filter(
-        (_, index) => index !== indexToRemove
-      );
-      setTasks((prevTasks) =>
-        prevTasks.map((task) =>
-          task.id === editMode.taskID
-            ? { ...task, subTasks: updatedSubTasks }
-            : task
-        )
-      );
+      const currTask = tasks.filter((t) => t.id === editMode.taskID)[0];
+      if (currTask.subTasks.length > 0) {
+        console.log(currTask);
+        const updatedSubTasks = currTask.subTasks.filter(
+          (_, index) => index !== indexToRemove
+        );
+        setTasks((prevTasks) =>
+          prevTasks.map((task) =>
+            task.id === editMode.taskID
+              ? { ...task, subTasks: updatedSubTasks }
+              : task
+          )
+        );
+      } else {
+        const updatedSubTasks = formData.subTasks.filter(
+          (_, index) => index !== indexToRemove
+        );
+        setFormData((prevForm) => ({ ...prevForm, subTasks: updatedSubTasks }));
+      }
     } else {
       const updatedSubTasks = formData.subTasks.filter(
         (_, index) => index !== indexToRemove
@@ -239,7 +249,14 @@ function TaskForm(props) {
             {formData.subTasks &&
               formData.subTasks.map((st, index) => (
                 <div className="subtask-item" key={index}>
-                  <button onClick={() => removeSubTask(index)}>-</button>
+                  <button
+                    onClick={(event) => {
+                      removeSubTask(index);
+                      event.preventDefault();
+                    }}
+                  >
+                    -
+                  </button>
                   <p>{st.task}</p>
                 </div>
               ))}
@@ -249,7 +266,14 @@ function TaskForm(props) {
                 .filter((t) => t.id === editMode.taskID)[0]
                 .subTasks.map((st, index) => (
                   <div className="subtask-item">
-                    <button onClick={() => removeSubTask(index)}>-</button>
+                    <button
+                      onClick={(event) => {
+                        removeSubTask(index);
+                        event.preventDefault();
+                      }}
+                    >
+                      -
+                    </button>
                     <p>{st.task}</p>
                   </div>
                 ))}

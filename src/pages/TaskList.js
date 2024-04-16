@@ -1,5 +1,5 @@
 import { React, useContext } from "react";
-import "../styling/tasklist.css";
+import "../styling/taskform.css";
 import TaskMain from "./TaskMain.js";
 import TaskForm from "./TaskForm.js";
 import Notification from "./Notification.js";
