@@ -54,17 +54,15 @@ function TaskForm(props) {
     const index = tasks.findIndex((t) => t.id === taskID);
     if (index !== -1) {
       const updatedTask = [...tasks];
+
       // Subtasks
       const currentSubTasks = Array.isArray(formData.subTasks)
         ? formData.subTasks
         : [];
 
-      const mergedSubTasks = Array.from(
-        new Set([...currentSubTasks, ...updatedTask[index].subTasks])
-      );
       const updatedForm = {
         ...formData,
-        subTasks: mergedSubTasks,
+        subTasks: currentSubTasks,
         images: updatedTask[index].images,
         tags: updatedTask[index].tags,
       };
@@ -75,8 +73,9 @@ function TaskForm(props) {
         ...updatedForm,
         id: taskID,
       };
-
       setTasks(updatedTask);
+
+      // Clear Form
       setFormData({
         id: "",
         title: "",
@@ -93,13 +92,10 @@ function TaskForm(props) {
 
   const addSubTask = (event) => {
     event.preventDefault();
-    const currentSubTasks = Array.isArray(formData.subTasks)
-      ? formData.subTasks.map((t) => ({ task: t.task, checked: false }))
-      : [];
     const newSubTask = { task: subTask, checked: false };
     const updatedForm = {
       ...formData,
-      subTasks: [...currentSubTasks, newSubTask],
+      subTasks: [...formData.subTasks, newSubTask],
     };
     setFormData(updatedForm);
     setSubTask("");
@@ -107,37 +103,16 @@ function TaskForm(props) {
 
   const removeSubTask = (indexToRemove) => {
     // Checks if removetask in edit mode or normal mod
-    if (editMode.state) {
-      const currTask = tasks.filter((t) => t.id === editMode.taskID)[0];
-      if (currTask.subTasks.length > 0) {
-        console.log(currTask);
-        const updatedSubTasks = currTask.subTasks.filter(
-          (_, index) => index !== indexToRemove
-        );
-        setTasks((prevTasks) =>
-          prevTasks.map((task) =>
-            task.id === editMode.taskID
-              ? { ...task, subTasks: updatedSubTasks }
-              : task
-          )
-        );
-      } else {
-        const updatedSubTasks = formData.subTasks.filter(
-          (_, index) => index !== indexToRemove
-        );
-        setFormData((prevForm) => ({ ...prevForm, subTasks: updatedSubTasks }));
-      }
-    } else {
-      const updatedSubTasks = formData.subTasks.filter(
-        (_, index) => index !== indexToRemove
-      );
-      setFormData((prevForm) => ({ ...prevForm, subTasks: updatedSubTasks }));
-    }
+    const updatedSubTasks = formData.subTasks.filter(
+      (_, index) => index !== indexToRemove
+    );
+    setFormData((prevForm) => ({ ...prevForm, subTasks: updatedSubTasks }));
   };
 
   React.useEffect(() => {
     if (editMode.state === true) {
       const currTask = tasks.filter((t) => t.id === editMode.taskID)[0];
+      console.log(currTask.subTasks);
       if (currTask) {
         form.current.elements.title.value = currTask.title;
         form.current.elements.desc.value = currTask.desc;
@@ -146,7 +121,7 @@ function TaskForm(props) {
           title: currTask.title,
           desc: currTask.desc,
           dueDate: currTask.dueDate,
-          subTasks: [],
+          subTasks: currTask.subTasks,
           images: [],
           tags: [],
         });
@@ -245,6 +220,8 @@ function TaskForm(props) {
             type="submit"
             value="+ Add Subtask"
           />
+
+          {/* Display subtasks */}
           <div className="subtask-item-container">
             {formData.subTasks &&
               formData.subTasks.map((st, index) => (
@@ -260,23 +237,6 @@ function TaskForm(props) {
                   <p>{st.task}</p>
                 </div>
               ))}
-
-            {editMode.state &&
-              tasks
-                .filter((t) => t.id === editMode.taskID)[0]
-                .subTasks.map((st, index) => (
-                  <div className="subtask-item">
-                    <button
-                      onClick={(event) => {
-                        removeSubTask(index);
-                        event.preventDefault();
-                      }}
-                    >
-                      -
-                    </button>
-                    <p>{st.task}</p>
-                  </div>
-                ))}
           </div>
         </form>
       </div>
