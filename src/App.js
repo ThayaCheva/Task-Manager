@@ -23,6 +23,7 @@ function App() {
   const [selectedTask, setSelectedTask] = useState("");
   const [taskImages, setTaskImages] = useState([]);
   const [allowNotification, setAllowNotification] = useState(false);
+  const [allowSettings, setAllowSettings] = useState(false);
   const [notificationCount, setNotificationCount] = useState(0);
   const [currentPage, setCurrentPage] = useState("Home");
 
@@ -32,9 +33,14 @@ function App() {
 
   const handleNavClick = (page, isNotification) => {
     setCurrentPage(page);
-    if (isNotification) {
+    if (page == "Notification") {
       setAllowNotification(true);
+      setAllowSettings(false);
+    } else if (page == "Settings") {
+      setAllowSettings(true);
+      setAllowNotification(false);
     } else {
+      setAllowSettings(false);
       setAllowNotification(false);
     }
   };
@@ -108,7 +114,14 @@ function App() {
             </div>
             <div className="navbar-container">
               <Link className="link" to="/">
-                <div className="nav-item">
+                <div
+                  className={
+                    currentPage === "Settings"
+                      ? "nav-item-active nav-item"
+                      : "nav-item"
+                  }
+                  onClick={() => handleNavClick("Settings", false)}
+                >
                   <FontAwesomeIcon className="icon" icon={faSliders} /> Settings
                 </div>
               </Link>
@@ -135,8 +148,12 @@ function App() {
                 setTaskImages,
                 allowNotification,
                 setAllowNotification,
+                allowSettings,
+                setAllowSettings,
                 notificationCount,
                 setNotificationCount,
+                currentPage,
+                setCurrentPage,
               }}
             >
               <Routes>

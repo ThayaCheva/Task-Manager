@@ -97,6 +97,10 @@
   justify-content: center;
   block-size: -moz-fit-content;
   block-size: fit-content;
+  transition: 0.1s ease-in;
+}
+.task-summary .task-summary-container .summary-task-item:hover {
+  transform: translateY(-5px);
 }
 .task-summary .task-summary-container .summary-task-item .summary-title,
 .task-summary .task-summary-container .summary-task-item p {

@@ -4,9 +4,12 @@ import { differenceInDays, isToday, format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { TaskContext } from "../App.js";
+import { useNavigate } from "react-router-dom";
 
 function Notification(props) {
-  const { tasks, setAllowNotification } = useContext(TaskContext);
+  const navigate = useNavigate();
+  const { tasks, setAllowNotification, setSelectedTask } =
+    useContext(TaskContext);
   const [notificationType, setNotificationType] = useState("today");
 
   const closeNotification = () => {
@@ -29,6 +32,11 @@ function Notification(props) {
   const overDuedTasks = tasks.filter(
     (t) => differenceInDays(t.dueDate, new Date()) < 0
   );
+
+  const handleTaskClick = (id) => {
+    setSelectedTask(id);
+    navigate("/");
+  };
 
   return (
     <div className="notification">
@@ -77,7 +85,12 @@ function Notification(props) {
               tasks.map(
                 (t) =>
                   isToday(t.dueDate) && (
-                    <div className="notification-item">
+                    <div
+                      className="notification-item"
+                      onClick={() => {
+                        handleTaskClick(t.id);
+                      }}
+                    >
                       <div className="notification-text">
                         <div
                           className="dot"
@@ -106,7 +119,13 @@ function Notification(props) {
                 (t) =>
                   differenceInDays(t.dueDate, new Date()) > 0 &&
                   differenceInDays(t.dueDate, new Date()) < 7 && (
-                    <div key={t.id} className="notification-item">
+                    <div
+                      key={t.id}
+                      className="notification-item"
+                      onClick={() => {
+                        handleTaskClick(t.id);
+                      }}
+                    >
                       <div className="notification-text">
                         <div
                           className="dot"
@@ -135,7 +154,13 @@ function Notification(props) {
               tasks.map(
                 (t) =>
                   differenceInDays(t.dueDate, new Date()) < 0 && (
-                    <div key={t.id} className="notification-item">
+                    <div
+                      key={t.id}
+                      className="notification-item"
+                      onClick={() => {
+                        handleTaskClick(t.id);
+                      }}
+                    >
                       <div className="notification-text">
                         <div
                           className="dot"

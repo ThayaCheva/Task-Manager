@@ -57,12 +57,32 @@
         border-bottom: 2px solid var(--blue);
       }
     }
+    .today-tasks {
+      .dot {
+        background: var(--green);
+      }
+    }
+    .upcoming-tasks {
+      .dot {
+        background: var(--blue);
+      }
+    }
+    .overdue-tasks {
+      .dot {
+        background: var(--red);
+      }
+    }
     .notification-item {
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
       padding: 1rem 2rem;
       border-bottom: 1px solid var(--grey-1);
+      transition: 0.1s ease-in;
+      &:hover {
+        background: var(--grey);
+        cursor: pointer;
+      }
       .notification-text {
         display: flex;
         align-items: center;

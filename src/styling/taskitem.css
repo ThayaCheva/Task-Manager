@@ -1,3 +1,7 @@
+.highlighted {
+  box-shadow: var(--dark) 0px 2px 5px 0px, var(--dark) 0px 0px 0px 2px !important;
+}
+
 .task-item {
   position: relative;
   width: 100%;

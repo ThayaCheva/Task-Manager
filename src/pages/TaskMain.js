@@ -46,10 +46,17 @@ function TaskMain() {
   const [searchWord, setSearchWord] = useState({ word: "", foundTasks: [] });
   const handleSearchTasks = (event) => {
     const updatedTask = tasks.filter((task) =>
-      task.title.includes(event.target.value.toLowerCase())
+      task.title.toLowerCase().includes(event.target.value.toLowerCase())
     );
     setSearchWord({ word: event.target.value, foundTasks: updatedTask });
   };
+
+  useEffect(() => {
+    const updatedTask = tasks.filter((task) =>
+      task.title.toLowerCase().includes(searchWord.word.toLowerCase())
+    );
+    setSearchWord({ word: searchWord.word, foundTasks: updatedTask });
+  }, [tasks]);
 
   // Clicking a task in summary will scroll to the selected task in home
   useEffect(() => {

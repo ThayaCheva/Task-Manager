@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState, useEffect } from "react";
 import FileUpload from "./FileUpload.js";
 import TagDropDown from "./TagDropDown.js";
 import "../styling/taskitem.css";
@@ -19,7 +19,9 @@ function TaskItem(props) {
     editMode,
     setEditMode,
     selectedTask,
+    setSelectedTask,
     setAllowNotification,
+    setAllowSettings,
   } = useContext(TaskContext);
 
   const selectedTaskRef = useRef(null);
@@ -27,6 +29,7 @@ function TaskItem(props) {
   // Update the state to edit mode
   const editTask = (id) => {
     setAllowNotification(false);
+    setAllowSettings(false);
     setEditMode({ ...editMode, state: true, taskID: id });
   };
 
@@ -117,10 +120,35 @@ function TaskItem(props) {
     );
   };
 
+  const [highlighted, setHighlighted] = useState(false);
+  useEffect(() => {
+    if (props.task.id === selectedTask) {
+      setHighlighted(true);
+      const timerScroll = setTimeout(() => {
+        scrollToHighlighted();
+      }, 100);
+      const timer = setTimeout(() => {
+        setHighlighted(false);
+        setSelectedTask(null);
+      }, 1000);
+      return () => {
+        clearTimeout(timer);
+        clearTimeout(timerScroll);
+      };
+    }
+  }, [props.task.id, selectedTask]);
+
+  const scrollToHighlighted = () => {
+    const highlightedElement = document.querySelector(".highlighted");
+    if (highlightedElement) {
+      highlightedElement.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div
       ref={props.task.id === selectedTask ? selectedTaskRef : null}
-      className="task-item"
+      className={`task-item ${highlighted ? "highlighted" : ""}`}
     >
       <div>
         <div

@@ -59,12 +59,26 @@
 .notification .notification-container .notification-nav .active {
   border-bottom: 2px solid var(--blue);
 }
+.notification .notification-container .today-tasks .dot {
+  background: var(--green);
+}
+.notification .notification-container .upcoming-tasks .dot {
+  background: var(--blue);
+}
+.notification .notification-container .overdue-tasks .dot {
+  background: var(--red);
+}
 .notification .notification-container .notification-item {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   padding: 1rem 2rem;
   border-bottom: 1px solid var(--grey-1);
+  transition: 0.1s ease-in;
+}
+.notification .notification-container .notification-item:hover {
+  background: var(--grey);
+  cursor: pointer;
 }
 .notification .notification-container .notification-item .notification-text {
   display: flex;

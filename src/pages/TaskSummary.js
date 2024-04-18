@@ -15,7 +15,7 @@ import {
 import { TaskContext } from "../App";
 
 function TaskSummary() {
-  const { tasks, setSelectedTask } = useContext(TaskContext);
+  const { tasks, setSelectedTask, setCurrentPage } = useContext(TaskContext);
   const navigate = useNavigate();
   const newTasks = [...tasks];
   const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -31,7 +31,6 @@ function TaskSummary() {
         }
       }
     }
-
     return count;
   };
 
@@ -42,6 +41,7 @@ function TaskSummary() {
 
   const handleTaskClick = (id) => {
     setSelectedTask(id);
+    setCurrentPage("Home");
     navigate("/");
   };
 
@@ -74,6 +74,7 @@ function TaskSummary() {
       ),
     }));
   };
+
   const decreaseMonth = () => {
     setSelectedMonth((prevSelectedMonth) => ({
       ...prevSelectedMonth,
@@ -91,7 +92,7 @@ function TaskSummary() {
       ),
     }));
   };
-  console.log(tasks);
+
   return (
     <section className="task-summary">
       <div className="task-summary-container">
