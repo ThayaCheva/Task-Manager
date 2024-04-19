@@ -3,6 +3,7 @@
   height: 100%;
   padding: 1rem;
   overflow-y: auto;
+  transition: 0.1s ease-in;
 }
 .tasks-items .tasks-items-container {
   display: grid;
@@ -23,7 +24,7 @@
   justify-content: center;
 }
 .tasks-items .confirm-menu .confirm-menu-container {
-  background: var(--light);
+  background: var(--tasks-background);
   padding: 2.5rem;
   display: flex;
   flex-direction: column;
@@ -49,7 +50,8 @@
 }
 .tasks-items .confirm-menu .confirm-menu-container .confirm-menu-buttons button:last-child {
   background: 0;
-  border: 1px solid var(--dark);
+  color: var(--header);
+  border: 1px solid var(--header);
 }
 .tasks-items .search-bar {
   margin-top: 1rem;
@@ -63,8 +65,9 @@
   border-radius: 50px;
 }
 .tasks-items .search-bar input {
-  border: 1px solid var(--grey-1);
-  background: var(--light);
+  border: 1px solid var(--input-border);
+  background: var(--input-background);
+  color: var(--header);
   padding: 0 1rem;
 }
 .tasks-items .search-bar .btn-container button {
@@ -78,8 +81,8 @@
 }
 .tasks-items .search-bar .btn-container button:first-child {
   background: none;
-  border: 1px solid var(--dark);
-  color: var(--dark);
+  border: 1px solid var(--header);
+  color: var(--header);
   display: flex;
   align-items: center;
   justify-content: center;

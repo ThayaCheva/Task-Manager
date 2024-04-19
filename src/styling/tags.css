@@ -9,7 +9,7 @@
   gap: 1rem;
   width: 15vw;
   margin-left: 1rem;
-  background: var(--light);
+  background: var(--tasks-background);
   border: 1px solid var(--grey);
   box-shadow: var(--box-shadow);
   border-radius: 15px;
@@ -78,10 +78,11 @@
 .tags-menu .tags-create-form button {
   width: 100% !important;
   margin: 0 !important;
+  background: var(--input-background);
 }
 .tags-menu .tags-create-form input {
   padding: 0.5rem;
-  border: 1px solid var(--grey-1);
+  border: 1px solid var(--input-border);
 }
 .tags-menu .tags-create-form input:focus {
   outline: none;
@@ -107,7 +108,7 @@
   padding: 1rem;
   border: none !important;
   background: var(--grey) !important;
-  color: var(--dark) !important;
+  color: var(--header) !important;
 }
 .tags-menu .tags-create-form button:hover {
   background: #e5e5e5 !important;

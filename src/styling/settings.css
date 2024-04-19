@@ -6,9 +6,10 @@
   justify-content: flex-start;
   flex-direction: column;
   gap: 1rem;
-  background: var(--light);
+  background: var(--tasks-background);
   box-shadow: var(--box-shadow);
   padding: 2rem 0;
+  transition: 0.1s ease-in;
 }
 .settings .settings-container {
   width: 100%;
@@ -28,10 +29,11 @@
   height: 20px;
   border: 0;
   background: 0;
+  color: var(--header);
 }
 .settings .settings-container .settings-item {
-  border: 1px solid var(--grey-1);
-  color: var(--paragraph);
+  border: 1px solid var(--settings);
+  color: var(--settings);
   padding: 0.5rem 1rem;
   border-radius: 5px;
   display: flex;
@@ -57,8 +59,19 @@
   flex-direction: column;
   gap: 1rem;
 }
+.settings .settings-container .settings-font-size .settings-font-size-items {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
 .settings .settings-container .settings-mode {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+.settings .settings-container .selected-mode {
+  border: 1.5px solid var(--selected-setting);
+  color: var(--selected-setting);
+  font-weight: bold;
 }/*# sourceMappingURL=settings.css.map */

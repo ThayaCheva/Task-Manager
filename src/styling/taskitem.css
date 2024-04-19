@@ -8,11 +8,12 @@
   height: 100%;
   block-size: -moz-fit-content;
   block-size: fit-content;
-  background: var(--light);
+  background: var(--tasks-background);
   border-radius: 1rem;
   gap: 1rem;
   padding: 1rem;
   box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
+  transition: 0.1s ease-in;
 }
 .task-item .tasks-item-content {
   width: 100%;
@@ -27,6 +28,7 @@
 .task-item .tasks-item-content .task-item-title {
   font-size: 1em;
   font-weight: bold;
+  color: var(--header);
 }
 .task-item .tasks-item-content .task-item-tags {
   display: flex;
@@ -39,6 +41,7 @@
 .task-item .tasks-item-content .task-item-tags .task-item-tags-header {
   display: flex;
   align-items: center;
+  color: var(--header);
 }
 .task-item .tasks-item-content .task-item-tags .task-item-tags-header button {
   width: 1rem;
@@ -72,6 +75,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  color: var(--header);
 }
 .task-item .tasks-item-content .task-progress .task-progress-bar {
   width: 100%;
@@ -114,6 +118,7 @@
   width: 15px;
   background: none;
   border: none;
+  color: var(--header);
 }
 .task-item .edit-task button:hover {
   transform: none;
@@ -127,7 +132,7 @@
   justify-content: center;
   flex-direction: column;
   gap: 1rem;
-  background: var(--light);
+  background: var(--tasks-background);
   padding: 1rem;
   box-shadow: var(--box-shadow);
   border-radius: 15px;
@@ -139,6 +144,7 @@
   border-radius: 5px;
   font-weight: bold;
   cursor: pointer;
+  color: var(--header);
   font-size: 1rem;
 }
 .task-item .project-image-container {

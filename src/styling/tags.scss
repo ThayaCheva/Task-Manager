@@ -9,7 +9,7 @@
   gap: 1rem;
   width: 15vw;
   margin-left: 1rem;
-  background: var(--light);
+  background: var(--tasks-background);
   border: 1px solid var(--grey);
   box-shadow: var(--box-shadow);
   border-radius: 15px;
@@ -77,10 +77,11 @@
     button {
       width: 100% !important;
       margin: 0 !important;
+      background: var(--input-background);
     }
     input {
       padding: 0.5rem;
-      border: 1px solid var(--grey-1);
+      border: 1px solid var(--input-border);
       &:focus {
         outline: none;
       }
@@ -108,7 +109,7 @@
       padding: 1rem;
       border: none !important;
       background: var(--grey) !important;
-      color: var(--dark) !important;
+      color: var(--header) !important;
       &:hover {
         background: #e5e5e5 !important;
       }

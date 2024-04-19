@@ -10,6 +10,15 @@
   src: url("../fonts/Nunito-VariableFont_wght.ttf");
 }
 :root {
+  --nav-background: #383c44;
+  --nav-background-hover: #494d55;
+  --main-background: #f2f3f4;
+  --tasks-background: #fff;
+  --header: #383c44;
+  --input-background: #fff;
+  --input-border: #dfe0e1;
+  --selected-setting: #383c44;
+  --settings: #999999;
   --light: #fff;
   --dark: #383c44;
   --dark-hover: #494d55;
@@ -24,9 +33,24 @@
   --box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
+[data-theme=dark] {
+  --nav-background: #1d1d1d;
+  --nav-background-hover: #373737;
+  --main-background: #272727;
+  --secondary-background: #373737;
+  --tasks-background: #2e2e2e;
+  --input-background: #383838;
+  --selected-setting: #fff;
+  --input-border: #383838;
+  --header: #fff;
+  --paragraph: #fff;
+  --grey: #484848;
+  --box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 24px;
+}
+
 html,
 body {
-  background: var(--grey);
+  background: var(--main-background);
   height: 100%;
 }
 
@@ -34,8 +58,14 @@ body {
   font-size: 100%;
 }
 
+h1,
+h2,
+h3,
+h4 {
+  color: var(--header);
+}
+
 h1 {
-  color: var(--dark);
   font-size: 1.4em;
 }
 

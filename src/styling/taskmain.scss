@@ -3,6 +3,7 @@
   height: 100%;
   padding: 1rem;
   overflow-y: auto;
+  transition: 0.1s ease-in;
   .tasks-items-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -21,7 +22,7 @@
     align-items: center;
     justify-content: center;
     .confirm-menu-container {
-      background: var(--light);
+      background: var(--tasks-background);
       padding: 2.5rem;
       display: flex;
       flex-direction: column;
@@ -44,7 +45,8 @@
           }
           &:last-child {
             background: 0;
-            border: 1px solid var(--dark);
+            color: var(--header);
+            border: 1px solid var(--header);
           }
         }
       }
@@ -61,8 +63,9 @@
       border-radius: 50px;
     }
     input {
-      border: 1px solid var(--grey-1);
-      background: var(--light);
+      border: 1px solid var(--input-border);
+      background: var(--input-background);
+      color: var(--header);
       padding: 0 1rem;
     }
     .btn-container {
@@ -76,8 +79,8 @@
         cursor: pointer;
         &:first-child {
           background: none;
-          border: 1px solid var(--dark);
-          color: var(--dark);
+          border: 1px solid var(--header);
+          color: var(--header);
           display: flex;
           align-items: center;
           justify-content: center;

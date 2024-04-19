@@ -12,7 +12,7 @@
     align-items: flex-start;
     justify-content: flex-start;
     flex-direction: column;
-    background: var(--light);
+    background: var(--tasks-background);
     gap: 2rem;
     box-shadow: var(--box-shadow);
     padding: 2rem 0;
@@ -41,10 +41,11 @@
     }
     input {
       padding: 0.5rem 1rem;
-      background: var(--light);
-      border: 1px solid var(--grey-1);
+      background: var(--input-background);
+      border: 1px solid var(--input-border);
       border-radius: 5px;
       width: 100%;
+      color: var(--header);
       &:focus {
         border: 1px solid var(--green);
       }
@@ -73,8 +74,9 @@
       margin-left: 2rem;
     }
     .subtask-btn {
-      background: none !important;
-      border: 1px solid var(--paragraph);
+      background: var(--input-background) !important;
+      border: 1px solid var(--input-border);
+      color: var(--header);
     }
 
     .subtask-item-container {
@@ -82,7 +84,6 @@
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
-
       .subtask-item {
         display: flex;
         gap: 1rem;
@@ -105,8 +106,9 @@
     background: var(--yellow) !important;
   }
   .cancel {
-    background: var(--light) !important;
-    border: 1px solid var(--paragraph) !important;
+    background: var(--input-background) !important;
+    border: 1px solid var(--input-border) !important;
+    color: var(--header) !important;
   }
   .btn-container {
     display: flex;

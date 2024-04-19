@@ -5,7 +5,7 @@
   align-items: flex-start;
   justify-content: flex-start;
   flex-direction: column;
-  background: var(--light);
+  background: var(--tasks-background);
   box-shadow: var(--box-shadow);
   padding: 2rem 0;
   .notification-container {
@@ -23,6 +23,7 @@
         height: 20px;
         border: 0;
         background: 0;
+        color: var(--header);
       }
     }
     .notification-nav {
@@ -41,7 +42,9 @@
         justify-content: center;
         gap: 0.5rem;
         font-size: 1em;
+        color: var(--header);
         .notification-count {
+          color: var(--main-background);
           background: var(--paragraph);
           padding: 0 0.5rem;
           border-radius: 50px;
@@ -50,7 +53,6 @@
           justify-content: center;
           font-weight: bold;
           font-size: 0.75rem;
-          color: var(--light);
         }
       }
       .active {
@@ -79,6 +81,7 @@
       padding: 1rem 2rem;
       border-bottom: 1px solid var(--grey-1);
       transition: 0.1s ease-in;
+      color: var(--header);
       &:hover {
         background: var(--grey);
         cursor: pointer;

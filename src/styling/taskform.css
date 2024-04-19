@@ -13,7 +13,7 @@
   align-items: flex-start;
   justify-content: flex-start;
   flex-direction: column;
-  background: var(--light);
+  background: var(--tasks-background);
   gap: 2rem;
   box-shadow: var(--box-shadow);
   padding: 2rem 0;
@@ -43,10 +43,11 @@
 }
 #tasklist .forms input {
   padding: 0.5rem 1rem;
-  background: var(--light);
-  border: 1px solid var(--grey-1);
+  background: var(--input-background);
+  border: 1px solid var(--input-border);
   border-radius: 5px;
   width: 100%;
+  color: var(--header);
 }
 #tasklist .forms input:focus {
   border: 1px solid var(--green);
@@ -75,8 +76,9 @@
   margin-left: 2rem;
 }
 #tasklist .sub-task .subtask-btn {
-  background: none !important;
-  border: 1px solid var(--paragraph);
+  background: var(--input-background) !important;
+  border: 1px solid var(--input-border);
+  color: var(--header);
 }
 #tasklist .sub-task .subtask-item-container {
   width: 100%;
@@ -104,8 +106,9 @@
   background: var(--yellow) !important;
 }
 #tasklist .cancel {
-  background: var(--light) !important;
-  border: 1px solid var(--paragraph) !important;
+  background: var(--input-background) !important;
+  border: 1px solid var(--input-border) !important;
+  color: var(--header) !important;
 }
 #tasklist .btn-container {
   display: flex;

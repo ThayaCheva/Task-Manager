@@ -26,6 +26,11 @@ function App() {
   const [allowSettings, setAllowSettings] = useState(false);
   const [notificationCount, setNotificationCount] = useState(0);
   const [currentPage, setCurrentPage] = useState("Home");
+  const [settings, setSettings] = useState({
+    style: "grid",
+    fontSize: 1,
+    mode: "light",
+  });
 
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -154,6 +159,8 @@ function App() {
                 setNotificationCount,
                 currentPage,
                 setCurrentPage,
+                settings,
+                setSettings,
               }}
             >
               <Routes>
