@@ -9,9 +9,16 @@ import {
   faMoon,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
+import ConfirmDialog from "../pages/ConfirmDialog.js";
+
 function Settings(props) {
-  const { tasks, setAllowSettings, settings, setSettings } =
-    useContext(TaskContext);
+  const {
+    setAllowSettings,
+    settings,
+    setSettings,
+    allowConfirmDialog,
+    setAllowConfirmDialog,
+  } = useContext(TaskContext);
   const setDarkMode = () => {
     setSettings({ ...settings, mode: "dark" });
     document.querySelector("body").setAttribute("data-theme", "dark");
@@ -20,19 +27,25 @@ function Settings(props) {
     setSettings({ ...settings, mode: "light" });
     document.querySelector("body").setAttribute("data-theme", "light");
   };
-  const setFontSize = (fontSize) => {
-    setSettings({ ...settings, fontSize: fontSize });
-  };
   const setSettingsStyle = (style) => {
     setSettings({ ...settings, style: style });
   };
 
   const closeSettings = () => {
     setAllowSettings(false);
-    props.handleNavClick("Home", false);
+    props.handleNavClick("Home");
   };
+
   return (
     <div className="settings">
+      {allowConfirmDialog.state &&
+        allowConfirmDialog.type === "clear-storage" && (
+          <ConfirmDialog
+            title={"Clear Local Storage?"}
+            desc={"Clearing local storage will remove all tasks and tags"}
+            functionToCall={() => localStorage.clear()}
+          />
+        )}
       <div className="settings-container">
         <div className="settings-header">
           <h1>Settings</h1>
@@ -63,51 +76,7 @@ function Settings(props) {
             </div>
           </div>
         </div>
-        <div className="settings-font-size">
-          <h4>Font Size:</h4>
-          <div className="settings-font-size-items">
-            <div
-              className={`settings-item ${
-                settings.fontSize === 50 ? "selected-mode" : ""
-              }`}
-              onClick={() => setFontSize(50)}
-            >
-              50%
-            </div>
-            <div
-              className={`settings-item ${
-                settings.fontSize === 75 ? "selected-mode" : ""
-              }`}
-              onClick={() => setFontSize(75)}
-            >
-              75%
-            </div>
-            <div
-              className={`settings-item ${
-                settings.fontSize === 100 ? "selected-mode" : ""
-              }`}
-              onClick={() => setFontSize(100)}
-            >
-              100%
-            </div>
-            <div
-              className={`settings-item ${
-                settings.fontSize === 125 ? "selected-mode" : ""
-              }`}
-              onClick={() => setFontSize(125)}
-            >
-              125%
-            </div>
-            <div
-              className={`settings-item ${
-                settings.fontSize === 150 ? "selected-mode" : ""
-              }`}
-              onClick={() => setFontSize(150)}
-            >
-              150%
-            </div>
-          </div>
-        </div>
+
         <div className="settings-mode">
           <h4>Mode:</h4>
           <div
@@ -127,6 +96,17 @@ function Settings(props) {
             {" "}
             <FontAwesomeIcon className="icon" icon={faMoon} />
             Dark Mode
+          </div>
+          <div className="settings-clear-cache">
+            <h4>Clear Storage:</h4>
+            <div
+              className="settings-item"
+              onClick={() =>
+                setAllowConfirmDialog({ type: "clear-storage", state: true })
+              }
+            >
+              Clear Storage
+            </div>
           </div>
         </div>
       </div>

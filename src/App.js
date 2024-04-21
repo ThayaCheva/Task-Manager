@@ -28,15 +28,19 @@ function App() {
   const [currentPage, setCurrentPage] = useState("Home");
   const [settings, setSettings] = useState({
     style: "grid",
-    fontSize: 1,
+    fontSize: 100,
     mode: "light",
+  });
+  const [allowConfirmDialog, setAllowConfirmDialog] = useState({
+    type: null,
+    state: false,
   });
 
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
-  const handleNavClick = (page, isNotification) => {
+  const handleNavClick = (page) => {
     setCurrentPage(page);
     if (page == "Notification") {
       setAllowNotification(true);
@@ -75,7 +79,7 @@ function App() {
               <h1>Task Manager</h1>
               <Link className="link" to="/">
                 <div
-                  onClick={() => handleNavClick("Home", false)}
+                  onClick={() => handleNavClick("Home")}
                   className={
                     currentPage === "Home"
                       ? "nav-item-active nav-item"
@@ -87,7 +91,7 @@ function App() {
               </Link>
               <Link className="link" to="/">
                 <div
-                  onClick={() => handleNavClick("Notification", true)}
+                  onClick={() => handleNavClick("Notification")}
                   className={
                     currentPage === "Notification"
                       ? "nav-item-active nav-item"
@@ -105,7 +109,7 @@ function App() {
               </Link>
               <Link className="link" to="/summary">
                 <div
-                  onClick={() => handleNavClick("Summary", false)}
+                  onClick={() => handleNavClick("Summary")}
                   className={
                     currentPage === "Summary"
                       ? "nav-item-active nav-item"
@@ -125,7 +129,7 @@ function App() {
                       ? "nav-item-active nav-item"
                       : "nav-item"
                   }
-                  onClick={() => handleNavClick("Settings", false)}
+                  onClick={() => handleNavClick("Settings")}
                 >
                   <FontAwesomeIcon className="icon" icon={faSliders} /> Settings
                 </div>
@@ -161,6 +165,8 @@ function App() {
                 setCurrentPage,
                 settings,
                 setSettings,
+                allowConfirmDialog,
+                setAllowConfirmDialog,
               }}
             >
               <Routes>

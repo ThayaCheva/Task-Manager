@@ -112,4 +112,7 @@
 }
 .tags-menu .tags-create-form button:hover {
   background: #e5e5e5 !important;
+}
+.tags-menu .tags-create-form input {
+  color: var(--header);
 }/*# sourceMappingURL=tags.css.map */

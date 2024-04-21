@@ -52,17 +52,6 @@
         gap: 1rem;
       }
     }
-    .settings-font-size {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      .settings-font-size-items {
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 1rem;
-      }
-    }
     .settings-mode {
       display: flex;
       flex-direction: column;
@@ -72,6 +61,17 @@
       border: 1.5px solid var(--selected-setting);
       color: var(--selected-setting);
       font-weight: bold;
+    }
+    .settings-clear-cache {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      .settings-item {
+        background: 0;
+        border: 1px solid var(--red);
+        color: var(--red);
+        width: 100%;
+      }
     }
   }
 }

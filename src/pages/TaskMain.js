@@ -4,11 +4,17 @@ import { BiFilter } from "react-icons/bi";
 import "../styling/taskmain.css";
 import { TaskContext } from "../App.js";
 import TaskItem from "../pages/TaskItem.js";
+import ConfirmDialog from "../pages/ConfirmDialog.js";
 
 function TaskMain() {
-  const { tasks, setTasks } = useContext(TaskContext);
+  const {
+    tasks,
+    setTasks,
+    settings,
+    allowConfirmDialog,
+    setAllowConfirmDialog,
+  } = useContext(TaskContext);
   const selectedTaskRef = useRef(null);
-  const [openClearMenu, setOpenClearMenu] = useState(false);
 
   // Remove all tasks
   const clearAllTasks = () => {
@@ -64,30 +70,17 @@ function TaskMain() {
       selectedTaskRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [selectedTaskRef]);
-
+  console.log(allowConfirmDialog);
   return (
     <div className="tasks-items">
-      {openClearMenu && (
-        <div className="confirm-menu">
-          <div className="confirm-menu-container">
-            <h1>Clear all tasks?</h1>
-            <p>Are you sure you want to clear all tasks?</p>
-            <div className="confirm-menu-buttons">
-              <button
-                className="btn"
-                onClick={() => {
-                  clearAllTasks();
-                  setOpenClearMenu(false);
-                }}
-              >
-                Confirm
-              </button>
-              <button className="btn" onClick={() => setOpenClearMenu(false)}>
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
+      {allowConfirmDialog.state && allowConfirmDialog.type === "clear-task" && (
+        <ConfirmDialog
+          title={"Clear all tasks?"}
+          desc={"Are you sure you want to clear all tasks?"}
+          functionToCall={() =>
+            setAllowConfirmDialog({ type: "clear-task", state: false })
+          }
+        />
       )}
 
       <h1 className="header">My Tasks</h1>
@@ -103,13 +96,18 @@ function TaskMain() {
             <BiFilter size={20} />
             Sort By
           </button>
-          <button className="btn" onClick={() => setOpenClearMenu(true)}>
+          <button
+            className="btn"
+            onClick={() =>
+              setAllowConfirmDialog({ type: "clear-task", state: true })
+            }
+          >
             Clear All Tasks
           </button>
         </div>
       </div>
 
-      <div className="tasks-items-container">
+      <div className={`tasks-items-container ${settings.style}`}>
         {searchWord.word === ""
           ? tasks.map((t, index) => (
               <TaskItem

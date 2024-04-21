@@ -54,17 +54,6 @@
   justify-content: flex-start !important;
   gap: 1rem;
 }
-.settings .settings-container .settings-font-size {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-.settings .settings-container .settings-font-size .settings-font-size-items {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
 .settings .settings-container .settings-mode {
   display: flex;
   flex-direction: column;
@@ -74,4 +63,15 @@
   border: 1.5px solid var(--selected-setting);
   color: var(--selected-setting);
   font-weight: bold;
+}
+.settings .settings-container .settings-clear-cache {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.settings .settings-container .settings-clear-cache .settings-item {
+  background: 0;
+  border: 1px solid var(--red);
+  color: var(--red);
+  width: 100%;
 }/*# sourceMappingURL=settings.css.map */

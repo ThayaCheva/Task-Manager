@@ -1,5 +1,5 @@
 .highlighted {
-  box-shadow: var(--dark) 0px 2px 5px 0px, var(--dark) 0px 0px 0px 2px !important;
+  box-shadow: var(--highlighted) !important;
 }
 
 .task-item {

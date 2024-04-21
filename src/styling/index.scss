@@ -32,6 +32,7 @@
   --green: #a1eebd;
   --yellow: #f9cf73;
   --box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  --highlighted: var(--blue) 0px 2px 5px 0px, var(--blue) 0px 0px 0px 2px !important;
 }
 
 [data-theme="dark"] {
@@ -47,6 +48,7 @@
   --paragraph: #fff;
   --grey: #484848;
   --box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 24px;
+  --highlighted: var(--blue) 0px 2px 5px 0px, var(--blue) 0px 0px 0px 2px !important;
 }
 
 html,

@@ -22,6 +22,7 @@ function TaskItem(props) {
     setSelectedTask,
     setAllowNotification,
     setAllowSettings,
+    settings,
   } = useContext(TaskContext);
 
   const selectedTaskRef = useRef(null);
