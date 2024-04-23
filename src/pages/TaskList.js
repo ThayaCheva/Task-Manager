@@ -11,7 +11,7 @@ function TaskList() {
     useContext(TaskContext);
   const { handleNavClick } = useContext(NavContext);
 
-  const displayItem = () => {
+  const displayMenu = () => {
     if (allowNotification) {
       return <Notification handleNavClick={handleNavClick} />;
     } else if (allowSettings) {
@@ -27,7 +27,7 @@ function TaskList() {
   return (
     <section id="tasklist">
       <TaskMain />
-      {displayItem()}
+      {displayMenu()}
     </section>
   );
 }

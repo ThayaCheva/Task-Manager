@@ -1,9 +1,10 @@
-import { React, useContext } from "react";
+import { React, useContext, useEffect } from "react";
 import { TaskContext } from "../App.js";
 import "../styling/taskmain.css";
 
 function ConfirmDialog(props) {
-  const { allowConfirmDialog, setAllowConfirmDialog } = useContext(TaskContext);
+  const { tasks, allowConfirmDialog, setAllowConfirmDialog } =
+    useContext(TaskContext);
   return (
     <div className="confirm-menu">
       <div className="confirm-menu-container">

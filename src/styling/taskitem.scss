@@ -25,6 +25,14 @@
       font-size: 1em;
       font-weight: bold;
       color: var(--header);
+      width: 100%;
+    }
+    .list-tasks {
+      cursor: pointer;
+      transition: 0.1s ease-in;
+      &:hover {
+        background: var(--input-border);
+      }
     }
     .task-item-tags {
       display: flex;

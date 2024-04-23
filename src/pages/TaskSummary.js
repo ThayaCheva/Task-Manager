@@ -13,6 +13,7 @@ import {
   subMonths,
 } from "date-fns";
 import { TaskContext } from "../App";
+import Navbar from "./Navbar.js";
 
 function TaskSummary() {
   const { tasks, setSelectedTask, setCurrentPage } = useContext(TaskContext);
@@ -95,6 +96,7 @@ function TaskSummary() {
 
   return (
     <section className="task-summary">
+      <Navbar />
       <div className="task-summary-container">
         <div className="tasks-list">
           <div className="calendar-header">

@@ -26,7 +26,14 @@ function TaskItem(props) {
   } = useContext(TaskContext);
 
   const selectedTaskRef = useRef(null);
-
+  const [hidden, setHidden] = useState(false);
+  useEffect(() => {
+    if (settings.style === "list") {
+      setHidden(true);
+    } else {
+      setHidden(false);
+    }
+  }, [settings]);
   // Update the state to edit mode
   const editTask = (id) => {
     setAllowNotification(false);
@@ -165,7 +172,14 @@ function TaskItem(props) {
         )}
 
         <div className="tasks-item-content">
-          <div className="task-item-title">{props.task.title}</div>
+          <div
+            className={`task-item-title ${
+              settings.style === "list" && "list-tasks"
+            }`}
+            onClick={() => setHidden(!hidden)}
+          >
+            {props.task.title}
+          </div>
           {props.task.dueDate && (
             <p className="due-date">
               <BiAlarm className="icon" />
@@ -173,37 +187,39 @@ function TaskItem(props) {
             </p>
           )}
 
-          <div className="task-item-tags">
-            <div className="task-item-tags-header">
-              <p>Tags: </p>
-              <button onClick={() => props.handleTagDropdown(props.task.id)}>
-                +
-              </button>
-              {props.tagDropdown.state &&
-                props.tagDropdown.id === props.task.id && (
-                  <TagDropDown
-                    taskID={props.task.id}
-                    handleTagDropdown={props.handleTagDropdown}
-                  ></TagDropDown>
-                )}
-            </div>
-            {props.task.tags && (
-              <div className="task-tags">
-                {props.task.tags.map((t, index) => (
-                  <div
-                    key={index}
-                    style={{ backgroundColor: t.tagInfo.tagColor }}
-                  >
-                    {t.tagInfo.tagName}
-                  </div>
-                ))}
+          {!hidden && (
+            <div className="task-item-tags">
+              <div className="task-item-tags-header">
+                <p>Tags: </p>
+                <button onClick={() => props.handleTagDropdown(props.task.id)}>
+                  +
+                </button>
+                {props.tagDropdown.state &&
+                  props.tagDropdown.id === props.task.id && (
+                    <TagDropDown
+                      taskID={props.task.id}
+                      handleTagDropdown={props.handleTagDropdown}
+                    ></TagDropDown>
+                  )}
               </div>
-            )}
-          </div>
+              {props.task.tags && (
+                <div className="task-tags">
+                  {props.task.tags.map((t, index) => (
+                    <div
+                      key={index}
+                      style={{ backgroundColor: t.tagInfo.tagColor }}
+                    >
+                      {t.tagInfo.tagName}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
 
-          <p>{props.task.desc}</p>
+          {!hidden && <p>{props.task.desc}</p>}
 
-          {props.task.subTasks && props.task.subTasks.length > 0 && (
+          {!hidden && props.task.subTasks && props.task.subTasks.length > 0 && (
             <div className="task-progress">
               <div className="task-progress-header">
                 <h5>Task Progress</h5>
@@ -217,7 +233,7 @@ function TaskItem(props) {
             </div>
           )}
 
-          {props.task.subTasks && (
+          {!hidden && props.task.subTasks && (
             <div>
               {props.task.subTasks.map((st, index) => (
                 <div className="subtask-item">
@@ -238,12 +254,14 @@ function TaskItem(props) {
               <img alt="my task" src={props.task.images} />
             </div>
           )}
-          <button
-            className="done-btn btn"
-            onClick={() => removeTask(props.task.id)}
-          >
-            Mark as done
-          </button>
+          {!hidden && (
+            <button
+              className="done-btn btn"
+              onClick={() => removeTask(props.task.id)}
+            >
+              Mark as done
+            </button>
+          )}
         </div>
       </div>
     </div>

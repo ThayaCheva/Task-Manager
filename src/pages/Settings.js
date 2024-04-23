@@ -43,7 +43,10 @@ function Settings(props) {
           <ConfirmDialog
             title={"Clear Local Storage?"}
             desc={"Clearing local storage will remove all tasks and tags"}
-            functionToCall={() => localStorage.clear()}
+            functionToCall={() => {
+              localStorage.clear();
+              alert("Test");
+            }}
           />
         )}
       <div className="settings-container">

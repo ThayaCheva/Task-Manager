@@ -1,12 +1,6 @@
-.App {
-  padding-left: 17vw;
-}
 .App .navbar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
   width: 15vw;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -68,4 +62,10 @@
   font-weight: bold;
   font-size: 0.75rem;
   color: var(--main-background);
+}
+
+@media only screen and (max-width: 1200px) {
+  .navbar {
+    width: 40vw;
+  }
 }/*# sourceMappingURL=nav.css.map */

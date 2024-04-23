@@ -29,6 +29,14 @@
   font-size: 1em;
   font-weight: bold;
   color: var(--header);
+  width: 100%;
+}
+.task-item .tasks-item-content .list-tasks {
+  cursor: pointer;
+  transition: 0.1s ease-in;
+}
+.task-item .tasks-item-content .list-tasks:hover {
+  background: var(--input-border);
 }
 .task-item .tasks-item-content .task-item-tags {
   display: flex;

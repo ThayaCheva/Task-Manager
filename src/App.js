@@ -1,6 +1,10 @@
 import { React, useState, useEffect, createContext } from "react";
-import TaskSections from "./pages/TaskList";
 import TaskSummary from "./pages/TaskSummary";
+import TaskMain from "./pages/TaskMain.js";
+import TaskForm from "./pages/TaskForm.js";
+import Settings from "./pages/Settings.js";
+import Navbar from "./pages/Navbar.js";
+import Notification from "./pages/Notification.js";
 import { differenceInDays, isToday } from "date-fns";
 import "./styling/nav.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -40,6 +44,20 @@ function App() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 1200) {
+        setSettings({ ...settings, style: "list" });
+      } else {
+        setSettings({ ...settings, style: "grid" });
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [window.innerWidth]);
+
   const handleNavClick = (page) => {
     setCurrentPage(page);
     if (page == "Notification") {
@@ -70,79 +88,33 @@ function App() {
     );
   }, [tasks]);
 
+  const displayMenu = () => {
+    if (allowNotification) {
+      return <Notification handleNavClick={handleNavClick} />;
+    } else if (allowSettings) {
+      return <Settings handleNavClick={handleNavClick} />;
+    } else {
+      if (editMode.state) {
+        return <TaskForm formTitle={"Edit Task"} />;
+      } else {
+        return <TaskForm formTitle={"Add Task"} />;
+      }
+    }
+  };
+
+  const TaskSections = () => {
+    return (
+      <section id="tasklist">
+        <Navbar handleNavClick={handleNavClick} />
+        <TaskMain />
+        {displayMenu()}
+      </section>
+    );
+  };
+
   return (
     <Router>
       <div className="App">
-        <header>
-          <div className="navbar">
-            <div className="navbar-container">
-              <h1>Task Manager</h1>
-              <Link className="link" to="/">
-                <div
-                  onClick={() => handleNavClick("Home")}
-                  className={
-                    currentPage === "Home"
-                      ? "nav-item-active nav-item"
-                      : "nav-item"
-                  }
-                >
-                  <FontAwesomeIcon className="icon" icon={faHome} /> My Tasks
-                </div>
-              </Link>
-              <Link className="link" to="/">
-                <div
-                  onClick={() => handleNavClick("Notification")}
-                  className={
-                    currentPage === "Notification"
-                      ? "nav-item-active nav-item"
-                      : "nav-item"
-                  }
-                >
-                  <FontAwesomeIcon className="icon" icon={faBell} />
-                  Notification
-                  {notificationCount > 0 && (
-                    <div className="notification-count">
-                      {notificationCount}
-                    </div>
-                  )}
-                </div>
-              </Link>
-              <Link className="link" to="/summary">
-                <div
-                  onClick={() => handleNavClick("Summary")}
-                  className={
-                    currentPage === "Summary"
-                      ? "nav-item-active nav-item"
-                      : "nav-item"
-                  }
-                >
-                  <FontAwesomeIcon className="icon" icon={faListCheck} />{" "}
-                  Summary
-                </div>
-              </Link>
-            </div>
-            <div className="navbar-container">
-              <Link className="link" to="/">
-                <div
-                  className={
-                    currentPage === "Settings"
-                      ? "nav-item-active nav-item"
-                      : "nav-item"
-                  }
-                  onClick={() => handleNavClick("Settings")}
-                >
-                  <FontAwesomeIcon className="icon" icon={faSliders} /> Settings
-                </div>
-              </Link>
-              <Link className="link sign-out" to="/">
-                <div className="nav-item">
-                  <FontAwesomeIcon className="icon" icon={faSignOut} /> Sign Out
-                </div>
-              </Link>
-            </div>
-          </div>
-        </header>
-
         <main>
           <NavContext.Provider value={{ handleNavClick }}>
             <TaskContext.Provider
@@ -167,6 +139,7 @@ function App() {
                 setSettings,
                 allowConfirmDialog,
                 setAllowConfirmDialog,
+                handleNavClick,
               }}
             >
               <Routes>

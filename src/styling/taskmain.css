@@ -35,6 +35,10 @@
   background: var(--input-background);
   color: var(--header);
   padding: 0 1rem;
+  height: 100%;
+}
+.tasks-items .search-bar .btn-container {
+  height: 100%;
 }
 .tasks-items .search-bar .btn-container button {
   border: none;
@@ -99,4 +103,12 @@
   background: 0;
   color: var(--header);
   border: 1px solid var(--header);
+}
+
+@media only screen and (max-width: 1200px) {
+  .tasks-items .search-bar {
+    display: flex;
+    flex-direction: column;
+    height: 95px;
+  }
 }/*# sourceMappingURL=taskmain.css.map */
