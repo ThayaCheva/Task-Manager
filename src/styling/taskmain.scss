@@ -18,6 +18,14 @@
     justify-content: center;
     margin-top: 1rem;
   }
+  .tasks-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    width: 100%;
+    padding: 0 1rem;
+    margin-top: 1rem;
+    font-weight: bold;
+  }
   .search-bar {
     margin-top: 1rem;
     display: grid;
@@ -111,6 +119,14 @@
       display: flex;
       flex-direction: column;
       height: 95px;
+    }
+    .tasks-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      width: 100%;
+      padding: 0 1rem;
+      margin-top: 1rem;
+      font-weight: bold;
     }
   }
 }

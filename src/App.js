@@ -7,15 +7,7 @@ import Navbar from "./pages/Navbar.js";
 import Notification from "./pages/Notification.js";
 import { differenceInDays, isToday } from "date-fns";
 import "./styling/nav.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSliders,
-  faSignOut,
-  faHome,
-  faBell,
-  faListCheck,
-} from "@fortawesome/free-solid-svg-icons";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 export const TaskContext = createContext();
 export const NavContext = createContext();
 
@@ -44,12 +36,16 @@ function App() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
+  const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 1200) {
         setSettings({ ...settings, style: "list" });
+        setIsMobile(true);
       } else {
         setSettings({ ...settings, style: "grid" });
+        setIsMobile(false);
       }
     };
     window.addEventListener("resize", handleResize);
@@ -103,11 +99,19 @@ function App() {
   };
 
   const TaskSections = () => {
-    return (
+    return !isMobile ? (
       <section id="tasklist">
         <Navbar handleNavClick={handleNavClick} />
         <TaskMain />
         {displayMenu()}
+      </section>
+    ) : (
+      <section id="tasklist-mobile">
+        <Navbar handleNavClick={handleNavClick} />
+        <div>
+          <TaskMain />
+          {displayMenu()}
+        </div>
       </section>
     );
   };
@@ -116,7 +120,7 @@ function App() {
     <Router>
       <div className="App">
         <main>
-          <NavContext.Provider value={{ handleNavClick }}>
+          <NavContext.Provider value={{ handleNavClick, isMobile }}>
             <TaskContext.Provider
               value={{
                 tasks,
@@ -139,7 +143,6 @@ function App() {
                 setSettings,
                 allowConfirmDialog,
                 setAllowConfirmDialog,
-                handleNavClick,
               }}
             >
               <Routes>

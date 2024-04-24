@@ -67,7 +67,18 @@
 }
 
 @media only screen and (max-width: 1200px) {
-  .navbar {
-    width: 40vw;
+  .App {
+    .navbar {
+      width: 100%;
+      color: var(--main-background);
+      padding: 1.5rem;
+      gap: 1rem;
+      .nav-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+      }
+    }
   }
 }

@@ -84,7 +84,6 @@ function TaskMain() {
       )}
 
       <h1 className="header">My Tasks</h1>
-
       <div className="search-bar">
         <input
           type="text"
@@ -107,6 +106,14 @@ function TaskMain() {
         </div>
       </div>
 
+      {settings.style === "list" && (
+        <div className="tasks-header">
+          <div>Title</div>
+          <div>Due Date</div>
+          <div>Current Tags</div>
+          <div></div>
+        </div>
+      )}
       <div className={`tasks-items-container ${settings.style}`}>
         {searchWord.word === ""
           ? tasks.map((t, index) => (

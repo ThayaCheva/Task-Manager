@@ -1,7 +1,6 @@
 .highlighted {
   box-shadow: var(--highlighted) !important;
 }
-
 .task-item {
   position: relative;
   width: 100%;
@@ -178,5 +177,46 @@
     padding: 0.5rem 1rem;
     border-radius: 5px;
     font-weight: bold;
+  }
+}
+
+.list-item {
+  &:hover {
+    cursor: pointer;
+    background: var(--grey-1);
+  }
+  .list-item-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    width: 100%;
+    .task-tags {
+      display: flex;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      flex-wrap: wrap;
+      div {
+        padding: 0 0.5rem;
+        border-radius: 5px;
+      }
+    }
+    .task-item-buttons {
+      position: initial;
+      flex-direction: row;
+      box-shadow: none;
+      justify-content: flex-sta;
+      block-size: fit-content;
+      width: 100%;
+      padding: 0;
+      top: 0;
+      right: 0;
+    }
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .list-item {
+    .list-item-header {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
   }
 }
