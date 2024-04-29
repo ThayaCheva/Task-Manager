@@ -8,8 +8,7 @@ import {
   faSignOut,
   faHome,
   faBell,
-  faListCheck,
-  faBars,
+  faCalendar,
 } from "@fortawesome/free-solid-svg-icons";
 export default function Navbar() {
   const { currentPage, notificationCount } = useContext(TaskContext);
@@ -25,83 +24,76 @@ export default function Navbar() {
   return (
     <header>
       <div className="navbar">
-        {isMobile && (
-          <div className="nav-header">
-            <h1>Task Manager</h1>
-            <FontAwesomeIcon
-              icon={faBars}
-              onClick={() => {
-                setIsHidden(!isHidden);
-              }}
-            />
-          </div>
-        )}
-        {!isHidden && (
-          <div className="navbar-container">
-            {!isMobile && <h1>Task Manager</h1>}
-            <Link className="link" to="/">
-              <div
-                onClick={() => handleNavClick("Home")}
-                className={
-                  currentPage === "Home"
-                    ? "nav-item-active nav-item"
-                    : "nav-item"
-                }
-              >
-                <FontAwesomeIcon className="icon" icon={faHome} /> My Tasks
-              </div>
-            </Link>
-            <Link className="link" to="/">
-              <div
-                onClick={() => handleNavClick("Notification")}
-                className={
-                  currentPage === "Notification"
-                    ? "nav-item-active nav-item"
-                    : "nav-item"
-                }
-              >
+        {isMobile && <h1 className="navbar-header">TM</h1>}
+        <div className="navbar-container">
+          {!isMobile && <h1 className="navbar-header">Task Manager</h1>}
+          <Link className="link" to="/">
+            <div
+              onClick={() => handleNavClick("Home")}
+              className={
+                currentPage === "Home" ? "nav-item-active nav-item" : "nav-item"
+              }
+            >
+              <FontAwesomeIcon className="icon" icon={faHome} />{" "}
+              <div className="nav-item-name">My Tasks</div>
+            </div>
+          </Link>
+          <Link className="link" to="/">
+            <div
+              onClick={() => handleNavClick("Notification")}
+              className={
+                currentPage === "Notification"
+                  ? "nav-item-active nav-item"
+                  : "nav-item"
+              }
+            >
+              <div className="notification-icon">
                 <FontAwesomeIcon className="icon" icon={faBell} />
-                Notification
                 {notificationCount > 0 && (
-                  <div className="notification-count">{notificationCount}</div>
+                  <div className="notification-light"></div>
                 )}
               </div>
-            </Link>
-            <Link className="link" to="/summary">
+              <div className="nav-item-name">Notification</div>
+            </div>
+          </Link>
+          <Link className="link" to="/summary">
+            <div
+              onClick={() => handleNavClick("Summary")}
+              className={
+                currentPage === "Summary"
+                  ? "nav-item-active nav-item"
+                  : "nav-item"
+              }
+            >
+              <FontAwesomeIcon className="icon" icon={faCalendar} />{" "}
+              <div className="nav-item-name">Summary</div>
+            </div>
+          </Link>
+          {isMobile && (
+            <Link className="link" to="/">
               <div
-                onClick={() => handleNavClick("Summary")}
                 className={
-                  currentPage === "Summary"
+                  currentPage === "Settings"
                     ? "nav-item-active nav-item"
                     : "nav-item"
                 }
+                onClick={() => handleNavClick("Settings")}
               >
-                <FontAwesomeIcon className="icon" icon={faListCheck} /> Summary
+                <FontAwesomeIcon className="icon" icon={faSliders} />{" "}
+                <div className="nav-item-name">Settings</div>
               </div>
             </Link>
-            {isMobile && (
-              <Link className="link" to="/">
-                <div
-                  className={
-                    currentPage === "Settings"
-                      ? "nav-item-active nav-item"
-                      : "nav-item"
-                  }
-                  onClick={() => handleNavClick("Settings")}
-                >
-                  <FontAwesomeIcon className="icon" icon={faSliders} /> Settings
-                </div>
-              </Link>
-            )}
-            {isMobile && (
-              <Link className="link sign-out" to="/">
-                <div className="nav-item">
-                  <FontAwesomeIcon className="icon" icon={faSignOut} /> Sign Out
-                </div>
-              </Link>
-            )}
-          </div>
-        )}
+          )}
+          {isMobile && (
+            <Link className="link sign-out" to="/">
+              <div className="nav-item">
+                <FontAwesomeIcon className="icon" icon={faSignOut} />
+                <div className="nav-item-name">Sign Out</div>
+              </div>
+            </Link>
+          )}
+        </div>
+
         {!isMobile && (
           <div className="navbar-container">
             <Link className="link" to="/">

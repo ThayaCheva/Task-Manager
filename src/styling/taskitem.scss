@@ -94,9 +94,10 @@
     .due-date {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.25rem;
       .icon {
         color: var(--paragraph);
+        transform: translateY(-1px);
       }
     }
     .subtask-item {
@@ -188,6 +189,7 @@
   .list-item-header {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1fr;
+    align-items: center;
     width: 100%;
     .task-tags {
       display: flex;

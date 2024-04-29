@@ -1,11 +1,13 @@
 import React from "react";
 import "../styling/taskform.css";
 import { TaskContext } from "../App";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { nanoid } from "nanoid";
 import { format } from "date-fns";
 
 function TaskForm(props) {
-  const { tasks, setTasks, editMode, setEditMode } =
+  const { tasks, setTasks, editMode, setEditMode, setSidePanel } =
     React.useContext(TaskContext);
   const form = React.useRef();
   const [subTask, setSubTask] = React.useState("");
@@ -109,6 +111,7 @@ function TaskForm(props) {
     setFormData((prevForm) => ({ ...prevForm, subTasks: updatedSubTasks }));
   };
 
+  // Sets the form data to the tasks info
   React.useEffect(() => {
     if (editMode.state === true) {
       const currTask = tasks.filter((t) => t.id === editMode.taskID)[0];
@@ -128,7 +131,7 @@ function TaskForm(props) {
       }
     }
   }, [editMode.state, editMode.taskID, tasks]);
-
+  const closeForm = () => {};
   return (
     <div className="forms">
       <form
@@ -137,7 +140,18 @@ function TaskForm(props) {
           editMode.state ? editTask(event, editMode.taskID) : addTask(event)
         }
       >
-        <h1>{props.formTitle}</h1>
+        <div className="form-header">
+          <h1>{props.formTitle}</h1>
+          <button onClick={() => closeForm()}>
+            <FontAwesomeIcon
+              icon={faXmark}
+              onClick={(event) => {
+                setSidePanel(null);
+                event.preventDefault();
+              }}
+            />
+          </button>
+        </div>
         <input
           type="text"
           id="title"

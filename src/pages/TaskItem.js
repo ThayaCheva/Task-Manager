@@ -20,8 +20,7 @@ function TaskItem(props) {
     setEditMode,
     selectedTask,
     setSelectedTask,
-    setAllowNotification,
-    setAllowSettings,
+    setSidePanel,
     settings,
   } = useContext(TaskContext);
 
@@ -36,8 +35,7 @@ function TaskItem(props) {
   }, [settings]);
   // Update the state to edit mode
   const editTask = (id) => {
-    setAllowNotification(false);
-    setAllowSettings(false);
+    setSidePanel("Add Task");
     setEditMode({ ...editMode, state: true, taskID: id });
   };
 
@@ -152,7 +150,7 @@ function TaskItem(props) {
       highlightedElement.scrollIntoView({ behavior: "smooth" });
     }
   };
-
+  console.log(props.tagDropdown.state);
   const GridStyle = () => {
     return (
       <div
@@ -177,14 +175,13 @@ function TaskItem(props) {
               className={`task-item-title ${
                 settings.style === "list" && "list-tasks"
               }`}
-              onClick={() => setHidden(!hidden)}
             >
               {props.task.title}
             </div>
             {props.task.dueDate && (
               <p className="due-date">
                 <BiAlarm className="icon" />
-                Due {format(props.task.dueDate, "dd MMMM yyyy ")}
+                {format(props.task.dueDate, "dd MMMM yyyy ")}
               </p>
             )}
 
@@ -273,47 +270,7 @@ function TaskItem(props) {
     );
   };
 
-  const ListStyle = () => {
-    return (
-      <div
-        ref={props.task.id === selectedTask ? selectedTaskRef : null}
-        className={`task-item list-item${highlighted ? "highlighted" : ""}`}
-      >
-        <div className="list-item-header">
-          <div
-            className={`task-item-title ${
-              settings.style === "list" && "list-tasks"
-            }`}
-            onClick={() => setHidden(!hidden)}
-          >
-            {props.task.title}
-          </div>
-          {props.task.dueDate && (
-            <p className="due-date">
-              {format(props.task.dueDate, "dd MMMM yyyy ")}
-            </p>
-          )}
-          {props.task.tags ? (
-            <div className="task-tags">
-              {props.task.tags.slice(0, 3).map((t, index) => (
-                <div
-                  key={index}
-                  style={{ backgroundColor: t.tagInfo.tagColor }}
-                >
-                  {t.tagInfo.tagName}
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div></div>
-          )}
-          <TaskDropDown></TaskDropDown>
-        </div>
-      </div>
-    );
-  };
-
-  return settings.style === "grid" ? <GridStyle /> : <ListStyle />;
+  return <GridStyle />;
 }
 
 export default TaskItem;

@@ -1,10 +1,14 @@
 #tasklist {
   height: 100vh;
   width: 100%;
+  justify-content: space-between;
+  display: flex;
+}
+#tasklist .tasklight-container {
   display: flex;
 }
 #tasklist .forms {
-  width: 30vw;
+  min-width: 25rem;
   height: 100%;
   display: flex;
   align-items: flex-start;
@@ -14,6 +18,19 @@
   gap: 2rem;
   box-shadow: var(--box-shadow);
   padding: 2rem 0;
+}
+#tasklist .forms .form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+#tasklist .forms .form-header button {
+  width: 20px;
+  height: 20px;
+  border: 0;
+  background: 0;
+  color: var(--header);
 }
 #tasklist .forms form {
   display: flex;
@@ -111,4 +128,18 @@
   display: flex;
   width: 100%;
   gap: 1rem;
+}
+
+@media only screen and (max-width: 1300px) {
+  #tasklist .forms {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 999;
+  }
+}
+@media only screen and (max-width: 480px) {
+  #tasklist .forms {
+    min-width: 100%;
+  }
 }/*# sourceMappingURL=taskform.css.map */

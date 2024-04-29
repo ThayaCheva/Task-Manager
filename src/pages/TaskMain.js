@@ -1,25 +1,20 @@
 import { React, useState, useContext, useRef, useEffect } from "react";
-
-import { BiFilter } from "react-icons/bi";
 import "../styling/taskmain.css";
 import { TaskContext } from "../App.js";
 import TaskItem from "../pages/TaskItem.js";
 import ConfirmDialog from "../pages/ConfirmDialog.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 function TaskMain() {
   const {
     tasks,
-    setTasks,
     settings,
     allowConfirmDialog,
     setAllowConfirmDialog,
+    setSidePanel,
   } = useContext(TaskContext);
   const selectedTaskRef = useRef(null);
-
-  // Remove all tasks
-  const clearAllTasks = () => {
-    setTasks([]);
-  };
 
   const [tagDropdown, setTagDropdown] = useState({
     state: false,
@@ -49,6 +44,7 @@ function TaskMain() {
     }
   };
 
+  // Search Functionality
   const [searchWord, setSearchWord] = useState({ word: "", foundTasks: [] });
   const handleSearchTasks = (event) => {
     const updatedTask = tasks.filter((task) =>
@@ -57,12 +53,13 @@ function TaskMain() {
     setSearchWord({ word: event.target.value, foundTasks: updatedTask });
   };
 
+  // Find the word that matches
   useEffect(() => {
     const updatedTask = tasks.filter((task) =>
       task.title.toLowerCase().includes(searchWord.word.toLowerCase())
     );
     setSearchWord({ word: searchWord.word, foundTasks: updatedTask });
-  }, [tasks]);
+  }, []);
 
   // Clicking a task in summary will scroll to the selected task in home
   useEffect(() => {
@@ -70,7 +67,7 @@ function TaskMain() {
       selectedTaskRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [selectedTaskRef]);
-  console.log(allowConfirmDialog);
+
   return (
     <div className="tasks-items">
       {allowConfirmDialog.state && allowConfirmDialog.type === "clear-task" && (
@@ -84,16 +81,23 @@ function TaskMain() {
       )}
 
       <h1 className="header">My Tasks</h1>
-      <div className="search-bar">
-        <input
-          type="text"
-          placeholder="Search..."
-          onChange={handleSearchTasks}
-        ></input>
+      <div className="tasks-manager">
+        <div className="search-bar">
+          <FontAwesomeIcon icon={faMagnifyingGlass} />
+          <input
+            type="text"
+            placeholder="Search..."
+            onChange={handleSearchTasks}
+          ></input>
+        </div>
         <div className="btn-container">
-          <button className="btn">
-            <BiFilter size={20} />
-            Sort By
+          <button
+            className="btn"
+            onClick={() => {
+              setSidePanel("Add Task");
+            }}
+          >
+            + Add Task
           </button>
           <button
             className="btn"

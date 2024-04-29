@@ -7,7 +7,8 @@
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  width: 15vw;
+  min-width: 15rem;
+  max-width: 17rem;
   margin-left: 1rem;
   background: var(--tasks-background);
   border: 1px solid var(--grey);
@@ -79,6 +80,7 @@
   width: 100% !important;
   margin: 0 !important;
   background: var(--input-background);
+  border-radius: 5px;
 }
 .tags-menu .tags-create-form input {
   padding: 0.5rem;
@@ -115,4 +117,10 @@
 }
 .tags-menu .tags-create-form input {
   color: var(--header);
+}
+
+@media only screen and (max-width: 435px) {
+  .tags-menu {
+    transform: translateX(calc(100vw - 435px));
+  }
 }/*# sourceMappingURL=tags.css.map */

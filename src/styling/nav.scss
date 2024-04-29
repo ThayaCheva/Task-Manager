@@ -1,6 +1,6 @@
 .App {
   .navbar {
-    width: 15vw;
+    min-width: 17.5rem;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -10,6 +10,10 @@
     padding: 2rem;
     box-shadow: var(--box-shadow);
     transition: 0.1s ease-in;
+    z-index: -1;
+    .navbar-header {
+      margin-bottom: 1rem;
+    }
     .navbar-container {
       display: flex;
       flex-direction: column;
@@ -51,34 +55,67 @@
           width: 1rem !important;
         }
       }
-      .notification-count {
-        background: var(--paragraph);
-        padding: 0 0.5rem;
-        border-radius: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: bold;
-        font-size: 0.75rem;
-        color: var(--main-background);
+      .notification-icon {
+        position: relative;
+        .notification-light {
+          position: absolute;
+          top: 0;
+          right: -5px;
+          background: var(--blue);
+          width: 5px;
+          height: 5px;
+          border-radius: 50%;
+        }
       }
     }
   }
 }
 
+@media only screen and (max-width: 1400px) {
+  .App {
+    .navbar {
+      min-width: 15rem;
+    }
+  }
+}
 @media only screen and (max-width: 1200px) {
   .App {
     .navbar {
-      width: 100%;
-      color: var(--main-background);
-      padding: 1.5rem;
-      gap: 1rem;
-      .nav-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 100%;
+      padding: 1rem;
+      block-size: fit-content;
+      height: 100%;
+      min-width: 5rem;
+      padding: 2rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      .navbar-header {
+        text-align: center;
+        border: 1px solid var(--light);
+        padding: 0.5rem;
+        border-radius: 5px;
       }
+      .navbar-container {
+        align-items: center;
+        justify-content: center;
+        .nav-item {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          padding: 0.5rem 0.75rem;
+          .nav-item-name {
+            font-size: 0.5em;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 830px) {
+  .App {
+    .navbar {
+      padding: 1rem 0.5rem;
     }
   }
 }

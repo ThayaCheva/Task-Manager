@@ -8,12 +8,11 @@ import { useNavigate } from "react-router-dom";
 
 function Notification(props) {
   const navigate = useNavigate();
-  const { tasks, setAllowNotification, setSelectedTask } =
-    useContext(TaskContext);
+  const { tasks, setSidePanel, setSelectedTask } = useContext(TaskContext);
   const [notificationType, setNotificationType] = useState("today");
 
   const closeNotification = () => {
-    setAllowNotification(false);
+    setSidePanel(null);
     props.handleNavClick("Home", false);
   };
 

@@ -93,4 +93,20 @@ button {
 }
 .btn:hover {
   transform: translateY(-5px);
+}
+
+@media only screen and (max-width: 1200px) {
+  h1 {
+    font-size: 1em !important;
+  }
+  h2 {
+    font-size: 0.8em !important;
+  }
+  h3 {
+    font-size: 0.8em !important;
+  }
+  p {
+    font-size: 0.8em !important;
+    color: var(--paragraph);
+  }
 }/*# sourceMappingURL=index.css.map */

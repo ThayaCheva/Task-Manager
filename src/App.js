@@ -18,8 +18,7 @@ function App() {
   const [editMode, setEditMode] = useState({ state: false, taskID: "" });
   const [selectedTask, setSelectedTask] = useState("");
   const [taskImages, setTaskImages] = useState([]);
-  const [allowNotification, setAllowNotification] = useState(false);
-  const [allowSettings, setAllowSettings] = useState(false);
+  const [sidePanel, setSidePanel] = useState(null);
   const [notificationCount, setNotificationCount] = useState(0);
   const [currentPage, setCurrentPage] = useState("Home");
   const [settings, setSettings] = useState({
@@ -41,10 +40,8 @@ function App() {
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 1200) {
-        setSettings({ ...settings, style: "list" });
         setIsMobile(true);
       } else {
-        setSettings({ ...settings, style: "grid" });
         setIsMobile(false);
       }
     };
@@ -56,18 +53,16 @@ function App() {
 
   const handleNavClick = (page) => {
     setCurrentPage(page);
-    if (page == "Notification") {
-      setAllowNotification(true);
-      setAllowSettings(false);
-    } else if (page == "Settings") {
-      setAllowSettings(true);
-      setAllowNotification(false);
+    if (page === "Notification") {
+      setSidePanel("Notification");
+    } else if (page === "Settings") {
+      setSidePanel("Settings");
     } else {
-      setAllowSettings(false);
-      setAllowNotification(false);
+      setSidePanel(null);
     }
   };
 
+  // Get the notification count
   useEffect(() => {
     const todayTasks = tasks.filter((t) => isToday(t.dueDate));
     const upcomingTasks = tasks.filter(
@@ -85,11 +80,11 @@ function App() {
   }, [tasks]);
 
   const displayMenu = () => {
-    if (allowNotification) {
+    if (sidePanel === "Notification") {
       return <Notification handleNavClick={handleNavClick} />;
-    } else if (allowSettings) {
+    } else if (sidePanel === "Settings") {
       return <Settings handleNavClick={handleNavClick} />;
-    } else {
+    } else if (sidePanel === "Add Task") {
       if (editMode.state) {
         return <TaskForm formTitle={"Edit Task"} />;
       } else {
@@ -106,12 +101,10 @@ function App() {
         {displayMenu()}
       </section>
     ) : (
-      <section id="tasklist-mobile">
+      <section id="tasklist">
         <Navbar handleNavClick={handleNavClick} />
-        <div>
-          <TaskMain />
-          {displayMenu()}
-        </div>
+        <TaskMain />
+        {displayMenu()}
       </section>
     );
   };
@@ -131,10 +124,6 @@ function App() {
                 setSelectedTask,
                 taskImages,
                 setTaskImages,
-                allowNotification,
-                setAllowNotification,
-                allowSettings,
-                setAllowSettings,
                 notificationCount,
                 setNotificationCount,
                 currentPage,
@@ -143,6 +132,8 @@ function App() {
                 setSettings,
                 allowConfirmDialog,
                 setAllowConfirmDialog,
+                sidePanel,
+                setSidePanel,
               }}
             >
               <Routes>

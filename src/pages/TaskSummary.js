@@ -12,14 +12,16 @@ import {
   addMonths,
   subMonths,
 } from "date-fns";
-import { TaskContext } from "../App";
+import { TaskContext, NavContext } from "../App";
 import Navbar from "./Navbar.js";
 
 function TaskSummary() {
   const { tasks, setSelectedTask, setCurrentPage } = useContext(TaskContext);
+  const { isMobile } = useContext(NavContext);
   const navigate = useNavigate();
   const newTasks = [...tasks];
   const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const weekdays_mobile = ["S", "M", "T", "W", "T", "F", "S"];
 
   const GetSubtaskAmount = () => {
     var count = 0;
@@ -105,6 +107,7 @@ function TaskSummary() {
               <div>{format(selectedMonth.selectedMonth, "MMMM yyyy")}</div>
               <button onClick={() => increaseMonth()}>{`>`}</button>
             </div>
+
             <div className="tasks-stats">
               <div className="tasks-stats-item">
                 <p>Number of Tasks: {tasks.length}</p>
@@ -117,12 +120,17 @@ function TaskSummary() {
             </div>
           </div>
           <div className="grid">
-            {weekdays.map((day) => (
-              <div className="border weekdays" key={day}>
-                {day}
-              </div>
-            ))}
-
+            {!isMobile
+              ? weekdays.map((day) => (
+                  <div className="border weekdays" key={day}>
+                    {day}
+                  </div>
+                ))
+              : weekdays_mobile.map((day) => (
+                  <div className="border weekdays" key={day}>
+                    {day}
+                  </div>
+                ))}
             {/* Empty Div */}
             {Array.from({ length: selectedMonth.startingDayIndex }).map(
               (_, index) => {

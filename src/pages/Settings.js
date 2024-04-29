@@ -1,4 +1,4 @@
-import { React, useContext, useState } from "react";
+import { React, useContext } from "react";
 import "../styling/settings.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { TaskContext } from "../App.js";
@@ -13,7 +13,7 @@ import ConfirmDialog from "../pages/ConfirmDialog.js";
 
 function Settings(props) {
   const {
-    setAllowSettings,
+    setSidePanel,
     settings,
     setSettings,
     allowConfirmDialog,
@@ -32,7 +32,7 @@ function Settings(props) {
   };
 
   const closeSettings = () => {
-    setAllowSettings(false);
+    setSidePanel(null);
     props.handleNavClick("Home");
   };
 
@@ -45,7 +45,6 @@ function Settings(props) {
             desc={"Clearing local storage will remove all tasks and tags"}
             functionToCall={() => {
               localStorage.clear();
-              alert("Test");
             }}
           />
         )}
@@ -67,15 +66,6 @@ function Settings(props) {
             >
               <FontAwesomeIcon className="icon" icon={faBorderAll} />
               Grid
-            </div>
-            <div
-              className={`settings-item ${
-                settings.style === "list" ? "selected-mode" : ""
-              }`}
-              onClick={() => setSettingsStyle("list")}
-            >
-              <FontAwesomeIcon className="icon" icon={faList} />
-              List
             </div>
           </div>
         </div>

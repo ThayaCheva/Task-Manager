@@ -79,27 +79,24 @@ function TagDropDown(props) {
         { tagName: formData.name, tagColor: formData.color },
       ];
       setTagList(newTags);
+      form.current.elements.tagName.value = "";
     }
   };
 
   const removeTag = (tagName) => {
-    var updatedTask = [];
-    for (var i = 0; i < tasks.length; i++) {
-      const tagsArray = Array.isArray(tasks[i].tags) ? tasks[i].tags : [];
-      for (var j = 0; j < tagsArray.length; j++) {
-        if (tagsArray[j].tagInfo.tagName === tagName) {
-          const tagIndex = tasks[i].tags.indexOf(tagsArray[j]);
-          tasks[i].tags.splice(tagIndex, 1);
-        }
-      }
-      updatedTask.push(tasks[i]);
-    }
-    setTasks(updatedTask);
+    const updatedTasks = tasks.map((task) => {
+      const updatedTags = task.tags.filter(
+        (tag) => tag.tagInfo.tagName !== tagName
+      );
+      return { ...task, tags: updatedTags };
+    });
+    setTasks(updatedTasks);
     const updatedTags = tagList.filter((tag) => tag.tagName !== tagName);
+    localStorage.setItem("tagList", JSON.stringify(updatedTags));
     setTagList(updatedTags);
   };
 
-  // Add and remove tag from task
+  // Enable and disable tag from task
   const manageTaskTag = (tag) => {
     const updatedTask = tasks.map((task) => {
       if (task.id === props.taskID) {
@@ -131,6 +128,7 @@ function TagDropDown(props) {
       }
       return task;
     });
+    console.log(updatedTask);
     setTasks(updatedTask);
   };
 
