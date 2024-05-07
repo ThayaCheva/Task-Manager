@@ -11,6 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { BiAlarm } from "react-icons/bi";
 import { TaskContext } from "../App.js";
+import { useTaskContext } from "../hooks/useTaskContext.js";
 
 function TaskItem(props) {
   const {
@@ -23,7 +24,7 @@ function TaskItem(props) {
     setSidePanel,
     settings,
   } = useContext(TaskContext);
-
+  const { dispatch } = useTaskContext();
   const selectedTaskRef = useRef(null);
   const [hidden, setHidden] = useState(false);
   useEffect(() => {
@@ -40,10 +41,15 @@ function TaskItem(props) {
   };
 
   // Remove selected task
-  const removeTask = (id) => {
+  const removeTask = async (id) => {
     setEditMode(false);
-    const updatedTask = tasks.filter((task) => task.id !== id);
-    setTasks(updatedTask);
+    const response = await fetch("/api/tasks/" + id, {
+      method: "DELETE",
+    });
+    const json = await response.json();
+    if (response.ok) {
+      dispatch({ type: "DELETE_TASKS", payload: json });
+    }
   };
 
   // Get the percentage for the amount of subtask completed
@@ -66,7 +72,7 @@ function TaskItem(props) {
 
   // Manage CheckList for subtasks and when clicked update task progress bar
   const handleCheckList = (taskID, subTaskID) => {
-    var currSubTask = tasks.filter((t) => t.id === taskID)[0].subTasks[
+    var currSubTask = tasks.filter((t) => t._id === taskID)[0].subTasks[
       subTaskID
     ];
     if (!currSubTask.checked) {
@@ -104,20 +110,20 @@ function TaskItem(props) {
       <div className="task-item-buttons">
         <button
           onClick={() => {
-            editTask(props.task.id);
-            props.handleToggleMenu(props.task.id);
+            editTask(props.task._id);
+            props.handleToggleMenu(props.task._id);
           }}
         >
           <FontAwesomeIcon title="Edit Task" icon={faPenToSquare} />
         </button>
 
-        <FileUpload taskID={props.task.id}></FileUpload>
+        <FileUpload taskID={props.task._id}></FileUpload>
 
         <button
           className="delete-btn"
           onClick={() => {
-            removeTask(props.task.id);
-            props.handleToggleMenu(props.task.id);
+            removeTask(props.task._id);
+            props.handleToggleMenu(props.task._id);
           }}
         >
           <FontAwesomeIcon title="Delete Task" icon={faTrash} />
@@ -128,7 +134,7 @@ function TaskItem(props) {
 
   const [highlighted, setHighlighted] = useState(false);
   useEffect(() => {
-    if (props.task.id === selectedTask) {
+    if (props.task._id === selectedTask) {
       setHighlighted(true);
       const timerScroll = setTimeout(() => {
         scrollToHighlighted();
@@ -142,7 +148,7 @@ function TaskItem(props) {
         clearTimeout(timerScroll);
       };
     }
-  }, [props.task.id, selectedTask]);
+  }, [props.task._id, selectedTask]);
 
   const scrollToHighlighted = () => {
     const highlightedElement = document.querySelector(".highlighted");
@@ -150,23 +156,22 @@ function TaskItem(props) {
       highlightedElement.scrollIntoView({ behavior: "smooth" });
     }
   };
-  console.log(props.tagDropdown.state);
   const GridStyle = () => {
     return (
       <div
-        ref={props.task.id === selectedTask ? selectedTaskRef : null}
+        ref={props.task._id === selectedTask ? selectedTaskRef : null}
         className={`task-item ${highlighted ? "highlighted" : ""}`}
       >
         <div>
           <div
             className="edit-task"
-            onClick={() => props.handleToggleMenu(props.task.id)}
+            onClick={() => props.handleToggleMenu(props.task._id)}
           >
             <button>
               <FontAwesomeIcon icon={faEllipsisVertical} />
             </button>
           </div>
-          {props.task.id === props.toggleMenu.id && props.toggleMenu.state && (
+          {props.task._id === props.toggleMenu.id && props.toggleMenu.state && (
             <TaskDropDown />
           )}
 
@@ -190,14 +195,14 @@ function TaskItem(props) {
                 <div className="task-item-tags-header">
                   <p>Tags: </p>
                   <button
-                    onClick={() => props.handleTagDropdown(props.task.id)}
+                    onClick={() => props.handleTagDropdown(props.task._id)}
                   >
                     +
                   </button>
                   {props.tagDropdown.state &&
-                    props.tagDropdown.id === props.task.id && (
+                    props.tagDropdown.id === props.task._id && (
                       <TagDropDown
-                        taskID={props.task.id}
+                        taskID={props.task._id}
                         handleTagDropdown={props.handleTagDropdown}
                       ></TagDropDown>
                     )}
@@ -225,11 +230,11 @@ function TaskItem(props) {
                 <div className="task-progress">
                   <div className="task-progress-header">
                     <h5>Task Progress</h5>
-                    <p>{getTaskPercent(props.task.id)}%</p>
+                    <p>{getTaskPercent(props.task._id)}%</p>
                   </div>
                   <div className="task-progress-bar">
                     <div
-                      style={{ width: `${getTaskPercent(props.task.id)}%` }}
+                      style={{ width: `${getTaskPercent(props.task._id)}%` }}
                     ></div>
                   </div>
                 </div>
@@ -241,11 +246,11 @@ function TaskItem(props) {
                   <div className="subtask-item">
                     <input
                       key={index}
-                      onChange={() => handleCheckList(props.task.id, index)}
+                      onChange={() => handleCheckList(props.task._id, index)}
                       type="checkbox"
                       checked={props.task.subTasks[index].checked}
                     />
-                    <p>{st.task}</p>
+                    <p>{st.subTaskName}</p>
                   </div>
                 ))}
               </div>
@@ -259,7 +264,7 @@ function TaskItem(props) {
             {!hidden && (
               <button
                 className="done-btn btn"
-                onClick={() => removeTask(props.task.id)}
+                onClick={() => removeTask(props.task._id)}
               >
                 Mark as done
               </button>

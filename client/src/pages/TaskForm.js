@@ -3,12 +3,13 @@ import "../styling/taskform.css";
 import { TaskContext } from "../App";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { nanoid } from "nanoid";
 import { format } from "date-fns";
+import { useTaskContext } from "../hooks/useTaskContext.js";
 
 function TaskForm(props) {
-  const { tasks, setTasks, editMode, setEditMode, setSidePanel } =
+  const { tasks, editMode, setEditMode, setSidePanel } =
     React.useContext(TaskContext);
+  const { dispatch } = useTaskContext();
   const form = React.useRef();
   const [subTask, setSubTask] = React.useState("");
 
@@ -31,24 +32,29 @@ function TaskForm(props) {
     setSubTask(event.target.value);
   };
 
-  const addTask = (event) => {
+  const addTask = async (event) => {
     event.preventDefault();
-    setTasks([
-      ...tasks,
-      {
-        ...formData,
-        id: nanoid(),
+    const response = await fetch("/api/tasks", {
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
       },
-    ]);
-    setFormData({
-      id: "",
-      title: "",
-      desc: "",
-      dueDate: "",
-      subTasks: [],
-      images: null,
-      tags: [],
     });
+    const json = await response.json();
+    if (response.ok) {
+      console.log(formData.subTasks);
+      dispatch({ type: "CREATE_TASKS", payload: formData });
+      setFormData({
+        id: "",
+        title: "",
+        desc: "",
+        dueDate: "",
+        subTasks: [],
+        images: null,
+        tags: [],
+      });
+    }
   };
 
   const editTask = (event, taskID) => {
@@ -75,7 +81,7 @@ function TaskForm(props) {
         ...updatedForm,
         id: taskID,
       };
-      setTasks(updatedTask);
+      // setTasks(updatedTask);
 
       // Clear Form
       setFormData({
@@ -94,7 +100,7 @@ function TaskForm(props) {
 
   const addSubTask = (event) => {
     event.preventDefault();
-    const newSubTask = { task: subTask, checked: false };
+    const newSubTask = { subTaskName: subTask, checked: false };
     const updatedForm = {
       ...formData,
       subTasks: [...formData.subTasks, newSubTask],
@@ -114,8 +120,8 @@ function TaskForm(props) {
   // Sets the form data to the tasks info
   React.useEffect(() => {
     if (editMode.state === true) {
-      const currTask = tasks.filter((t) => t.id === editMode.taskID)[0];
-      console.log(currTask.subTasks);
+      const currTask = tasks.filter((t) => t._id === editMode.taskID)[0];
+      console.log(currTask);
       if (currTask) {
         form.current.elements.title.value = currTask.title;
         form.current.elements.desc.value = currTask.desc;
@@ -248,7 +254,7 @@ function TaskForm(props) {
                   >
                     -
                   </button>
-                  <p>{st.task}</p>
+                  <p>{st.subTaskName}</p>
                 </div>
               ))}
           </div>

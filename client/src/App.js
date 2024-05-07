@@ -13,13 +13,6 @@ export const TaskContext = createContext();
 export const NavContext = createContext();
 
 function App() {
-  // const [tasks, setTasks] = useState(
-  //   JSON.parse(localStorage.getItem("tasks")) || []
-  // );
-  // useEffect(() => {
-  //   localStorage.setItem("tasks", JSON.stringify(tasks));
-  // }, [tasks]);
-
   const { tasks, dispatch } = useTaskContext();
   const [editMode, setEditMode] = useState({ state: false, taskID: "" });
   const [selectedTask, setSelectedTask] = useState("");
@@ -37,6 +30,7 @@ function App() {
     state: false,
   });
 
+  // Retrieve tasks data from db
   useEffect(() => {
     const fetchTasks = async () => {
       const response = await fetch("/api/tasks");
@@ -48,8 +42,8 @@ function App() {
     fetchTasks();
   }, []);
 
+  // Make website respond to different screen size
   const [isMobile, setIsMobile] = useState(false);
-
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 1200) {
@@ -63,17 +57,6 @@ function App() {
       window.removeEventListener("resize", handleResize);
     };
   }, [window.innerWidth]);
-
-  const handleNavClick = (page) => {
-    setCurrentPage(page);
-    if (page === "Notification") {
-      setSidePanel("Notification");
-    } else if (page === "Settings") {
-      setSidePanel("Settings");
-    } else {
-      setSidePanel(null);
-    }
-  };
 
   // Get the notification count
   useEffect(() => {
@@ -91,10 +74,22 @@ function App() {
       setNotificationCount(
         todayTasks.length + upcomingTasks.length + overDuedTasks.length
       );
-      console.log(todayTasks);
     }
   }, [tasks]);
 
+  // Manage navigation bar clicks
+  const handleNavClick = (page) => {
+    setCurrentPage(page);
+    if (page === "Notification") {
+      setSidePanel("Notification");
+    } else if (page === "Settings") {
+      setSidePanel("Settings");
+    } else {
+      setSidePanel(null);
+    }
+  };
+
+  // Manage which side menu to display (Notification, Settings or Task Form)
   const displayMenu = () => {
     if (sidePanel === "Notification") {
       return <Notification handleNavClick={handleNavClick} />;
@@ -109,6 +104,7 @@ function App() {
     }
   };
 
+  // Manage the order of the display
   const TaskSections = () => {
     return !isMobile ? (
       <section id="tasklist">
@@ -126,7 +122,6 @@ function App() {
   };
 
   return (
-    // <div>{tasks && tasks.map((task) => <div>{task.title}</div>)}</div>
     <Router>
       <div className="App">
         <main>
@@ -136,7 +131,6 @@ function App() {
                 t
                 value={{
                   tasks,
-                  // setTasks,
                   editMode,
                   setEditMode,
                   selectedTask,

@@ -16,11 +16,7 @@ function TaskMain() {
   } = useContext(TaskContext);
   const selectedTaskRef = useRef(null);
 
-  const [tagDropdown, setTagDropdown] = useState({
-    state: false,
-    id: null,
-  });
-
+  // Manage the task item menu dropdown
   const [toggleMenu, setToggleMenu] = useState({
     state: false,
     id: null,
@@ -34,6 +30,12 @@ function TaskMain() {
       setToggleMenu({ state: true, id: taskID });
     }
   };
+
+  // Manage the tag dropdown
+  const [tagDropdown, setTagDropdown] = useState({
+    state: false,
+    id: null,
+  });
 
   const handleTagDropdown = (taskID) => {
     setToggleMenu({ state: false, id: taskID });

@@ -15,7 +15,7 @@ router.get("/", getTasks);
 router.post("/", createTask);
 
 // DELETE Task
-router.delete("/", deleteTask);
+router.delete("/:id", deleteTask);
 
 // UPDATE Task
 

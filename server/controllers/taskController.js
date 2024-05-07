@@ -37,7 +37,7 @@ const deleteTask = async (req, res) => {
   if (!task) {
     return res.status(400).json({ error: "No task with such ID" });
   }
-  res.status(200).json({ task });
+  res.status(200).json(task);
 };
 
 // UPDATE Task
