@@ -13,14 +13,14 @@ export const TaskContext = createContext();
 export const NavContext = createContext();
 
 function App() {
-  const [tasks, setTasks] = useState(
-    JSON.parse(localStorage.getItem("tasks")) || []
-  );
-  useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  }, [tasks]);
+  // const [tasks, setTasks] = useState(
+  //   JSON.parse(localStorage.getItem("tasks")) || []
+  // );
+  // useEffect(() => {
+  //   localStorage.setItem("tasks", JSON.stringify(tasks));
+  // }, [tasks]);
 
-  // const { tasks, dispatch } = useTaskContext();
+  const { tasks, dispatch } = useTaskContext();
   const [editMode, setEditMode] = useState({ state: false, taskID: "" });
   const [selectedTask, setSelectedTask] = useState("");
   const [taskImages, setTaskImages] = useState([]);
@@ -37,16 +37,16 @@ function App() {
     state: false,
   });
 
-  // useEffect(() => {
-  //   const fetchTasks = async () => {
-  //     const response = await fetch("/api/tasks");
-  //     const json = await response.json();
-  //     if (response.ok) {
-  //       dispatch({ type: "SET_TASKS", payload: json });
-  //     }
-  //   };
-  //   fetchTasks();
-  // }, []);
+  useEffect(() => {
+    const fetchTasks = async () => {
+      const response = await fetch("/api/tasks");
+      const json = await response.json();
+      if (response.ok) {
+        dispatch({ type: "SET_TASKS", payload: json });
+      }
+    };
+    fetchTasks();
+  }, []);
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -136,7 +136,7 @@ function App() {
                 t
                 value={{
                   tasks,
-                  setTasks,
+                  // setTasks,
                   editMode,
                   setEditMode,
                   selectedTask,
