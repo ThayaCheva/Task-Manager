@@ -29,16 +29,16 @@ function App() {
     type: null,
     state: false,
   });
+  const fetchTasks = async () => {
+    const response = await fetch("/api/tasks");
+    const json = await response.json();
+    if (response.ok) {
+      dispatch({ type: "SET_TASKS", payload: json });
+    }
+  };
 
   // Retrieve tasks data from db
   useEffect(() => {
-    const fetchTasks = async () => {
-      const response = await fetch("/api/tasks");
-      const json = await response.json();
-      if (response.ok) {
-        dispatch({ type: "SET_TASKS", payload: json });
-      }
-    };
     fetchTasks();
   }, []);
 
@@ -121,6 +121,22 @@ function App() {
     );
   };
 
+  const updateTask = async (updatedTask, id) => {
+    const response = await fetch("/api/tasks/" + id, {
+      method: "PATCH",
+      body: JSON.stringify(updatedTask),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      const json = await response.json();
+      console.log(json);
+      dispatch({ type: "UPDATE_TASKS", payload: json });
+      fetchTasks();
+    }
+  };
+
   return (
     <Router>
       <div className="App">
@@ -128,7 +144,6 @@ function App() {
           <NavContext.Provider value={{ handleNavClick, isMobile }}>
             {tasks && (
               <TaskContext.Provider
-                t
                 value={{
                   tasks,
                   editMode,
@@ -147,6 +162,7 @@ function App() {
                   setAllowConfirmDialog,
                   sidePanel,
                   setSidePanel,
+                  updateTask,
                 }}
               >
                 <Routes>

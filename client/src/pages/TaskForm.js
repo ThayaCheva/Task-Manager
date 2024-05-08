@@ -7,9 +7,9 @@ import { format } from "date-fns";
 import { useTaskContext } from "../hooks/useTaskContext.js";
 
 function TaskForm(props) {
-  const { tasks, editMode, setEditMode, setSidePanel } =
+  const { tasks, editMode, setEditMode, setSidePanel, updateTask } =
     React.useContext(TaskContext);
-  const { dispatch } = useTaskContext();
+  const { dispatch, update } = useTaskContext();
   const form = React.useRef();
   const [subTask, setSubTask] = React.useState("");
 
@@ -57,9 +57,9 @@ function TaskForm(props) {
     }
   };
 
-  const editTask = (event, taskID) => {
+  const editTask = async (event, taskID) => {
     event.preventDefault();
-    const index = tasks.findIndex((t) => t.id === taskID);
+    const index = tasks.findIndex((t) => t._id === taskID);
     if (index !== -1) {
       const updatedTask = [...tasks];
 
@@ -81,19 +81,23 @@ function TaskForm(props) {
         ...updatedForm,
         id: taskID,
       };
-      // setTasks(updatedTask);
+      try {
+        await updateTask(updatedTask[0], taskID);
 
-      // Clear Form
-      setFormData({
-        id: "",
-        title: "",
-        desc: "",
-        dueDate: "",
-        subTasks: [],
-        images: null,
-        tags: [],
-      });
-      setSubTask("");
+        // Clear Form
+        setFormData({
+          id: "",
+          title: "",
+          desc: "",
+          dueDate: "",
+          subTasks: [],
+          images: null,
+          tags: [],
+        });
+        setSubTask("");
+      } catch (error) {
+        console.log("Theres been an error", error);
+      }
     }
     setEditMode(false);
   };
@@ -121,7 +125,6 @@ function TaskForm(props) {
   React.useEffect(() => {
     if (editMode.state === true) {
       const currTask = tasks.filter((t) => t._id === editMode.taskID)[0];
-      console.log(currTask);
       if (currTask) {
         form.current.elements.title.value = currTask.title;
         form.current.elements.desc.value = currTask.desc;
@@ -137,6 +140,7 @@ function TaskForm(props) {
       }
     }
   }, [editMode.state, editMode.taskID, tasks]);
+
   const closeForm = () => {};
   return (
     <div className="forms">

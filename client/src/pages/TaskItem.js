@@ -16,13 +16,13 @@ import { useTaskContext } from "../hooks/useTaskContext.js";
 function TaskItem(props) {
   const {
     tasks,
-    setTasks,
     editMode,
     setEditMode,
     selectedTask,
     setSelectedTask,
     setSidePanel,
     settings,
+    updateTask,
   } = useContext(TaskContext);
   const { dispatch } = useTaskContext();
   const selectedTaskRef = useRef(null);
@@ -54,7 +54,7 @@ function TaskItem(props) {
 
   // Get the percentage for the amount of subtask completed
   const getTaskPercent = (taskID) => {
-    const currTask = tasks.filter((t) => t.id === taskID)[0];
+    const currTask = tasks.filter((t) => t._id === taskID)[0];
     var count = 0;
     if (currTask && currTask.subTasks) {
       for (var i = 0; i < currTask.subTasks.length; i++) {
@@ -71,36 +71,15 @@ function TaskItem(props) {
   };
 
   // Manage CheckList for subtasks and when clicked update task progress bar
-  const handleCheckList = (taskID, subTaskID) => {
-    var currSubTask = tasks.filter((t) => t._id === taskID)[0].subTasks[
-      subTaskID
-    ];
-    if (!currSubTask.checked) {
-      setTasks((prevTasks) =>
-        prevTasks.map((taskItem) =>
-          taskItem.id === taskID
-            ? {
-                ...taskItem,
-                subTasks: taskItem.subTasks.map((subTask, index) =>
-                  index === subTaskID ? { ...subTask, checked: true } : subTask
-                ),
-              }
-            : taskItem
-        )
-      );
+  const handleCheckList = async (taskID, subTaskID) => {
+    const updatedTask = [...tasks];
+    const index = updatedTask.findIndex((t) => t._id === taskID);
+    if (index != -1) {
+      updatedTask[index].subTasks[subTaskID].checked =
+        !updatedTask[index].subTasks[subTaskID].checked;
+      updateTask(updatedTask[index], taskID);
     } else {
-      setTasks((prevTasks) =>
-        prevTasks.map((taskItem) =>
-          taskItem.id === taskID
-            ? {
-                ...taskItem,
-                subTasks: taskItem.subTasks.map((subTask, index) =>
-                  index === subTaskID ? { ...subTask, checked: false } : subTask
-                ),
-              }
-            : taskItem
-        )
-      );
+      console.log("Task not found", taskID);
     }
   };
 

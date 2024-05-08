@@ -4,7 +4,7 @@ import "../styling/tags.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faX, faCheck } from "@fortawesome/free-solid-svg-icons";
 function TagDropDown(props) {
-  const { tasks, setTasks } = React.useContext(TaskContext);
+  const { tasks, setTasks, updateTask } = React.useContext(TaskContext);
   const form = React.useRef();
 
   const [selectedColor, setSelectedColor] = useState(0);
@@ -97,9 +97,9 @@ function TagDropDown(props) {
   };
 
   // Enable and disable tag from task
-  const manageTaskTag = (tag) => {
+  const manageTaskTag = async (tag) => {
     const updatedTask = tasks.map((task) => {
-      if (task.id === props.taskID) {
+      if (task._id === props.taskID) {
         const tagsArray = Array.isArray(task.tags) ? task.tags : [];
         if (
           // check if tag already in array
@@ -129,12 +129,13 @@ function TagDropDown(props) {
       return task;
     });
     console.log(updatedTask);
-    setTasks(updatedTask);
+    updateTask(updatedTask[0], props.taskID);
+    // setTasks(updatedTask);
   };
 
   // Return the tag status for each task
   const checkTagStatus = (tagName) => {
-    const currTask = tasks.find((t) => t.id === props.taskID);
+    const currTask = tasks.find((t) => t._id === props.taskID);
     if (currTask) {
       for (var i = 0; i < currTask.tags.length; i++) {
         if (currTask.tags[i].tagInfo.tagName === tagName) {
