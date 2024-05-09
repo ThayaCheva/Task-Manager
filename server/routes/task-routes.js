@@ -7,12 +7,9 @@ const {
   deleteAllTasks,
 } = require("../controllers/taskController");
 const router = express.Router();
-const Task = require("../models/taskModel");
 
 // Get All Tasks
 router.get("/", getTasks);
-
-// Get Single Task
 
 // POST new Task
 router.post("/", createTask);

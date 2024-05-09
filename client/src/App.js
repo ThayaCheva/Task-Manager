@@ -44,6 +44,7 @@ function App() {
   };
 
   const [isMobile, setIsMobile] = useState(false);
+
   // Retrieve data from db and handle resize
   useEffect(() => {
     const fetchTasksAndHandleResize = async () => {
