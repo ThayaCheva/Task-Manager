@@ -2,18 +2,18 @@
 
 A website for managing daily or other tasks.
 
-Features:
+<h3>Features:</h3>
 
-- Create personal profile with authentication
+- Create a personal profile with authentication
 - View task in a calendar style
 
   - User can click on a task to locate it in the main task view
 
-- See notifications for tasks dued immedietly, upcoming and overdued tasks
-- Add and delete custom tags from task
-- Customize task with more details using subtasks and track its progress
+- See notifications for tasks due immediately, upcoming and overdue tasks
+- Add and delete custom tags from a task
+- Customize tasks with more details using subtasks and track their progress
 - Dark & Light Mode
   
-Built with:
+<h3>Built with:</h3>
 - Front-end: React, SCSS
 - Back-end: MongoDB
