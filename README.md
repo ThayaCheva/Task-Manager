@@ -13,6 +13,7 @@ Features:
 - Add and delete custom tags from task
 - Customize task with more details using subtasks and track its progress
 - Dark & Light Mode
-  Built with:
+  
+Built with:
 - Front-end: React, SCSS
 - Back-end: MongoDB
