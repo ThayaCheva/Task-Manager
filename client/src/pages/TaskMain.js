@@ -13,6 +13,7 @@ function TaskMain() {
     allowConfirmDialog,
     setAllowConfirmDialog,
     setSidePanel,
+    fetchTasks,
   } = useContext(TaskContext);
   const selectedTaskRef = useRef(null);
 
@@ -36,7 +37,7 @@ function TaskMain() {
     state: false,
     id: null,
   });
-
+  // console.log("Test");
   const handleTagDropdown = (taskID) => {
     setToggleMenu({ state: false, id: taskID });
     if (tagDropdown.id === taskID) {
@@ -70,15 +71,30 @@ function TaskMain() {
     }
   }, [selectedTaskRef]);
 
+  const deleteAllTasks = async () => {
+    try {
+      const response = await fetch("/api/tasks/deleteAllTasks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.ok) {
+        const json = response.json();
+        fetchTasks();
+      }
+    } catch (error) {
+      console.log("Error deleting all tasks: ", error);
+    }
+  };
+
   return (
     <div className="tasks-items">
       {allowConfirmDialog.state && allowConfirmDialog.type === "clear-task" && (
         <ConfirmDialog
           title={"Clear all tasks?"}
           desc={"Are you sure you want to clear all tasks?"}
-          functionToCall={() =>
-            setAllowConfirmDialog({ type: "clear-task", state: false })
-          }
+          functionToCall={deleteAllTasks}
         />
       )}
 

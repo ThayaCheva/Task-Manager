@@ -105,6 +105,7 @@ function TaskItem(props) {
   };
 
   const [highlighted, setHighlighted] = useState(false);
+
   useEffect(() => {
     if (props.task._id === selectedTask) {
       setHighlighted(true);
@@ -122,6 +123,7 @@ function TaskItem(props) {
     }
   }, [props.task._id, selectedTask]);
 
+  // Scroll to the highlighted task from notification or summary page
   const scrollToHighlighted = () => {
     const highlightedElement = document.querySelector(".highlighted");
     if (highlightedElement) {
@@ -144,6 +146,7 @@ function TaskItem(props) {
               <FontAwesomeIcon icon={faEllipsisVertical} />
             </button>
           </div>
+
           {props.task._id === props.toggleMenu.id && props.toggleMenu.state && (
             <TaskDropDown />
           )}
@@ -174,9 +177,10 @@ function TaskItem(props) {
                     <TagDropDown
                       taskID={props.task._id}
                       handleTagDropdown={props.handleTagDropdown}
-                    ></TagDropDown>
+                    />
                   )}
               </div>
+
               {props.task.tags && (
                 <div className="task-tags">
                   {props.task.tags.map((t, index) => (
@@ -222,6 +226,7 @@ function TaskItem(props) {
                 ))}
               </div>
             )}
+
             {props.task.images && (
               <div className="project-image-container">
                 <img alt="my task" src={props.task.images} />

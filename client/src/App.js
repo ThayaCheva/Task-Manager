@@ -25,6 +25,7 @@ function App() {
     fontSize: 100,
     mode: "light",
   });
+
   const [allowConfirmDialog, setAllowConfirmDialog] = useState({
     type: null,
     state: false,
@@ -165,6 +166,7 @@ function App() {
                   sidePanel,
                   setSidePanel,
                   updateTask,
+                  fetchTasks,
                 }}
               >
                 <Routes>

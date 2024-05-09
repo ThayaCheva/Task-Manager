@@ -98,7 +98,6 @@ function TagDropDown(props) {
 
   // Enable and disable tag from task
   const manageTaskTag = async (tag) => {
-    console.log(props.taskID);
     const updatedTask = tasks.map((task) => {
       if (task._id === props.taskID) {
         const tagsArray = Array.isArray(task.tags) ? task.tags : [];
