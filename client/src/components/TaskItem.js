@@ -26,14 +26,7 @@ function TaskItem(props) {
   } = useContext(TaskContext);
   const { dispatch } = useTaskContext();
   const selectedTaskRef = useRef(null);
-  const [hidden, setHidden] = useState(false);
-  useEffect(() => {
-    if (settings.style === "list") {
-      setHidden(true);
-    } else {
-      setHidden(false);
-    }
-  }, [settings]);
+
   // Update the state to edit mode
   const editTask = (id) => {
     setSidePanel("Add Task");
@@ -135,6 +128,7 @@ function TaskItem(props) {
       highlightedElement.scrollIntoView({ behavior: "smooth" });
     }
   };
+
   const GridStyle = () => {
     return (
       <div
@@ -169,57 +163,51 @@ function TaskItem(props) {
               </p>
             )}
 
-            {!hidden && (
-              <div className="task-item-tags">
-                <div className="task-item-tags-header">
-                  <p>Tags: </p>
-                  <button
-                    onClick={() => props.handleTagDropdown(props.task._id)}
-                  >
-                    +
-                  </button>
-                  {props.tagDropdown.state &&
-                    props.tagDropdown.id === props.task._id && (
-                      <TagDropDown
-                        taskID={props.task._id}
-                        handleTagDropdown={props.handleTagDropdown}
-                      ></TagDropDown>
-                    )}
+            <div className="task-item-tags">
+              <div className="task-item-tags-header">
+                <p>Tags: </p>
+                <button onClick={() => props.handleTagDropdown(props.task._id)}>
+                  +
+                </button>
+                {props.tagDropdown.state &&
+                  props.tagDropdown.id === props.task._id && (
+                    <TagDropDown
+                      taskID={props.task._id}
+                      handleTagDropdown={props.handleTagDropdown}
+                    ></TagDropDown>
+                  )}
+              </div>
+              {props.task.tags && (
+                <div className="task-tags">
+                  {props.task.tags.map((t, index) => (
+                    <div
+                      key={index}
+                      style={{ backgroundColor: t.tagInfo.tagColor }}
+                    >
+                      {t.tagInfo.tagName}
+                    </div>
+                  ))}
                 </div>
-                {props.task.tags && (
-                  <div className="task-tags">
-                    {props.task.tags.map((t, index) => (
-                      <div
-                        key={index}
-                        style={{ backgroundColor: t.tagInfo.tagColor }}
-                      >
-                        {t.tagInfo.tagName}
-                      </div>
-                    ))}
-                  </div>
-                )}
+              )}
+            </div>
+
+            <p>{props.task.desc}</p>
+
+            {props.task.subTasks && props.task.subTasks.length > 0 && (
+              <div className="task-progress">
+                <div className="task-progress-header">
+                  <h5>Task Progress</h5>
+                  <p>{getTaskPercent(props.task._id)}%</p>
+                </div>
+                <div className="task-progress-bar">
+                  <div
+                    style={{ width: `${getTaskPercent(props.task._id)}%` }}
+                  ></div>
+                </div>
               </div>
             )}
 
-            {!hidden && <p>{props.task.desc}</p>}
-
-            {!hidden &&
-              props.task.subTasks &&
-              props.task.subTasks.length > 0 && (
-                <div className="task-progress">
-                  <div className="task-progress-header">
-                    <h5>Task Progress</h5>
-                    <p>{getTaskPercent(props.task._id)}%</p>
-                  </div>
-                  <div className="task-progress-bar">
-                    <div
-                      style={{ width: `${getTaskPercent(props.task._id)}%` }}
-                    ></div>
-                  </div>
-                </div>
-              )}
-
-            {!hidden && props.task.subTasks && (
+            {props.task.subTasks && (
               <div>
                 {props.task.subTasks.map((st, index) => (
                   <div className="subtask-item">
@@ -236,24 +224,21 @@ function TaskItem(props) {
             )}
             {props.task.images && (
               <div className="project-image-container">
-                <div className="project-image-overlay"></div>
                 <img alt="my task" src={props.task.images} />
               </div>
             )}
-            {!hidden && (
-              <button
-                className="done-btn btn"
-                onClick={() => removeTask(props.task._id)}
-              >
-                Mark as done
-              </button>
-            )}
+
+            <button
+              className="done-btn btn"
+              onClick={() => removeTask(props.task._id)}
+            >
+              Mark as done
+            </button>
           </div>
         </div>
       </div>
     );
   };
-
   return <GridStyle />;
 }
 

@@ -89,6 +89,9 @@
 .tags-menu .tags-create-form input:focus {
   outline: none;
 }
+.tags-menu .tags-create-form .create-tag-btn {
+  cursor: pointer;
+}
 .tags-menu .tags-create-form .tags-create-color p {
   margin-bottom: 0.5rem;
 }
@@ -105,18 +108,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.tags-menu .tags-create-form button {
-  padding: 1rem;
-  border: none !important;
-  background: var(--grey) !important;
-  color: var(--header) !important;
-}
-.tags-menu .tags-create-form button:hover {
-  background: #e5e5e5 !important;
-}
-.tags-menu .tags-create-form input {
-  color: var(--header);
 }
 
 @media only screen and (max-width: 435px) {

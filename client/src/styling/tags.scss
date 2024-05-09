@@ -88,6 +88,9 @@
         outline: none;
       }
     }
+    .create-tag-btn {
+      cursor: pointer;
+    }
     .tags-create-color {
       p {
         margin-bottom: 0.5rem;
@@ -106,18 +109,6 @@
           justify-content: center;
         }
       }
-    }
-    button {
-      padding: 1rem;
-      border: none !important;
-      background: var(--grey) !important;
-      color: var(--header) !important;
-      &:hover {
-        background: #e5e5e5 !important;
-      }
-    }
-    input {
-      color: var(--header);
     }
   }
 }

@@ -4,7 +4,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const taskRoutes = require("./routes/task-routes");
 // express app
+const bodyParser = require("body-parser");
 const app = express();
+
+// Express 4.0
+app.use(bodyParser.json({ limit: "10mb" }));
+app.use(bodyParser.urlencoded({ extended: true, limit: "10mb" }));
 
 // Middleware
 app.use(express.json());

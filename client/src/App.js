@@ -1,10 +1,10 @@
 import { React, useState, useEffect, createContext } from "react";
 import TaskSummary from "./pages/TaskSummary";
 import TaskMain from "./pages/TaskMain.js";
-import TaskForm from "./pages/TaskForm.js";
-import Settings from "./pages/Settings.js";
+import TaskForm from "./components/TaskForm.js";
+import Settings from "./components/Settings.js";
 import Navbar from "./pages/Navbar.js";
-import Notification from "./pages/Notification.js";
+import Notification from "./components/Notification.js";
 import { differenceInDays, isToday } from "date-fns";
 import "./styling/nav.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -29,33 +29,36 @@ function App() {
     type: null,
     state: false,
   });
+
   const fetchTasks = async () => {
-    const response = await fetch("/api/tasks");
-    const json = await response.json();
-    if (response.ok) {
-      dispatch({ type: "SET_TASKS", payload: json });
+    try {
+      const response = await fetch("/api/tasks");
+      const json = await response.json();
+      if (response.ok) {
+        dispatch({ type: "SET_TASKS", payload: json });
+      }
+    } catch (error) {
+      console.log("Error fecthing data: ", error);
     }
   };
 
-  // Retrieve tasks data from db
-  useEffect(() => {
-    fetchTasks();
-  }, []);
-
-  // Make website respond to different screen size
   const [isMobile, setIsMobile] = useState(false);
+  // Retrieve data from db and handle resize
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth <= 1200) {
-        setIsMobile(true);
-      } else {
-        setIsMobile(false);
-      }
+    const fetchTasksAndHandleResize = async () => {
+      await fetchTasks();
+
+      const handleResize = () => {
+        setIsMobile(window.innerWidth <= 1200);
+      };
+
+      handleResize(); // Call handleResize immediately to set initial state
+
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
     };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+
+    fetchTasksAndHandleResize();
   }, [window.innerWidth]);
 
   // Get the notification count
@@ -131,7 +134,6 @@ function App() {
     });
     if (response.ok) {
       const json = await response.json();
-      console.log(json);
       dispatch({ type: "UPDATE_TASKS", payload: json });
       fetchTasks();
     }

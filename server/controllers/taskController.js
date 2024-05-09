@@ -21,8 +21,8 @@ const createTask = async (req, res) => {
       images,
       tags,
     });
-    res.status(200).json({ task });
-  } catch {
+    res.status(200).json(task);
+  } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
@@ -30,20 +30,45 @@ const createTask = async (req, res) => {
 // DELETE Task
 const deleteTask = async (req, res) => {
   const { id } = req.params;
-  if (!mongoose.isObjectIdOrHexString(id)) {
-    return res.status(400).json({ error: "No task with such ID" });
+  try {
+    if (!mongoose.isObjectIdOrHexString(id)) {
+      return res.status(400).json({ error: "No task with such ID" });
+    }
+    const task = await Task.findOneAndDelete({ _id: id });
+    if (!task) {
+      return res.status(400).json({ error: "No task with such ID" });
+    }
+    res.status(200).json(task);
+  } catch (error) {
+    res.status(400).json({ error: "No task with such ID" });
   }
-  const task = await Task.findOneAndDelete({ _id: id });
-  if (!task) {
-    return res.status(400).json({ error: "No task with such ID" });
-  }
-  res.status(200).json(task);
 };
 
 // UPDATE Task
+const updateTask = async (req, res) => {
+  const { id } = req.params;
+  try {
+    if (!mongoose.isObjectIdOrHexString(id)) {
+      return res.status(404).json({ error: "No task with such ID" });
+    }
+    const task = await Task.findOneAndUpdate(
+      { _id: id },
+      {
+        ...req.body,
+      }
+    );
+    if (!task) {
+      return res.status(404).json({ error: "No task with such ID" });
+    }
+    res.status(200).json(task);
+  } catch (error) {
+    res.status(400).json({ error: "No task with such ID" });
+  }
+};
 
 module.exports = {
   getTasks,
   createTask,
   deleteTask,
+  updateTask,
 };

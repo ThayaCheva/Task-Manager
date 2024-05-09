@@ -1,6 +1,6 @@
 import React from "react";
 import "../styling/taskform.css";
-import { TaskContext } from "../App";
+import { TaskContext } from "../App.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";
@@ -32,31 +32,37 @@ function TaskForm(props) {
     setSubTask(event.target.value);
   };
 
+  // Create a new task
   const addTask = async (event) => {
     event.preventDefault();
-    const response = await fetch("/api/tasks", {
-      method: "POST",
-      body: JSON.stringify(formData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const json = await response.json();
-    if (response.ok) {
-      console.log(formData.subTasks);
-      dispatch({ type: "CREATE_TASKS", payload: formData });
-      setFormData({
-        id: "",
-        title: "",
-        desc: "",
-        dueDate: "",
-        subTasks: [],
-        images: null,
-        tags: [],
+    try {
+      const response = await fetch("/api/tasks", {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
+      const json = await response.json();
+      console.log(json);
+      if (response.ok) {
+        dispatch({ type: "CREATE_TASKS", payload: json });
+        setFormData({
+          id: "",
+          title: "",
+          desc: "",
+          dueDate: "",
+          subTasks: [],
+          images: null,
+          tags: [],
+        });
+      }
+    } catch (error) {
+      console.log("Error adding task:", error);
     }
   };
 
+  // Edit the selected task
   const editTask = async (event, taskID) => {
     event.preventDefault();
     const index = tasks.findIndex((t) => t._id === taskID);
@@ -102,6 +108,7 @@ function TaskForm(props) {
     setEditMode(false);
   };
 
+  // Add a new subtask to the selected task
   const addSubTask = (event) => {
     event.preventDefault();
     const newSubTask = { subTaskName: subTask, checked: false };
@@ -113,6 +120,7 @@ function TaskForm(props) {
     setSubTask("");
   };
 
+  // Remove a subtask from the selected task
   const removeSubTask = (indexToRemove) => {
     // Checks if removetask in edit mode or normal mod
     const updatedSubTasks = formData.subTasks.filter(

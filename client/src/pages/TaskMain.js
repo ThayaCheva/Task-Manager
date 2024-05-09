@@ -1,8 +1,8 @@
 import { React, useState, useContext, useRef, useEffect } from "react";
 import "../styling/taskmain.css";
 import { TaskContext } from "../App.js";
-import TaskItem from "../pages/TaskItem.js";
-import ConfirmDialog from "../pages/ConfirmDialog.js";
+import TaskItem from "../components/TaskItem.js";
+import ConfirmDialog from "../components/ConfirmDialog.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 

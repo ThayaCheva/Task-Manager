@@ -43,6 +43,7 @@ function TaskSummary() {
   };
 
   const handleTaskClick = (id) => {
+    console.log(id);
     setSelectedTask(id);
     setCurrentPage("Home");
     navigate("/");
@@ -150,7 +151,7 @@ function TaskSummary() {
                   .filter((task) => isSameDay(task.dueDate, day))
                   .map((task, taskIndex) => (
                     <div
-                      onClick={() => handleTaskClick(task.id)}
+                      onClick={() => handleTaskClick(task._id)}
                       className="summary-task-item"
                       key={taskIndex}
                       style={{

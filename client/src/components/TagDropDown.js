@@ -90,7 +90,7 @@ function TagDropDown(props) {
       );
       return { ...task, tags: updatedTags };
     });
-    setTasks(updatedTasks);
+    updateTask(updatedTasks[0], props.taskID);
     const updatedTags = tagList.filter((tag) => tag.tagName !== tagName);
     localStorage.setItem("tagList", JSON.stringify(updatedTags));
     setTagList(updatedTags);
@@ -98,6 +98,7 @@ function TagDropDown(props) {
 
   // Enable and disable tag from task
   const manageTaskTag = async (tag) => {
+    console.log(props.taskID);
     const updatedTask = tasks.map((task) => {
       if (task._id === props.taskID) {
         const tagsArray = Array.isArray(task.tags) ? task.tags : [];
@@ -128,9 +129,7 @@ function TagDropDown(props) {
       }
       return task;
     });
-    console.log(updatedTask);
-    updateTask(updatedTask[0], props.taskID);
-    // setTasks(updatedTask);
+    await updateTask(updatedTask[0], props.taskID);
   };
 
   // Return the tag status for each task
@@ -218,7 +217,11 @@ function TagDropDown(props) {
             ))}
           </div>
         </div>
-        <input type="submit" value="Create New Tag" />
+        <input
+          type="submit"
+          value="Create New Tag"
+          className="create-tag-btn"
+        />
       </form>
     </div>
   );

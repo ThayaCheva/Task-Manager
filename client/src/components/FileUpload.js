@@ -4,7 +4,7 @@ import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { TaskContext } from "../App";
 function FileUpload(props) {
   const [image, setImage] = React.useState();
-  const { tasks, setTasks } = React.useContext(TaskContext);
+  const { tasks, updateTask } = React.useContext(TaskContext);
   const fileInputRef = React.useRef();
 
   const handleImageImport = () => {
@@ -18,29 +18,19 @@ function FileUpload(props) {
     }
   }, []);
 
-  const handleimageChange = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const imageData = event.target.result;
-      const maxStorageSize = 5242880;
-      const imageDataSize = imageData ? imageData.length : 0;
-      if (imageDataSize > maxStorageSize) {
-        alert("Error: Image exceeded 5MB");
-        return;
-      }
-      setImage(imageData);
-      localStorage.setItem("uploadedImage", imageData);
-
-      const updatedTask = tasks.map((task) => {
-        if (task.id === props.taskID) {
-          return { ...task, images: image };
-        }
-        return task;
-      });
-      setTasks(updatedTask);
+  const onInputChange = (e) => {
+    var reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      console.log(reader.result);
+      var updatedTask = [...tasks];
+      updatedTask = updatedTask.filter((t) => t._id === props.taskID)[0];
+      updatedTask.images = reader.result;
+      updateTask(updatedTask, props.taskID);
     };
-    reader.readAsDataURL(file);
+    reader.onerror = (error) => {
+      console.log("Error:", error);
+    };
   };
 
   return (
@@ -52,7 +42,7 @@ function FileUpload(props) {
         type="file"
         style={{ display: "none", width: "100px" }}
         accept="image/jpg, image/jpeg, image/png"
-        onChange={handleimageChange}
+        onChange={onInputChange}
         ref={fileInputRef}
       />
     </div>

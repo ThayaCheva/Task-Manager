@@ -10,12 +10,25 @@ const subTaskSchema = new Schema({
 });
 
 const tagSchema = new Schema({
-  name: String,
-  color: String,
+  tagChecked: {
+    type: Boolean,
+    default: false,
+  },
+  tagInfo: {
+    tagName: {
+      type: String,
+      required: true,
+    },
+    tagColor: {
+      type: String,
+      required: true,
+    },
+  },
 });
 
 const taskSchema = new Schema(
   {
+    _id: { type: mongoose.Schema.Types.ObjectId, auto: true },
     title: {
       type: String,
       required: true,
@@ -23,7 +36,7 @@ const taskSchema = new Schema(
     desc: String,
     dueDate: String,
     subTasks: [subTaskSchema],
-    images: [String],
+    images: String,
     tags: [tagSchema],
   },
   { timestamps: true }

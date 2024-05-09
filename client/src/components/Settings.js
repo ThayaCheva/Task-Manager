@@ -9,7 +9,7 @@ import {
   faMoon,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
-import ConfirmDialog from "../pages/ConfirmDialog.js";
+import ConfirmDialog from "./ConfirmDialog.js";
 
 function Settings(props) {
   const {
