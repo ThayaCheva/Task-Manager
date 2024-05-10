@@ -22,3 +22,4 @@ Dependencies:
 - Fontawesome
 - bcrypt
 - mongoose
+- validator
