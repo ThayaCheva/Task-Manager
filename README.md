@@ -17,3 +17,8 @@ A website for managing daily or other tasks.
 <h3>Built with:</h3>
 - Front-end: React, SCSS
 - Back-end: MongoDB
+
+Dependencies:
+- Fontawesome
+- bcrypt
+- mongoose
