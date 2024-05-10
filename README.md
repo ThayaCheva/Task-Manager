@@ -1,6 +1,6 @@
 # Task Manager Website
 
-A website for managing daily or other tasks.
+A MERN stack website built using CRUD operation for managing daily or other tasks.
 
 <h3>Features:</h3>
 
