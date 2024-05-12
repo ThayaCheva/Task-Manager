@@ -124,14 +124,14 @@ function App() {
     }
   };
 
+  const style = {
+    display: "grid",
+    gridTemplateColumns: "1fr 8fr",
+  };
+
   // Manage the order of the display
   const TaskSections = () => {
-    return !isMobile ? (
-      <section id="tasklist">
-        <TaskMain />
-        {displayMenu()}
-      </section>
-    ) : (
+    return (
       <section id="tasklist">
         <TaskMain />
         {displayMenu()}

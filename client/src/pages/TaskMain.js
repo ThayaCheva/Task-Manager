@@ -50,21 +50,13 @@ function TaskMain() {
   // Search Functionality
   const [searchWord, setSearchWord] = useState({ word: "", foundTasks: [] });
   const handleSearchTasks = (event) => {
-    const updatedTask = tasks.filter((task) =>
-      task.title.toLowerCase().includes(event.target.value.toLowerCase())
-    );
-    setSearchWord({ word: event.target.value, foundTasks: updatedTask });
-  };
-
-  // Find the word that matches
-  useEffect(() => {
     if (tasks) {
       const updatedTask = tasks.filter((task) =>
-        task.title.toLowerCase().includes(searchWord.word.toLowerCase())
+        task.title.toLowerCase().includes(event.target.value.toLowerCase())
       );
-      setSearchWord({ word: searchWord.word, foundTasks: updatedTask });
+      setSearchWord({ word: event.target.value, foundTasks: updatedTask });
     }
-  }, []);
+  };
 
   // Clicking a task in summary will scroll to the selected task in home
   useEffect(() => {

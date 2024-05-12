@@ -139,12 +139,14 @@ export default function Navbar() {
           {!isMobile && <h1 className="navbar-header">Task Manager</h1>}
           <Link className="link sign-out" to="/login">
             <div className="nav-item">
-              <FontAwesomeIcon className="icon" icon={faRightToBracket} /> Login
+              <FontAwesomeIcon className="icon" icon={faRightToBracket} />{" "}
+              <div className="nav-item-name">Login</div>
             </div>
           </Link>
           <Link className="link sign-out" to="/signup">
             <div className="nav-item">
-              <FontAwesomeIcon className="icon" icon={faUserPlus} /> Sign Up
+              <FontAwesomeIcon className="icon" icon={faUserPlus} />{" "}
+              <div className="nav-item-name">Sign Up</div>
             </div>
           </Link>
         </div>

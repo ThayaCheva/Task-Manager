@@ -41,7 +41,7 @@ function Signup() {
         <p>
           Already have an account?{" "}
           <span>
-            <Link className="link sign-out" to="/signup">
+            <Link className="link sign-out" to="/login">
               <span>Login</span>
             </Link>
           </span>

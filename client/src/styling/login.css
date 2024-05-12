@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
 }
 .login form {
   display: flex;
@@ -11,7 +12,7 @@
   box-shadow: var(--box-shadow);
   padding: 2rem;
   border-radius: 15px;
-  width: 30vw;
+  width: 520px;
 }
 .login form h1 {
   text-align: center;
@@ -55,4 +56,25 @@
   color: var(--red);
   padding: 0.5rem 1rem;
   border-radius: 5px;
+}
+
+@media only screen and (max-width: 740px) {
+  .login form {
+    width: 100%;
+    margin: 2rem;
+  }
+}
+@media only screen and (max-width: 420px) {
+  .login {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    height: 100% !important;
+    background: var(--tasks-background);
+  }
+  .login form {
+    width: 100%;
+    margin: 0;
+    box-shadow: none;
+  }
 }/*# sourceMappingURL=login.css.map */

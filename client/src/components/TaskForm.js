@@ -154,7 +154,6 @@ function TaskForm(props) {
     }
   }, [editMode.state, editMode.taskID, tasks]);
 
-  const closeForm = () => {};
   return (
     <div className="forms">
       <form
@@ -165,14 +164,13 @@ function TaskForm(props) {
       >
         <div className="form-header">
           <h1>{props.formTitle}</h1>
-          <button onClick={() => closeForm()}>
-            <FontAwesomeIcon
-              icon={faXmark}
-              onClick={(event) => {
-                setSidePanel(null);
-                event.preventDefault();
-              }}
-            />
+          <button
+            onClick={(event) => {
+              setSidePanel(null);
+              event.preventDefault();
+            }}
+          >
+            <FontAwesomeIcon icon={faXmark} />
           </button>
         </div>
         <input

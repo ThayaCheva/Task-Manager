@@ -99,7 +99,6 @@ function TaskSummary() {
 
   return (
     <section className="task-summary">
-      <Navbar />
       <div className="task-summary-container">
         <div className="tasks-list">
           <div className="calendar-header">

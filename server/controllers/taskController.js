@@ -7,8 +7,6 @@ const getTasks = async (req, res) => {
   res.json(tasks);
 };
 
-// Get Single Task
-
 // POST new Task
 const createTask = async (req, res) => {
   const { title, desc, dueDate, subTasks, images, tags } = req.body;
