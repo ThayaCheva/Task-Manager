@@ -128,13 +128,11 @@ function App() {
   const TaskSections = () => {
     return !isMobile ? (
       <section id="tasklist">
-        <Navbar handleNavClick={handleNavClick} />
         <TaskMain />
         {displayMenu()}
       </section>
     ) : (
       <section id="tasklist">
-        <Navbar handleNavClick={handleNavClick} />
         <TaskMain />
         {displayMenu()}
       </section>
@@ -147,6 +145,7 @@ function App() {
       body: JSON.stringify(updatedTask),
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer: ${user.token}`,
       },
     });
     if (response.ok) {
@@ -185,24 +184,31 @@ function App() {
                   fetchTasks,
                 }}
               >
-                <Routes>
-                  <Route
-                    path="/"
-                    element={user ? <TaskSections /> : <Navigate to="/login" />}
-                  />
-                  <Route
-                    path="/summary"
-                    element={user ? <TaskSummary /> : <Navigate to="/login" />}
-                  />
-                  <Route
-                    path="/login"
-                    element={!user ? <Login /> : <TaskSections />}
-                  />
-                  <Route
-                    path="/signup"
-                    element={!user ? <Signup /> : <TaskSections />}
-                  />
-                </Routes>
+                <section id="tasklist">
+                  <Navbar handleNavClick={handleNavClick} />
+                  <Routes>
+                    <Route
+                      path="/"
+                      element={
+                        user ? <TaskSections /> : <Navigate to="/login" />
+                      }
+                    />
+                    <Route
+                      path="/summary"
+                      element={
+                        user ? <TaskSummary /> : <Navigate to="/login" />
+                      }
+                    />
+                    <Route
+                      path="/login"
+                      element={!user ? <Login /> : <TaskSections />}
+                    />
+                    <Route
+                      path="/signup"
+                      element={!user ? <Signup /> : <TaskSections />}
+                    />
+                  </Routes>
+                </section>
               </TaskContext.Provider>
             }
           </NavContext.Provider>

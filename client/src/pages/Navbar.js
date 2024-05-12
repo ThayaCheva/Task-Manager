@@ -4,17 +4,21 @@ import { TaskContext } from "../App.js";
 import { NavContext } from "../App.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLogout } from "../hooks/useLogout.js";
+import { useAuthContext } from "../hooks/useAuthContext.js";
 import {
   faSliders,
   faSignOut,
   faHome,
   faBell,
   faCalendar,
+  faRightToBracket,
+  faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 export default function Navbar() {
   const { currentPage, notificationCount } = useContext(TaskContext);
   const { handleNavClick, isMobile } = useContext(NavContext);
   const [isHidden, setIsHidden] = useState(true);
+  const { user } = useAuthContext();
   const logout = useLogout();
   useEffect(() => {
     if (isMobile) {
@@ -23,8 +27,9 @@ export default function Navbar() {
       setIsHidden(false);
     }
   }, [isMobile]);
-  return (
-    <header>
+
+  const UserNavbar = () => {
+    return (
       <div className="navbar">
         {isMobile && <h1 className="navbar-header">TM</h1>}
         <div className="navbar-container">
@@ -123,6 +128,29 @@ export default function Navbar() {
           </div>
         )}
       </div>
-    </header>
-  );
+    );
+  };
+
+  const NoUserNavbar = () => {
+    return (
+      <div className="navbar">
+        {isMobile && <h1 className="navbar-header">TM</h1>}
+        <div className="navbar-container">
+          {!isMobile && <h1 className="navbar-header">Task Manager</h1>}
+          <Link className="link sign-out" to="/login">
+            <div className="nav-item">
+              <FontAwesomeIcon className="icon" icon={faRightToBracket} /> Login
+            </div>
+          </Link>
+          <Link className="link sign-out" to="/signup">
+            <div className="nav-item">
+              <FontAwesomeIcon className="icon" icon={faUserPlus} /> Sign Up
+            </div>
+          </Link>
+        </div>
+      </div>
+    );
+  };
+
+  return <header>{user ? <UserNavbar /> : <NoUserNavbar />}</header>;
 }
