@@ -7,6 +7,9 @@ const {
   deleteAllTasks,
 } = require("../controllers/taskController");
 const router = express.Router();
+const requireAuth = require("../middleware/requireAuth");
+
+router.use(requireAuth);
 
 // Get All Tasks
 router.get("/", getTasks);

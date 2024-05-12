@@ -38,6 +38,10 @@ const taskSchema = new Schema(
     subTasks: [subTaskSchema],
     images: String,
     tags: [tagSchema],
+    user_id: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );

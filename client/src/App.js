@@ -7,8 +7,16 @@ import Navbar from "./pages/Navbar.js";
 import Notification from "./components/Notification.js";
 import { differenceInDays, isToday } from "date-fns";
 import "./styling/nav.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { useTaskContext } from "./hooks/useTaskContext.js";
+import Login from "./pages/Login.js";
+import Signup from "./pages/Signup.js";
+import { useAuthContext } from "./hooks/useAuthContext.js";
 export const TaskContext = createContext();
 export const NavContext = createContext();
 
@@ -25,6 +33,7 @@ function App() {
     fontSize: 100,
     mode: "light",
   });
+  const { user } = useAuthContext();
 
   const [allowConfirmDialog, setAllowConfirmDialog] = useState({
     type: null,
@@ -33,7 +42,11 @@ function App() {
 
   const fetchTasks = async () => {
     try {
-      const response = await fetch("/api/tasks");
+      const response = await fetch("/api/tasks", {
+        headers: {
+          Authorization: `Bearer: ${user.token}`,
+        },
+      });
       const json = await response.json();
       if (response.ok) {
         dispatch({ type: "SET_TASKS", payload: json });
@@ -48,7 +61,9 @@ function App() {
   // Retrieve data from db and handle resize
   useEffect(() => {
     const fetchTasksAndHandleResize = async () => {
-      await fetchTasks();
+      if (user) {
+        await fetchTasks();
+      }
 
       const handleResize = () => {
         setIsMobile(window.innerWidth <= 1200);
@@ -61,7 +76,7 @@ function App() {
     };
 
     fetchTasksAndHandleResize();
-  }, [window.innerWidth]);
+  }, [user, window.innerWidth]);
 
   // Get the notification count
   useEffect(() => {
@@ -146,7 +161,7 @@ function App() {
       <div className="App">
         <main>
           <NavContext.Provider value={{ handleNavClick, isMobile }}>
-            {tasks && (
+            {
               <TaskContext.Provider
                 value={{
                   tasks,
@@ -171,11 +186,25 @@ function App() {
                 }}
               >
                 <Routes>
-                  <Route path="/" element={<TaskSections />} />
-                  <Route path="/summary" element={<TaskSummary />} />
+                  <Route
+                    path="/"
+                    element={user ? <TaskSections /> : <Navigate to="/login" />}
+                  />
+                  <Route
+                    path="/summary"
+                    element={user ? <TaskSummary /> : <Navigate to="/login" />}
+                  />
+                  <Route
+                    path="/login"
+                    element={!user ? <Login /> : <TaskSections />}
+                  />
+                  <Route
+                    path="/signup"
+                    element={!user ? <Signup /> : <TaskSections />}
+                  />
                 </Routes>
               </TaskContext.Provider>
-            )}
+            }
           </NavContext.Provider>
         </main>
       </div>

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { TaskContext } from "../App.js";
 import { NavContext } from "../App.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useLogout } from "../hooks/useLogout.js";
 import {
   faSliders,
   faSignOut,
@@ -14,6 +15,7 @@ export default function Navbar() {
   const { currentPage, notificationCount } = useContext(TaskContext);
   const { handleNavClick, isMobile } = useContext(NavContext);
   const [isHidden, setIsHidden] = useState(true);
+  const logout = useLogout();
   useEffect(() => {
     if (isMobile) {
       setIsHidden(true);
@@ -109,7 +111,12 @@ export default function Navbar() {
               </div>
             </Link>
             <Link className="link sign-out" to="/">
-              <div className="nav-item">
+              <div
+                className="nav-item"
+                onClick={() => {
+                  logout();
+                }}
+              >
                 <FontAwesomeIcon className="icon" icon={faSignOut} /> Sign Out
               </div>
             </Link>

@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";
 import { useTaskContext } from "../hooks/useTaskContext.js";
+import { useAuthContext } from "../hooks/useAuthContext.js";
 
 function TaskForm(props) {
   const { tasks, editMode, setEditMode, setSidePanel, updateTask } =
@@ -12,7 +13,7 @@ function TaskForm(props) {
   const { dispatch, update } = useTaskContext();
   const form = React.useRef();
   const [subTask, setSubTask] = React.useState("");
-
+  const { user } = useAuthContext();
   const [formData, setFormData] = React.useState({
     id: "",
     title: "",
@@ -35,16 +36,20 @@ function TaskForm(props) {
   // Create a new task
   const addTask = async (event) => {
     event.preventDefault();
+    if (!user) {
+      alert("You must be logged in");
+      return;
+    }
     try {
       const response = await fetch("/api/tasks", {
         method: "POST",
         body: JSON.stringify(formData),
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer: ${user.token}`,
         },
       });
       const json = await response.json();
-      console.log(json);
       if (response.ok) {
         dispatch({ type: "CREATE_TASKS", payload: json });
         setFormData({

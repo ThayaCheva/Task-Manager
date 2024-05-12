@@ -1,9 +1,9 @@
 const { default: mongoose } = require("mongoose");
 const Task = require("../models/taskModel");
-
 // Get All Tasks
 const getTasks = async (req, res) => {
-  const tasks = await Task.find({}).sort({ createdAt: -1 });
+  const user_id = req.user._id;
+  const tasks = await Task.find({ user_id }).sort({ createdAt: -1 });
   res.json(tasks);
 };
 
@@ -13,6 +13,7 @@ const getTasks = async (req, res) => {
 const createTask = async (req, res) => {
   const { title, desc, dueDate, subTasks, images, tags } = req.body;
   try {
+    const user_id = req.user._id;
     const task = await Task.create({
       title,
       desc,
@@ -20,6 +21,7 @@ const createTask = async (req, res) => {
       subTasks,
       images,
       tags,
+      user_id,
     });
     res.status(200).json(task);
   } catch (error) {

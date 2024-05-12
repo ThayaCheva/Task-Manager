@@ -12,6 +12,7 @@ import {
 import { BiAlarm } from "react-icons/bi";
 import { TaskContext } from "../App.js";
 import { useTaskContext } from "../hooks/useTaskContext.js";
+import { useAuthContext } from "../hooks/useAuthContext.js";
 
 function TaskItem(props) {
   const {
@@ -26,7 +27,7 @@ function TaskItem(props) {
   } = useContext(TaskContext);
   const { dispatch } = useTaskContext();
   const selectedTaskRef = useRef(null);
-
+  const { user } = useAuthContext();
   // Update the state to edit mode
   const editTask = (id) => {
     setSidePanel("Add Task");
@@ -35,9 +36,15 @@ function TaskItem(props) {
 
   // Remove selected task
   const removeTask = async (id) => {
+    if (!user) {
+      return;
+    }
     setEditMode(false);
     const response = await fetch("/api/tasks/" + id, {
       method: "DELETE",
+      headers: {
+        Authorization: `Bearer: ${user.token}`,
+      },
     });
     const json = await response.json();
     if (response.ok) {

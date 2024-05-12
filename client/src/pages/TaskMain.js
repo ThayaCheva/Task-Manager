@@ -58,10 +58,12 @@ function TaskMain() {
 
   // Find the word that matches
   useEffect(() => {
-    const updatedTask = tasks.filter((task) =>
-      task.title.toLowerCase().includes(searchWord.word.toLowerCase())
-    );
-    setSearchWord({ word: searchWord.word, foundTasks: updatedTask });
+    if (tasks) {
+      const updatedTask = tasks.filter((task) =>
+        task.title.toLowerCase().includes(searchWord.word.toLowerCase())
+      );
+      setSearchWord({ word: searchWord.word, foundTasks: updatedTask });
+    }
   }, []);
 
   // Clicking a task in summary will scroll to the selected task in home
@@ -136,31 +138,33 @@ function TaskMain() {
           <div></div>
         </div>
       )}
-      <div className={`tasks-items-container ${settings.style}`}>
-        {searchWord.word === ""
-          ? tasks.map((t, index) => (
-              <TaskItem
-                key={index}
-                task={t}
-                subTask={t.subTasks}
-                tagDropdown={tagDropdown}
-                handleTagDropdown={handleTagDropdown}
-                toggleMenu={toggleMenu}
-                handleToggleMenu={handleToggleMenu}
-              />
-            ))
-          : searchWord.foundTasks.map((t, index) => (
-              <TaskItem
-                key={index}
-                task={t}
-                subTask={t.subTasks}
-                tagDropdown={tagDropdown}
-                handleTagDropdown={handleTagDropdown}
-                toggleMenu={toggleMenu}
-                handleToggleMenu={handleToggleMenu}
-              />
-            ))}
-      </div>
+      {tasks && (
+        <div className={`tasks-items-container ${settings.style}`}>
+          {searchWord.word === ""
+            ? tasks.map((t, index) => (
+                <TaskItem
+                  key={index}
+                  task={t}
+                  subTask={t.subTasks}
+                  tagDropdown={tagDropdown}
+                  handleTagDropdown={handleTagDropdown}
+                  toggleMenu={toggleMenu}
+                  handleToggleMenu={handleToggleMenu}
+                />
+              ))
+            : searchWord.foundTasks.map((t, index) => (
+                <TaskItem
+                  key={index}
+                  task={t}
+                  subTask={t.subTasks}
+                  tagDropdown={tagDropdown}
+                  handleTagDropdown={handleTagDropdown}
+                  toggleMenu={toggleMenu}
+                  handleToggleMenu={handleToggleMenu}
+                />
+              ))}
+        </div>
+      )}
     </div>
   );
 }
