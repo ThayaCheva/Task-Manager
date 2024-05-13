@@ -15,12 +15,30 @@ A MERN stack website built using CRUD operation for managing daily or other task
 - Dark & Light Mode
 
 <h3>Built with:</h3>
-- Front-end: React, SCSS
-- Back-end: MongoDB
+Built with React JS and SCSS for the front-end with Node JS and Mongo DB as the back-end
 
-Dependencies:
+<h3>Dependencies:</h3>
 
-- Fontawesome
+- fontawesome
 - bcrypt
 - mongoose
 - validator
+- jwt
+
+<h3>Images: </h3>
+
+<h2>Main task page</h2>
+
+![](readme-images/img1.PNG)
+
+<h2>Editing a task</h2>
+
+![](readme-images/img2.PNG)
+
+<h2>Task summary page (calendar)</h2>
+
+![](readme-images/img3.PNG)
+
+<h2>Login page</h2>
+
+![](readme-images/img4.PNG)
