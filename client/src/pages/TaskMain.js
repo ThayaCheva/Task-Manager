@@ -74,7 +74,6 @@ function TaskMain() {
         },
       });
       if (response.ok) {
-        const json = response.json();
         fetchTasks();
       }
     } catch (error) {

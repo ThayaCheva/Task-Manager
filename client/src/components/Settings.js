@@ -98,7 +98,7 @@ function Settings(props) {
                 setAllowConfirmDialog({ type: "clear-storage", state: true })
               }
             >
-              Clear Storage
+              Clear Local Storage
             </div>
           </div>
         </div>

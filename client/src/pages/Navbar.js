@@ -1,4 +1,4 @@
-import { React, useContext, useEffect, useState } from "react";
+import { React, useContext } from "react";
 import { Link } from "react-router-dom";
 import { TaskContext } from "../App.js";
 import { NavContext } from "../App.js";
@@ -17,23 +17,18 @@ import {
 export default function Navbar() {
   const { currentPage, notificationCount } = useContext(TaskContext);
   const { handleNavClick, isMobile } = useContext(NavContext);
-  const [isHidden, setIsHidden] = useState(true);
   const { user } = useAuthContext();
   const logout = useLogout();
-  useEffect(() => {
-    if (isMobile) {
-      setIsHidden(true);
-    } else {
-      setIsHidden(false);
-    }
-  }, [isMobile]);
 
   const UserNavbar = () => {
     return (
       <div className="navbar">
         {isMobile && <h1 className="navbar-header">TM</h1>}
         <div className="navbar-container">
-          {!isMobile && <h1 className="navbar-header">Task Manager</h1>}
+          <div className="header">
+            {!isMobile && <h1 className="navbar-header">Task Manager</h1>}
+            <div className="nav-item">{user.email}</div>
+          </div>
           <Link className="link" to="/">
             <div
               onClick={() => handleNavClick("Home")}
