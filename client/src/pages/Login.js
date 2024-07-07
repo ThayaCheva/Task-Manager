@@ -34,7 +34,7 @@ function Login() {
           Login
         </button>
         <p>
-          Dont have an account?{" "}
+          Don't have an account?{" "}
           <span>
             <Link className="link sign-out" to="/signup">
               <span>Sign Up</span>
