@@ -1,37 +1,37 @@
-import { React, useState, useEffect, createContext } from "react";
-import TaskSummary from "./pages/TaskSummary";
-import TaskMain from "./pages/TaskMain.js";
-import TaskForm from "./components/TaskForm.js";
-import Settings from "./components/Settings.js";
-import Navbar from "./pages/Navbar.js";
-import Notification from "./components/Notification.js";
-import { differenceInDays, isToday } from "date-fns";
-import "./styling/nav.css";
+import { React, useState, useEffect, createContext } from 'react';
+import TaskSummary from './pages/TaskSummary';
+import TaskMain from './pages/TaskMain.js';
+import TaskForm from './components/TaskForm.js';
+import Settings from './components/Settings.js';
+import Navbar from './pages/Navbar.js';
+import Notification from './components/Notification.js';
+import { differenceInDays, isToday } from 'date-fns';
+import './styling/nav.css';
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
-} from "react-router-dom";
-import { useTaskContext } from "./hooks/useTaskContext.js";
-import Login from "./pages/Login.js";
-import Signup from "./pages/Signup.js";
-import { useAuthContext } from "./hooks/useAuthContext.js";
+} from 'react-router-dom';
+import { useTaskContext } from './hooks/useTaskContext.js';
+import Login from './pages/Login.js';
+import Signup from './pages/Signup.js';
+import { useAuthContext } from './hooks/useAuthContext.js';
 export const TaskContext = createContext();
 export const NavContext = createContext();
 
 function App() {
   const { tasks, dispatch } = useTaskContext();
-  const [editMode, setEditMode] = useState({ state: false, taskID: "" });
-  const [selectedTask, setSelectedTask] = useState("");
+  const [editMode, setEditMode] = useState({ state: false, taskID: '' });
+  const [selectedTask, setSelectedTask] = useState('');
   const [taskImages, setTaskImages] = useState([]);
   const [sidePanel, setSidePanel] = useState(null);
   const [notificationCount, setNotificationCount] = useState(0);
-  const [currentPage, setCurrentPage] = useState("Home");
+  const [currentPage, setCurrentPage] = useState('Home');
   const [settings, setSettings] = useState({
-    style: "grid",
+    style: 'grid',
     fontSize: 100,
-    mode: "light",
+    mode: 'light',
   });
   const { user } = useAuthContext();
 
@@ -42,17 +42,17 @@ function App() {
 
   const fetchTasks = async () => {
     try {
-      const response = await fetch("/api/tasks", {
+      const response = await fetch('/api/tasks', {
         headers: {
           Authorization: `Bearer: ${user.token}`,
         },
       });
       const json = await response.json();
       if (response.ok) {
-        dispatch({ type: "SET_TASKS", payload: json });
+        dispatch({ type: 'SET_TASKS', payload: json });
       }
     } catch (error) {
-      console.log("Error fecthing data: ", error);
+      console.log('Error fecthing data: ', error);
     }
   };
 
@@ -71,8 +71,8 @@ function App() {
 
       handleResize(); // Call handleResize immediately to set initial state
 
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
     };
 
     fetchTasksAndHandleResize();
@@ -100,10 +100,10 @@ function App() {
   // Manage navigation bar clicks
   const handleNavClick = (page) => {
     setCurrentPage(page);
-    if (page === "Notification") {
-      setSidePanel("Notification");
-    } else if (page === "Settings") {
-      setSidePanel("Settings");
+    if (page === 'Notification') {
+      setSidePanel('Notification');
+    } else if (page === 'Settings') {
+      setSidePanel('Settings');
     } else {
       setSidePanel(null);
     }
@@ -111,28 +111,28 @@ function App() {
 
   // Manage which side menu to display (Notification, Settings or Task Form)
   const displayMenu = () => {
-    if (sidePanel === "Notification") {
+    if (sidePanel === 'Notification') {
       return <Notification handleNavClick={handleNavClick} />;
-    } else if (sidePanel === "Settings") {
+    } else if (sidePanel === 'Settings') {
       return <Settings handleNavClick={handleNavClick} />;
-    } else if (sidePanel === "Add Task") {
+    } else if (sidePanel === 'Add Task') {
       if (editMode.state) {
-        return <TaskForm formTitle={"Edit Task"} />;
+        return <TaskForm formTitle={'Edit Task'} />;
       } else {
-        return <TaskForm formTitle={"Add Task"} />;
+        return <TaskForm formTitle={'Add Task'} />;
       }
     }
   };
 
   const style = {
-    display: "grid",
-    gridTemplateColumns: "1fr 8fr",
+    display: 'grid',
+    gridTemplateColumns: '1fr 8fr',
   };
 
   // Manage the order of the display
   const TaskSections = () => {
     return (
-      <section id="tasklist">
+      <section id='tasklist'>
         <TaskMain />
         {displayMenu()}
       </section>
@@ -140,24 +140,24 @@ function App() {
   };
 
   const updateTask = async (updatedTask, id) => {
-    const response = await fetch("/api/tasks/" + id, {
-      method: "PATCH",
+    const response = await fetch('/api/tasks/' + id, {
+      method: 'PATCH',
       body: JSON.stringify(updatedTask),
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer: ${user.token}`,
       },
     });
     if (response.ok) {
       const json = await response.json();
-      dispatch({ type: "UPDATE_TASKS", payload: json });
+      dispatch({ type: 'UPDATE_TASKS', payload: json });
       fetchTasks();
     }
   };
 
   return (
     <Router>
-      <div className="App">
+      <div className='App'>
         <main>
           <NavContext.Provider value={{ handleNavClick, isMobile }}>
             {
@@ -184,27 +184,27 @@ function App() {
                   fetchTasks,
                 }}
               >
-                <section id="tasklist">
+                <section id='tasklist'>
                   <Navbar handleNavClick={handleNavClick} />
                   <Routes>
                     <Route
-                      path="/"
+                      path='/'
                       element={
-                        user ? <TaskSections /> : <Navigate to="/login" />
+                        user ? <TaskSections /> : <Navigate to='/login' />
                       }
                     />
                     <Route
-                      path="/summary"
+                      path='/summary'
                       element={
-                        user ? <TaskSummary /> : <Navigate to="/login" />
+                        user ? <TaskSummary /> : <Navigate to='/login' />
                       }
                     />
                     <Route
-                      path="/login"
+                      path='/login'
                       element={!user ? <Login /> : <TaskSections />}
                     />
                     <Route
-                      path="/signup"
+                      path='/signup'
                       element={!user ? <Signup /> : <TaskSections />}
                     />
                   </Routes>
