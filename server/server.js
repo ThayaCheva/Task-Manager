@@ -2,28 +2,31 @@ require('dotenv').config();
 
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const taskRoutes = require('./routes/task-routes');
 const userRoutes = require('./routes/user-routes');
-// express app
-const bodyParser = require('body-parser');
+
 const app = express();
 
-// Express 4.0
-app.use(bodyParser.json({ limit: '10mb' }));
-app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
+// Enable CORS
+app.use(cors());
 
-// Middleware
-app.use(express.json());
+// Parse incoming JSON requests
+app.use(express.json({ limit: '10mb' }));
+
+// Parse incoming URL-encoded requests
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
 });
 
-//routes
+// Routes
 app.use('/api/tasks', taskRoutes);
 app.use('/api/user', userRoutes);
-// connect to db
+
+// Connect to MongoDB
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
@@ -32,5 +35,5 @@ mongoose
     });
   })
   .catch((error) => {
-    console.log(error);
+    console.error('Error connecting to MongoDB:', error);
   });
