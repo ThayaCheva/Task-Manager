@@ -1,6 +1,6 @@
-import { React, useState, useContext } from "react";
-import "../styling/tasksummary.css";
-import { useNavigate } from "react-router-dom";
+import { React, useState, useContext } from 'react';
+import '../styling/tasksummary.css';
+import { useNavigate } from 'react-router-dom';
 import {
   eachDayOfInterval,
   endOfMonth,
@@ -11,17 +11,17 @@ import {
   startOfMonth,
   addMonths,
   subMonths,
-} from "date-fns";
-import { TaskContext, NavContext } from "../App";
-import Navbar from "./Navbar.js";
+} from 'date-fns';
+import { TaskContext, NavContext } from '../App';
+import Navbar from './Navbar.js';
 
 function TaskSummary() {
   const { tasks, setSelectedTask, setCurrentPage } = useContext(TaskContext);
   const { isMobile } = useContext(NavContext);
   const navigate = useNavigate();
   const newTasks = [...tasks];
-  const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const weekdays_mobile = ["S", "M", "T", "W", "T", "F", "S"];
+  const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const weekdays_mobile = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
   const GetSubtaskAmount = () => {
     var count = 0;
@@ -38,15 +38,14 @@ function TaskSummary() {
   };
 
   const limitWords = (text) => {
-    const newtext = text.length > 15 ? text.substring(0, 15) + "..." : text;
+    const newtext = text.length > 15 ? text.substring(0, 15) + '...' : text;
     return newtext;
   };
 
   const handleTaskClick = (id) => {
-    console.log(id);
     setSelectedTask(id);
-    setCurrentPage("Home");
-    navigate("/");
+    setCurrentPage('Home');
+    navigate('/');
   };
 
   const currDate = new Date();
@@ -98,66 +97,66 @@ function TaskSummary() {
   };
 
   return (
-    <section className="task-summary">
-      <div className="task-summary-container">
-        <div className="tasks-list">
-          <div className="calendar-header">
-            <div className="calendar-nav">
+    <section className='task-summary'>
+      <div className='task-summary-container'>
+        <div className='tasks-list'>
+          <div className='calendar-header'>
+            <div className='calendar-nav'>
               <button onClick={() => decreaseMonth()}>{`<`}</button>
-              <div>{format(selectedMonth.selectedMonth, "MMMM yyyy")}</div>
+              <div>{format(selectedMonth.selectedMonth, 'MMMM yyyy')}</div>
               <button onClick={() => increaseMonth()}>{`>`}</button>
             </div>
 
-            <div className="tasks-stats">
-              <div className="tasks-stats-item">
+            <div className='tasks-stats'>
+              <div className='tasks-stats-item'>
                 <p>Number of Tasks: {tasks.length}</p>
               </div>
-              <div className="tasks-stats-item">
+              <div className='tasks-stats-item'>
                 <p>
                   Number of Subtasks: <GetSubtaskAmount />
                 </p>
               </div>
             </div>
           </div>
-          <div className="grid">
+          <div className='grid'>
             {!isMobile
               ? weekdays.map((day) => (
-                  <div className="border weekdays" key={day}>
+                  <div className='border weekdays' key={day}>
                     {day}
                   </div>
                 ))
               : weekdays_mobile.map((day) => (
-                  <div className="border weekdays" key={day}>
+                  <div className='border weekdays' key={day}>
                     {day}
                   </div>
                 ))}
             {/* Empty Div */}
             {Array.from({ length: selectedMonth.startingDayIndex }).map(
               (_, index) => {
-                return <div className="border" key={index}></div>;
+                return <div className='border' key={index}></div>;
               }
             )}
 
             {/* Actual Days */}
             {selectedMonth.daysInMonth.map((day, index) => (
               <div
-                className={`border ${isToday(day) ? "today" : ""}`}
+                className={`border ${isToday(day) ? 'today' : ''}`}
                 key={index + selectedMonth.startingDayIndex}
               >
-                <p>{format(day, "d")}</p>
+                <p>{format(day, 'd')}</p>
                 {/* Map tasks to date */}
                 {newTasks
                   .filter((task) => isSameDay(task.dueDate, day))
                   .map((task, taskIndex) => (
                     <div
                       onClick={() => handleTaskClick(task._id)}
-                      className="summary-task-item"
+                      className='summary-task-item'
                       key={taskIndex}
                       style={{
                         backgroundColor:
                           task.tags.length > 0
                             ? task.tags[0].tagInfo.tagColor
-                            : "#7bd3ea",
+                            : '#7bd3ea',
                       }}
                     >
                       <p>{limitWords(task.title)}</p>

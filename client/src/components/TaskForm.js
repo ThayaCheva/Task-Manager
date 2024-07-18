@@ -1,24 +1,24 @@
-import React from "react";
-import "../styling/taskform.css";
-import { TaskContext } from "../App.js";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { format } from "date-fns";
-import { useTaskContext } from "../hooks/useTaskContext.js";
-import { useAuthContext } from "../hooks/useAuthContext.js";
+import React from 'react';
+import '../styling/taskform.css';
+import { TaskContext } from '../App.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { format } from 'date-fns';
+import { useTaskContext } from '../hooks/useTaskContext.js';
+import { useAuthContext } from '../hooks/useAuthContext.js';
 
 function TaskForm(props) {
   const { tasks, editMode, setEditMode, setSidePanel, updateTask } =
     React.useContext(TaskContext);
   const { dispatch, update } = useTaskContext();
   const form = React.useRef();
-  const [subTask, setSubTask] = React.useState("");
+  const [subTask, setSubTask] = React.useState('');
   const { user } = useAuthContext();
   const [formData, setFormData] = React.useState({
-    id: "",
-    title: "",
-    desc: "",
-    dueDate: "",
+    id: '',
+    title: '',
+    desc: '',
+    dueDate: '',
     subTasks: [],
     images: null,
     tags: [],
@@ -37,33 +37,36 @@ function TaskForm(props) {
   const addTask = async (event) => {
     event.preventDefault();
     if (!user) {
-      alert("You must be logged in");
+      alert('You must be logged in');
       return;
     }
     try {
-      const response = await fetch("/api/tasks", {
-        method: "POST",
-        body: JSON.stringify(formData),
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer: ${user.token}`,
-        },
-      });
+      const response = await fetch(
+        'https://task-manager-rjw6.onrender.com/api/tasks',
+        {
+          method: 'POST',
+          body: JSON.stringify(formData),
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer: ${user.token}`,
+          },
+        }
+      );
       const json = await response.json();
       if (response.ok) {
-        dispatch({ type: "CREATE_TASKS", payload: json });
+        dispatch({ type: 'CREATE_TASKS', payload: json });
         setFormData({
-          id: "",
-          title: "",
-          desc: "",
-          dueDate: "",
+          id: '',
+          title: '',
+          desc: '',
+          dueDate: '',
           subTasks: [],
           images: null,
           tags: [],
         });
       }
     } catch (error) {
-      console.log("Error adding task:", error);
+      console.log('Error adding task:', error);
     }
   };
 
@@ -97,17 +100,17 @@ function TaskForm(props) {
 
         // Clear Form
         setFormData({
-          id: "",
-          title: "",
-          desc: "",
-          dueDate: "",
+          id: '',
+          title: '',
+          desc: '',
+          dueDate: '',
           subTasks: [],
           images: null,
           tags: [],
         });
-        setSubTask("");
+        setSubTask('');
       } catch (error) {
-        console.log("Theres been an error", error);
+        console.log('Theres been an error', error);
       }
     }
     setEditMode(false);
@@ -122,7 +125,7 @@ function TaskForm(props) {
       subTasks: [...formData.subTasks, newSubTask],
     };
     setFormData(updatedForm);
-    setSubTask("");
+    setSubTask('');
   };
 
   // Remove a subtask from the selected task
@@ -155,14 +158,14 @@ function TaskForm(props) {
   }, [editMode.state, editMode.taskID, tasks]);
 
   return (
-    <div className="forms">
+    <div className='forms'>
       <form
         ref={form}
         onSubmit={(event) =>
           editMode.state ? editTask(event, editMode.taskID) : addTask(event)
         }
       >
-        <div className="form-header">
+        <div className='form-header'>
           <h1>{props.formTitle}</h1>
           <button
             onClick={(event) => {
@@ -174,57 +177,57 @@ function TaskForm(props) {
           </button>
         </div>
         <input
-          type="text"
-          id="title"
-          name="title"
-          placeholder="Insert task title"
+          type='text'
+          id='title'
+          name='title'
+          placeholder='Insert task title'
           value={formData.title}
           onChange={handleInputChange}
           required
         />
         <input
-          type="text"
-          id="desc"
-          name="desc"
-          placeholder="Insert task description"
+          type='text'
+          id='desc'
+          name='desc'
+          placeholder='Insert task description'
           value={formData.desc}
           onChange={handleInputChange}
         />
-        <div className="due-date">
+        <div className='due-date'>
           <p>Due Date:</p>
           <input
-            type="date"
-            id="dueDate"
-            name="dueDate"
+            type='date'
+            id='dueDate'
+            name='dueDate'
             value={formData.dueDate.toString()}
             onChange={handleInputChange}
-            min={format(new Date(), "yyyy-MM-dd")}
+            min={format(new Date(), 'yyyy-MM-dd')}
           />
         </div>
-        <div className="btn-container">
+        <div className='btn-container'>
           {editMode.state ? (
             <input
-              className={`${editMode.state ? "edit-mode" : ""} btn`}
-              type="submit"
-              value="Edit Task"
+              className={`${editMode.state ? 'edit-mode' : ''} btn`}
+              type='submit'
+              value='Edit Task'
             />
           ) : (
             <input
-              className={`${editMode.state ? "edit-mode" : ""} btn`}
-              type="submit"
-              value="Create New Task"
+              className={`${editMode.state ? 'edit-mode' : ''} btn`}
+              type='submit'
+              value='Create New Task'
             />
           )}
           {editMode.state && (
             <button
-              className={`${editMode.state ? "edit-mode" : ""} btn cancel`}
+              className={`${editMode.state ? 'edit-mode' : ''} btn cancel`}
               onClick={() => {
                 setEditMode(false);
                 setFormData({
-                  id: "",
-                  title: "",
-                  desc: "",
-                  dueDate: "",
+                  id: '',
+                  title: '',
+                  desc: '',
+                  dueDate: '',
                   subTasks: [],
                   images: [],
                   tags: [],
@@ -238,29 +241,29 @@ function TaskForm(props) {
       </form>
 
       {/* Subtasks */}
-      <div className="sub-task">
+      <div className='sub-task'>
         <h1>Subtasks</h1>
         <form onSubmit={addSubTask}>
           <input
-            type="text"
-            id="subTask"
-            name="subTask"
+            type='text'
+            id='subTask'
+            name='subTask'
             value={subTask}
             onChange={handleSubTaskChange}
-            placeholder="Insert new subtask"
+            placeholder='Insert new subtask'
             required
           />
           <input
-            className={`${editMode.state ? "edit-mode" : ""} btn subtask-btn`}
-            type="submit"
-            value="+ Add Subtask"
+            className={`${editMode.state ? 'edit-mode' : ''} btn subtask-btn`}
+            type='submit'
+            value='+ Add Subtask'
           />
 
           {/* Display subtasks */}
-          <div className="subtask-item-container">
+          <div className='subtask-item-container'>
             {formData.subTasks &&
               formData.subTasks.map((st, index) => (
-                <div className="subtask-item" key={index}>
+                <div className='subtask-item' key={index}>
                   <button
                     onClick={(event) => {
                       removeSubTask(index);

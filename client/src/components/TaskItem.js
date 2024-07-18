@@ -1,18 +1,18 @@
-import React, { useContext, useRef, useState, useEffect } from "react";
-import FileUpload from "./FileUpload.js";
-import TagDropDown from "./TagDropDown.js";
-import "../styling/taskitem.css";
-import { format } from "date-fns";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useContext, useRef, useState, useEffect } from 'react';
+import FileUpload from './FileUpload.js';
+import TagDropDown from './TagDropDown.js';
+import '../styling/taskitem.css';
+import { format } from 'date-fns';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faTrash,
   faPenToSquare,
   faEllipsisVertical,
-} from "@fortawesome/free-solid-svg-icons";
-import { BiAlarm } from "react-icons/bi";
-import { TaskContext } from "../App.js";
-import { useTaskContext } from "../hooks/useTaskContext.js";
-import { useAuthContext } from "../hooks/useAuthContext.js";
+} from '@fortawesome/free-solid-svg-icons';
+import { BiAlarm } from 'react-icons/bi';
+import { TaskContext } from '../App.js';
+import { useTaskContext } from '../hooks/useTaskContext.js';
+import { useAuthContext } from '../hooks/useAuthContext.js';
 
 function TaskItem(props) {
   const {
@@ -30,7 +30,7 @@ function TaskItem(props) {
   const { user } = useAuthContext();
   // Update the state to edit mode
   const editTask = (id) => {
-    setSidePanel("Add Task");
+    setSidePanel('Add Task');
     setEditMode({ ...editMode, state: true, taskID: id });
   };
 
@@ -40,15 +40,18 @@ function TaskItem(props) {
       return;
     }
     setEditMode(false);
-    const response = await fetch("/api/tasks/" + id, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer: ${user.token}`,
-      },
-    });
+    const response = await fetch(
+      'https://task-manager-rjw6.onrender.com//api/tasks/' + id,
+      {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer: ${user.token}`,
+        },
+      }
+    );
     const json = await response.json();
     if (response.ok) {
-      dispatch({ type: "DELETE_TASKS", payload: json });
+      dispatch({ type: 'DELETE_TASKS', payload: json });
     }
   };
 
@@ -79,33 +82,33 @@ function TaskItem(props) {
         !updatedTask[index].subTasks[subTaskID].checked;
       updateTask(updatedTask[index], taskID);
     } else {
-      console.log("Task not found", taskID);
+      console.log('Task not found', taskID);
     }
   };
 
   // Dropdown menu for task edit, image and delete
   const TaskDropDown = () => {
     return (
-      <div className="task-item-buttons">
+      <div className='task-item-buttons'>
         <button
           onClick={() => {
             editTask(props.task._id);
             props.handleToggleMenu(props.task._id);
           }}
         >
-          <FontAwesomeIcon title="Edit Task" icon={faPenToSquare} />
+          <FontAwesomeIcon title='Edit Task' icon={faPenToSquare} />
         </button>
 
         <FileUpload taskID={props.task._id}></FileUpload>
 
         <button
-          className="delete-btn"
+          className='delete-btn'
           onClick={() => {
             removeTask(props.task._id);
             props.handleToggleMenu(props.task._id);
           }}
         >
-          <FontAwesomeIcon title="Delete Task" icon={faTrash} />
+          <FontAwesomeIcon title='Delete Task' icon={faTrash} />
         </button>
       </div>
     );
@@ -132,9 +135,9 @@ function TaskItem(props) {
 
   // Scroll to the highlighted task from notification or summary page
   const scrollToHighlighted = () => {
-    const highlightedElement = document.querySelector(".highlighted");
+    const highlightedElement = document.querySelector('.highlighted');
     if (highlightedElement) {
-      highlightedElement.scrollIntoView({ behavior: "smooth" });
+      highlightedElement.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -142,11 +145,11 @@ function TaskItem(props) {
     return (
       <div
         ref={props.task._id === selectedTask ? selectedTaskRef : null}
-        className={`task-item ${highlighted ? "highlighted" : ""}`}
+        className={`task-item ${highlighted ? 'highlighted' : ''}`}
       >
         <div>
           <div
-            className="edit-task"
+            className='edit-task'
             onClick={() => props.handleToggleMenu(props.task._id)}
           >
             <button>
@@ -158,23 +161,23 @@ function TaskItem(props) {
             <TaskDropDown />
           )}
 
-          <div className="tasks-item-content">
+          <div className='tasks-item-content'>
             <div
               className={`task-item-title ${
-                settings.style === "list" && "list-tasks"
+                settings.style === 'list' && 'list-tasks'
               }`}
             >
               {props.task.title}
             </div>
             {props.task.dueDate && (
-              <p className="due-date">
-                <BiAlarm className="icon" />
-                {format(props.task.dueDate, "dd MMMM yyyy ")}
+              <p className='due-date'>
+                <BiAlarm className='icon' />
+                {format(props.task.dueDate, 'dd MMMM yyyy ')}
               </p>
             )}
 
-            <div className="task-item-tags">
-              <div className="task-item-tags-header">
+            <div className='task-item-tags'>
+              <div className='task-item-tags-header'>
                 <p>Tags: </p>
                 <button onClick={() => props.handleTagDropdown(props.task._id)}>
                   +
@@ -189,7 +192,7 @@ function TaskItem(props) {
               </div>
 
               {props.task.tags && (
-                <div className="task-tags">
+                <div className='task-tags'>
                   {props.task.tags.map((t, index) => (
                     <div
                       key={index}
@@ -205,12 +208,12 @@ function TaskItem(props) {
             <p>{props.task.desc}</p>
 
             {props.task.subTasks && props.task.subTasks.length > 0 && (
-              <div className="task-progress">
-                <div className="task-progress-header">
+              <div className='task-progress'>
+                <div className='task-progress-header'>
                   <h5>Task Progress</h5>
                   <p>{getTaskPercent(props.task._id)}%</p>
                 </div>
-                <div className="task-progress-bar">
+                <div className='task-progress-bar'>
                   <div
                     style={{ width: `${getTaskPercent(props.task._id)}%` }}
                   ></div>
@@ -221,11 +224,11 @@ function TaskItem(props) {
             {props.task.subTasks && (
               <div>
                 {props.task.subTasks.map((st, index) => (
-                  <div className="subtask-item">
+                  <div className='subtask-item'>
                     <input
                       key={index}
                       onChange={() => handleCheckList(props.task._id, index)}
-                      type="checkbox"
+                      type='checkbox'
                       checked={props.task.subTasks[index].checked}
                     />
                     <p>{st.subTaskName}</p>
@@ -235,13 +238,13 @@ function TaskItem(props) {
             )}
 
             {props.task.images && (
-              <div className="project-image-container">
-                <img alt="my task" src={props.task.images} />
+              <div className='project-image-container'>
+                <img alt='my task' src={props.task.images} />
               </div>
             )}
 
             <button
-              className="done-btn btn"
+              className='done-btn btn'
               onClick={() => removeTask(props.task._id)}
             >
               Mark as done

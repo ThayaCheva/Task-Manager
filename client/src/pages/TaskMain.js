@@ -1,10 +1,10 @@
-import { React, useState, useContext, useRef, useEffect } from "react";
-import "../styling/taskmain.css";
-import { TaskContext } from "../App.js";
-import TaskItem from "../components/TaskItem.js";
-import ConfirmDialog from "../components/ConfirmDialog.js";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { React, useState, useContext, useRef, useEffect } from 'react';
+import '../styling/taskmain.css';
+import { TaskContext } from '../App.js';
+import TaskItem from '../components/TaskItem.js';
+import ConfirmDialog from '../components/ConfirmDialog.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 function TaskMain() {
   const {
@@ -48,7 +48,7 @@ function TaskMain() {
   };
 
   // Search Functionality
-  const [searchWord, setSearchWord] = useState({ word: "", foundTasks: [] });
+  const [searchWord, setSearchWord] = useState({ word: '', foundTasks: [] });
   const handleSearchTasks = (event) => {
     if (tasks) {
       const updatedTask = tasks.filter((task) =>
@@ -61,59 +61,62 @@ function TaskMain() {
   // Clicking a task in summary will scroll to the selected task in home
   useEffect(() => {
     if (selectedTaskRef && selectedTaskRef.current) {
-      selectedTaskRef.current.scrollIntoView({ behavior: "smooth" });
+      selectedTaskRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [selectedTaskRef]);
 
   const deleteAllTasks = async () => {
     try {
-      const response = await fetch("/api/tasks/deleteAllTasks", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        'https://task-manager-rjw6.onrender.com/api/tasks/deleteAllTasks',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
       if (response.ok) {
         fetchTasks();
       }
     } catch (error) {
-      console.log("Error deleting all tasks: ", error);
+      console.log('Error deleting all tasks: ', error);
     }
   };
 
   return (
-    <div className="tasks-items">
-      {allowConfirmDialog.state && allowConfirmDialog.type === "clear-task" && (
+    <div className='tasks-items'>
+      {allowConfirmDialog.state && allowConfirmDialog.type === 'clear-task' && (
         <ConfirmDialog
-          title={"Clear all tasks?"}
-          desc={"Are you sure you want to clear all tasks?"}
+          title={'Clear all tasks?'}
+          desc={'Are you sure you want to clear all tasks?'}
           functionToCall={deleteAllTasks}
         />
       )}
 
-      <h1 className="header">My Tasks</h1>
-      <div className="tasks-manager">
-        <div className="search-bar">
+      <h1 className='header'>My Tasks</h1>
+      <div className='tasks-manager'>
+        <div className='search-bar'>
           <FontAwesomeIcon icon={faMagnifyingGlass} />
           <input
-            type="text"
-            placeholder="Search..."
+            type='text'
+            placeholder='Search...'
             onChange={handleSearchTasks}
           ></input>
         </div>
-        <div className="btn-container">
+        <div className='btn-container'>
           <button
-            className="btn"
+            className='btn'
             onClick={() => {
-              setSidePanel("Add Task");
+              setSidePanel('Add Task');
             }}
           >
             + Add Task
           </button>
           <button
-            className="btn"
+            className='btn'
             onClick={() =>
-              setAllowConfirmDialog({ type: "clear-task", state: true })
+              setAllowConfirmDialog({ type: 'clear-task', state: true })
             }
           >
             Clear All Tasks
@@ -121,8 +124,8 @@ function TaskMain() {
         </div>
       </div>
 
-      {settings.style === "list" && (
-        <div className="tasks-header">
+      {settings.style === 'list' && (
+        <div className='tasks-header'>
           <div>Title</div>
           <div>Due Date</div>
           <div>Current Tags</div>
@@ -131,7 +134,7 @@ function TaskMain() {
       )}
       {tasks && (
         <div className={`tasks-items-container ${settings.style}`}>
-          {searchWord.word === ""
+          {searchWord.word === ''
             ? tasks.map((t, index) => (
                 <TaskItem
                   key={index}

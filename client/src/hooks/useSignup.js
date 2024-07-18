@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useAuthContext } from "./useAuthContext";
+import { useState } from 'react';
+import { useAuthContext } from './useAuthContext';
 
 export const useSignup = () => {
   const [error, setError] = useState(null);
@@ -10,11 +10,14 @@ export const useSignup = () => {
     if (password === confirmPassword) {
       setIsLoading(true);
       setError(null);
-      const response = await fetch("/api/user/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        'https://task-manager-rjw6.onrender.com/api/user/signup',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        }
+      );
       const json = await response.json();
       if (!response.ok) {
         setIsLoading(false);
@@ -22,13 +25,13 @@ export const useSignup = () => {
       }
       if (response.ok) {
         // save user to local storage
-        localStorage.setItem("user", JSON.stringify(json));
+        localStorage.setItem('user', JSON.stringify(json));
         // update the auth context
-        dispatch({ type: "LOGIN", payload: json });
+        dispatch({ type: 'LOGIN', payload: json });
         setIsLoading(false);
       }
     } else {
-      setError("Password mismatch");
+      setError('Password mismatch');
     }
   };
   return { signup, isLoading, error };

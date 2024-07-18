@@ -42,11 +42,14 @@ function App() {
 
   const fetchTasks = async () => {
     try {
-      const response = await fetch('/api/tasks', {
-        headers: {
-          Authorization: `Bearer: ${user.token}`,
-        },
-      });
+      const response = await fetch(
+        'https://task-manager-rjw6.onrender.com/api/tasks',
+        {
+          headers: {
+            Authorization: `Bearer: ${user.token}`,
+          },
+        }
+      );
       const json = await response.json();
       if (response.ok) {
         dispatch({ type: 'SET_TASKS', payload: json });
@@ -140,14 +143,17 @@ function App() {
   };
 
   const updateTask = async (updatedTask, id) => {
-    const response = await fetch('/api/tasks/' + id, {
-      method: 'PATCH',
-      body: JSON.stringify(updatedTask),
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer: ${user.token}`,
-      },
-    });
+    const response = await fetch(
+      'https://task-manager-rjw6.onrender.com/api/tasks/' + id,
+      {
+        method: 'PATCH',
+        body: JSON.stringify(updatedTask),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer: ${user.token}`,
+        },
+      }
+    );
     if (response.ok) {
       const json = await response.json();
       dispatch({ type: 'UPDATE_TASKS', payload: json });

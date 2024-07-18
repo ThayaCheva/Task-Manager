@@ -1,5 +1,4 @@
 {
-  "proxy": "https://task-manager-rjw6.onrender.com/",
   "name": "todolist",
   "version": "0.1.0",
   "private": true,
