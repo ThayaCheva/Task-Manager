@@ -5,6 +5,7 @@ import TaskItem from '../components/TaskItem.js';
 import ConfirmDialog from '../components/ConfirmDialog.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { useAuthContext } from '../hooks/useAuthContext.js';
 
 function TaskMain() {
   const {
@@ -16,6 +17,7 @@ function TaskMain() {
     fetchTasks,
   } = useContext(TaskContext);
   const selectedTaskRef = useRef(null);
+  const { user } = useAuthContext();
 
   // Manage the task item menu dropdown
   const [toggleMenu, setToggleMenu] = useState({
@@ -73,6 +75,7 @@ function TaskMain() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            Authorization: `Bearer: ${user.token}`,
           },
         }
       );

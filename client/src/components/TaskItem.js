@@ -41,7 +41,7 @@ function TaskItem(props) {
     }
     setEditMode(false);
     const response = await fetch(
-      'https://task-manager-rjw6.onrender.com//api/tasks/' + id,
+      'https://task-manager-rjw6.onrender.com/api/tasks/' + id,
       {
         method: 'DELETE',
         headers: {
@@ -77,7 +77,7 @@ function TaskItem(props) {
   const handleCheckList = async (taskID, subTaskID) => {
     const updatedTask = [...tasks];
     const index = updatedTask.findIndex((t) => t._id === taskID);
-    if (index != -1) {
+    if (index !== -1) {
       updatedTask[index].subTasks[subTaskID].checked =
         !updatedTask[index].subTasks[subTaskID].checked;
       updateTask(updatedTask[index], taskID);
